@@ -1,0 +1,198 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { locales, type Locale } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+import { resultCategories } from '../../content.config';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const t = useTranslations(locale);
+
+// getCollection은 id 알파벳순이다. 연차·분류 순서가 뒤집히므로 명시 정렬이 필수.
+const results = (await getCollection('results')).sort((a, b) => a.data.order - b.data.order);
+
+const years = [
+  { value: '2', label: t('results.year2') },
+  { value: '1', label: t('results.year1') },
+];
+---
+
+<BaseLayout title={t('results.title')} description={t('results.intro')}>
+  <section class="wrap block">
+    <p class="micro">{t('results.title')}</p>
+    <h1>{t('results.title')}</h1>
+    <p class="intro measure">{t('results.intro')}</p>
+
+    <div class="filters">
+      <div class="row" role="group" aria-label={t('results.year1') + ' / ' + t('results.year2')}>
+        <button class="chip" data-filter="year" data-value="all" aria-pressed="true">
+          {t('results.all')}
+        </button>
+        {
+          years.map((y) => (
+            <button class="chip" data-filter="year" data-value={y.value} aria-pressed="false">
+              {y.label}
+            </button>
+          ))
+        }
+      </div>
+      <div class="row" role="group" aria-label={t('section.project')}>
+        <button class="chip" data-filter="category" data-value="all" aria-pressed="true">
+          {t('results.all')}
+        </button>
+        {
+          resultCategories.map((c) => (
+            <button class="chip" data-filter="category" data-value={c} aria-pressed="false">
+              {t(`cat.${c}` as any)}
+            </button>
+          ))
+        }
+      </div>
+      <p class="count micro" aria-live="polite">
+        <span id="result-count">{results.length}</span> {t('results.count')}
+      </p>
+    </div>
+
+    <ul class="grid" id="result-grid">
+      {
+        results.map((r) => {
+          const c = locale === 'ko' ? r.data.ko : r.data.en;
+          return (
+            <li class="card" data-year={String(r.data.year)} data-category={r.data.category}>
+              {r.data.image && (
+                <img class="thumb" src={r.data.image} alt={c.title} loading="lazy" decoding="async" />
+              )}
+              <div class="body">
+                <p class="tag micro">
+                  {r.data.year === 2 ? t('results.year2') : t('results.year1')}
+                  <span class="sep">·</span>
+                  {t(`cat.${r.data.category}` as any)}
+                </p>
+                <h2>{c.title}</h2>
+                <p class="desc">{c.desc}</p>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <p class="empty" id="result-empty" hidden>{t('results.empty')}</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .block { padding-block: var(--s-72); }
+  h1 {
+    font-size: var(--t-display-ko);
+    line-height: var(--lh-display-ko);
+    margin: var(--s-8) 0 var(--s-16);
+  }
+  .intro { margin: 0 0 var(--s-48); color: var(--c-muted); }
+
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-12);
+    padding-bottom: var(--s-24);
+    border-bottom: 1px solid var(--c-border);
+    margin-bottom: var(--s-32);
+  }
+  .row { display: flex; flex-wrap: wrap; gap: var(--s-8); }
+  /* Ghost 계열 칩 — 비활성은 배경 없음, 활성만 Mint (DESIGN.md) */
+  .chip {
+    font: inherit;
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+    background: none;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+  .chip:hover { color: var(--c-text); }
+  .chip[aria-pressed='true'] {
+    color: var(--c-accent);
+    border-color: var(--c-accent);
+  }
+  .count { margin: var(--s-4) 0 0; }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--s-16);
+  }
+  .card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card[hidden] { display: none; }
+  .thumb {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .body { padding: var(--s-24); }
+  .tag { margin: 0; color: var(--c-accent); }
+  .sep { color: var(--c-muted); margin: 0 6px; }
+  h2 {
+    font-size: var(--t-heading-sm);
+    line-height: 1.5;
+    margin: var(--s-12) 0;
+  }
+  .desc {
+    margin: 0;
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+  }
+  .empty {
+    margin: var(--s-48) 0 0;
+    color: var(--c-muted);
+    text-align: center;
+  }
+</style>
+
+<script>
+  // 39건 규모에서는 서버 라우팅보다 클라이언트 필터가 적합하다 — 전체가 이미 한 페이지에 있다.
+  const grid = document.getElementById('result-grid')!;
+  const countEl = document.getElementById('result-count')!;
+  const emptyEl = document.getElementById('result-empty')!;
+  const cards = [...grid.querySelectorAll<HTMLElement>('.card')];
+  const state: Record<string, string> = { year: 'all', category: 'all' };
+
+  function apply() {
+    let shown = 0;
+    for (const card of cards) {
+      const ok =
+        (state.year === 'all' || card.dataset.year === state.year) &&
+        (state.category === 'all' || card.dataset.category === state.category);
+      card.hidden = !ok;
+      if (ok) shown++;
+    }
+    countEl.textContent = String(shown);
+    emptyEl.hidden = shown > 0;
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const group = chip.dataset.filter!;
+      state[group] = chip.dataset.value!;
+      document
+        .querySelectorAll<HTMLButtonElement>(`.chip[data-filter="${group}"]`)
+        .forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      apply();
+    });
+  });
+</script>

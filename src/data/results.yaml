@@ -1,0 +1,589 @@
+# 연구 결과물 — 현행 /results 실측 (2026-08-03). 국문은 원문 그대로.
+# 영문은 신규 번역 (P-02) — 연구 용어 최종 표현은 검수 대상.
+#
+# category 5종은 2차년도 대분류를 승계한다:
+#   acquisition 데이터 획득·품질 개선 / asset 애셋 기술 / analysis 지능형 분석·검색
+#   platform 큐레이션 플랫폼 / service 전시·체험 서비스
+# ⚠️ 1차년도 15건은 현행 사이트에 대분류가 없어 내용으로 역매핑했다 — 검수 대상 (M-13).
+#
+# order는 표시 순서. getCollection이 id 알파벳순으로 반환하므로 명시 정렬이 필수다.
+
+# ─────────────── 2차년도 ───────────────
+
+- id: y2-01-01
+  year: 2
+  category: acquisition
+  order: 101
+  ko:
+    title: 디지털 데이터 색상 개선
+    desc: >-
+      문화유산의 취득과정 및 보존과정에서의 이미지 데이터는 환경과 시간에 따른 색상 변형이 발생.
+      기존의 컴퓨터 비전 알고리즘 중 가장 좋은 색상개선 효과를 보이는 알고리즘들의 적용 및
+      문화유산 데이터의 효율성 검증 진행
+  en:
+    title: Colour correction of digital data
+    desc: >-
+      Image data acquired and preserved over time suffers colour distortion. The best-performing
+      colour correction algorithms in computer vision were applied and their effectiveness on
+      heritage data was verified.
+
+- id: y2-01-02
+  year: 2
+  category: acquisition
+  order: 102
+  ko:
+    title: 디지털 데이터 노이즈 개선
+    desc: >-
+      아날로그 데이터들의 경우 노이즈 문제가 두드러져 이를 스캐닝을 통하여 디지털화하고 노이즈를
+      줄이는 기술 개발. 기존 형태 최대한 손상 없이 디지털화 진행. 이후 색상 개선에 필요한 기술들
+      추가(LIME&BM3D 활용)
+  en:
+    title: Noise reduction in digital data
+    desc: >-
+      Analogue sources show pronounced noise. Techniques were developed to digitise by scanning
+      and reduce noise while preserving the original form, with colour correction added
+      afterwards (LIME & BM3D).
+
+- id: y2-01-03
+  year: 2
+  category: acquisition
+  order: 103
+  ko:
+    title: 디지털 데이터 블러링 개선
+    desc: 색상, 품질개선(블러링 개선 등)을 위해 Guided Filtering 사용
+  en:
+    title: Deblurring of digital data
+    desc: Guided filtering was used for colour and quality improvement including deblurring.
+
+- id: y2-01-04
+  year: 2
+  category: acquisition
+  order: 104
+  ko:
+    title: 인공지능 기반 저품질 디지털 데이터 개선
+    desc: 페어드/언페어드 데이터셋 기반 CNN 모델 학습 모델 2종 연구
+  en:
+    title: AI-based enhancement of low-quality digital data
+    desc: Two CNN training models were studied, based on paired and unpaired datasets.
+
+- id: y2-01-05
+  year: 2
+  category: acquisition
+  order: 105
+  ko:
+    title: 초고해상도 2D/3D 데이터 획득 기술
+    desc: >-
+      실감형 콘텐츠를 위해 획득 및 생성 과정에서의 최고 수준의 기술들에 대한 검토 및 기술 개발.
+      기가 픽셀단위의 2D 이미지 데이터, 초정밀 수준의 3D 데이터를 위한 단계별 특징별 표준방식에
+      대한 표준 가이드도 함께 병행하여 진행
+  en:
+    title: Ultra-high-resolution 2D/3D data acquisition
+    desc: >-
+      State-of-the-art acquisition and generation techniques were reviewed and developed for
+      immersive content, alongside a standard guide covering gigapixel 2D imagery and
+      ultra-precise 3D data by stage and characteristic.
+
+- id: y2-01-06
+  year: 2
+  category: acquisition
+  order: 106
+  ko:
+    title: 문화유산 획득을 위한 로봇팔 기술
+    desc: >-
+      콘텐츠 생성과정에서의 여러 환경에 대한 표준과 함께, 로봇을 이용한 자동 취득 기술을 개발하여
+      숙련도 문제 해결을 위한 기술개발 진행
+  en:
+    title: Robotic arm technology for heritage acquisition
+    desc: >-
+      Alongside environmental standards for content generation, robot-based automatic acquisition
+      was developed to remove dependence on operator skill.
+
+- id: y2-01-07
+  year: 2
+  category: acquisition
+  order: 107
+  ko:
+    title: 문화유산 데이터 품질 평가 가이드라인 구축
+    desc: >-
+      문화유산의 취득과정에서의 표준 가이드 라인을 구축하여 향후 박물관 콘텐츠 관련 제작에
+      큐레이터가 직접 활용 하고 검토 할 수 있는 방법 제시
+  en:
+    title: Quality assessment guidelines for heritage data
+    desc: >-
+      Standard guidelines for the acquisition process were established, giving curators a method
+      they can apply and review directly when producing museum content.
+
+- id: y2-02-01
+  year: 2
+  category: asset
+  order: 108
+  ko:
+    title: 2D/3D 애셋 생성/변환 기술
+    desc: >-
+      문화유산 데이터의 애셋 생성을 위한 기초 데이터 변환 기술 개발 및 DB와 연동. 애셋 데이터
+      관리자 모듈 개발, 애셋 변형/생성 모듈 고도화, 애셋 변환 모듈 고도화 수행
+  en:
+    title: 2D/3D asset generation and conversion
+    desc: >-
+      Base data conversion for heritage asset generation was developed and linked to the database,
+      with an asset data manager module and advanced asset transformation and conversion modules.
+
+- id: y2-02-02
+  year: 2
+  category: asset
+  order: 109
+  ko:
+    title: 문화유산 애셋 3D 가시화 기술
+    desc: >-
+      3D 초폴리곤 형태로 구성된 데이터들을 포함하는 가시화 기술 개발. 2D 애셋 가시화, 3D 애셋
+      가시화, 3D 중심점 수정 및 랜더링 고도화 수행
+  en:
+    title: 3D visualisation of heritage assets
+    desc: >-
+      Visualisation covering high-polygon 3D data was developed, including 2D and 3D asset
+      visualisation, 3D pivot correction and advanced rendering.
+
+- id: y2-02-03
+  year: 2
+  category: asset
+  order: 110
+  ko:
+    title: 문화유산의 가상 공간 전시 기술
+    desc: >-
+      문화유산의 가상공간 전시는 문화유물의 특성에 따라 유물 외에도 공간, 배치, 유물관 관련
+      데이터 등도 동시에 필요. 인공지능 기술을 활용한 유물 특성에 따른 가상전시 자동 생성을 위해,
+      실제 가상 전시 공간들의 대표적 관련 데이터를 수집, 이를 가시화하는 기술 개발
+  en:
+    title: Virtual space exhibition of cultural heritage
+    desc: >-
+      Virtual exhibition requires data on space, layout and gallery context as well as the
+      artefacts themselves. Representative data from real virtual exhibition spaces was collected
+      and visualisation developed, towards AI-driven automatic generation of virtual exhibitions.
+
+- id: y2-02-04
+  year: 2
+  category: asset
+  order: 111
+  ko:
+    title: 문화유산 애셋 표준 생성
+    desc: >-
+      애셋 표준 생성을 위한 데이터 취득 작업 진행 (177점 취득 → 129점 애셋화), 문화유산 아카이브
+      데이터 디지털화 작업 진행(8,353장 진행). 전시/교육/콘텐츠 개발 시 다양한 활용이 가능한
+      표준화 방법 연구
+  en:
+    title: Standard generation of heritage assets
+    desc: >-
+      Data acquisition for asset standardisation was carried out (177 items acquired → 129 turned
+      into assets) along with digitisation of archive data (8,353 sheets), studying standardisation
+      methods reusable across exhibition, education and content development.
+
+- id: y2-03-01
+  year: 2
+  category: analysis
+  order: 112
+  ko:
+    title: 지능형 검색을 위한 대규모 데이터셋 구축 및 응용 기술
+    desc: >-
+      문화유산 검색을 위한 데이터 및 관계를 정의(데이터속성 92종, 관계 14종). 국립중앙박물관
+      e-museum 데이터의 속성 및 관계 태깅 수행
+  en:
+    title: Large-scale dataset construction for intelligent search
+    desc: >-
+      Data and relations for heritage search were defined (92 data attributes, 14 relation types),
+      and attribute and relation tagging was performed on the National Museum of Korea e-museum data.
+
+- id: y2-03-02
+  year: 2
+  category: analysis
+  order: 113
+  ko:
+    title: 문화유산 자동 분류/태깅 및 검색 기술
+    desc: >-
+      문화유산의 자동분류/태깅을 위해서는 문화재에 특화된 언어의 학습이 필요. 여러 조건의 학습률과
+      학습 랜덤 시드를 이용하여 각 조건에서의 성능 테스트
+  en:
+    title: Automatic classification, tagging and search of heritage
+    desc: >-
+      Automatic classification and tagging requires learning language specific to cultural
+      properties. Performance was tested across conditions using varied learning rates and
+      random seeds.
+
+- id: y2-03-03
+  year: 2
+  category: analysis
+  order: 114
+  ko:
+    title: 문화유산 관계 네트워크 분석 기술
+    desc: >-
+      실제 문화유산 데이터를 기반으로 개체명 인식결과를 활용, 데이터간 온톨로지 구성을 위한 관계
+      네트워크 분석기술 진행. 4가지 모델에 대하여 연구 진행, 성능 및 확장성 고려하여 최적 모델 분석
+  en:
+    title: Relation network analysis of cultural heritage
+    desc: >-
+      Named entity recognition results on real heritage data were used to analyse relation networks
+      for ontology construction. Four models were studied and the optimal one identified for
+      performance and scalability.
+
+- id: y2-03-04
+  year: 2
+  category: analysis
+  order: 115
+  ko:
+    title: 문화유산 기반 실시간 객체 검출 및 인식 기술
+    desc: >-
+      Style Transfer를 기반으로 부족한 학습 이미지 데이터 보강 후 Natural 이미지 및 가상 DB용
+      모델 전이 학습을 통한 객체 검출 연구
+  en:
+    title: Real-time object detection and recognition for heritage
+    desc: >-
+      Scarce training imagery was augmented via style transfer, then object detection was studied
+      through transfer learning of models for natural images and virtual databases.
+
+- id: y2-04-01
+  year: 2
+  category: platform
+  order: 116
+  ko:
+    title: 큐레이션 지원 및 서비스 운영 플랫폼 설계 및 구축
+    desc: >-
+      문화유산 활용을 위한 연구 개발 결과들을 사용자가 편하게 사용할 수 있도록 최적의 플랫폼 설계를
+      목표. 문화유산 디지털 데이터의 효율적 관리 및 연구 개발 모듈 실행을 위한 데이터베이스와
+      플랫폼 구축
+  en:
+    title: Design and construction of the curation support and service platform
+    desc: >-
+      The platform was designed so that users can readily apply the project's R&D outputs, with a
+      database and platform for efficient management of digital heritage data and execution of the
+      research modules.
+
+- id: y2-04-02
+  year: 2
+  category: platform
+  order: 117
+  ko:
+    title: 의미/비주얼 검색 기반 지능형 큐레이션 기술 개발
+    desc: >-
+      전시 및 콘텐츠에 활용 가능한 데이터를 쉽게 접근할 수 있도록 문화유산의 관계 기반 검색 구축 및
+      관련 자료들을 시각화
+  en:
+    title: Intelligent curation based on semantic and visual search
+    desc: >-
+      Relation-based heritage search was built and related materials visualised, so that data usable
+      in exhibitions and content is easy to reach.
+
+- id: y2-04-03
+  year: 2
+  category: platform
+  order: 118
+  ko:
+    title: 자연어 및 연관 애셋 검색 연계 기술
+    desc: >-
+      문화유산 검색을 큐레이터 친화적인 자연어에 의한 복합 검색이 가능하도록 형태소 분석 및 데이터
+      베이스 연동. 문화유산의 의미/이미지 기반으로 연구된 결과와 기존 사용 엔진의 결과를 조합하여
+      사용자에게 검색 기능 제공 및 문화유물 태깅/검색 학습 결과를 활용한 문화유물 검색 필터링 모듈 개발
+  en:
+    title: Natural language and related-asset search integration
+    desc: >-
+      Morphological analysis was linked to the database so curators can run compound searches in
+      natural language. Semantic and image-based research results were combined with the existing
+      engine, and a filtering module built on tagging and search training results.
+
+- id: y2-04-04
+  year: 2
+  category: platform
+  order: 119
+  ko:
+    title: 큐레이션 애셋 공유기술(2D 기반)
+    desc: >-
+      플랫폼의 사용 형태 및 목적에 따라 문화유산 데이터의 변환 및 공유 기능을 제공하도록 개발.
+      문화유산 애셋 생성 가이드라인을 이용, 데이터 생성/관리를 위한 DB 설계 및 사용자 편의를 위한
+      GUI 모듈 개발
+  en:
+    title: Curation asset sharing (2D)
+    desc: >-
+      Conversion and sharing of heritage data was developed for different platform uses and purposes,
+      with database design for data creation and management following the asset generation
+      guidelines, plus a GUI module for usability.
+
+- id: y2-04-05
+  year: 2
+  category: platform
+  order: 120
+  ko:
+    title: 큐레이션 애셋 기반 관계분석 기술
+    desc: >-
+      언어 모델 기반 관계 추출 연구 결과를 활용하여 관계 형태를 표현하기 위한 다양한 형태의 관계형
+      가시화 연구 진행
+  en:
+    title: Relation analysis based on curation assets
+    desc: >-
+      Language-model relation extraction results were used to study various forms of relational
+      visualisation for expressing relation types.
+
+- id: y2-04-06
+  year: 2
+  category: platform
+  order: 121
+  ko:
+    title: 의미기반 지능형 검색 및 사용자 편의 기술 개발
+    desc: >-
+      대용량 데이터의 클라우드 활용과 저장공간 이원화 및 기존 텍스트 검색을 반영한 관계기법 검색
+      기술 등을 플랫폼 설계에 반영
+  en:
+    title: Semantic intelligent search and usability features
+    desc: >-
+      Cloud use for large data volumes, dual-tier storage and relation-based search reflecting
+      existing text search were incorporated into the platform design.
+
+- id: y2-05-01
+  year: 2
+  category: service
+  order: 122
+  ko:
+    title: AR/VR 박물관 시범 서비스
+    desc: 문화유산 애셋 생성 데이터를 활용하여 시범 콘텐츠 제작(7종)
+  en:
+    title: AR/VR museum pilot service
+    desc: Seven pilot content pieces were produced using generated heritage asset data.
+
+- id: y2-05-02
+  year: 2
+  category: service
+  order: 123
+  ko:
+    title: 웹 기반의 박물관 컨텐츠
+    desc: >-
+      문화유산 데이터의 애셋화와 지능형 분석을 통한 시범 서비스의 형태로 예상되는 디지털 아카이빙
+      기반 가상 전시 웹 콘텐츠 구성. 문화유산 애셋 플랫폼을 활용하여 다양한 웹 콘텐츠를 제작할 수
+      있는 모듈 및 시범 콘텐츠 제작
+  en:
+    title: Web-based museum content
+    desc: >-
+      Digital-archive-based virtual exhibition web content was composed as a pilot service built on
+      asset conversion and intelligent analysis, together with a module for producing varied web
+      content on the heritage asset platform.
+
+- id: y2-05-03
+  year: 2
+  category: service
+  order: 124
+  ko:
+    title: 인터랙티브 관람객 반응 감지 및 추적 기술
+    desc: >-
+      문화유산 애셋의 실감콘텐츠 활용을 위해 기본 데이터 외에 반응하는 데이터 추가, 사용자 관련
+      정보 추적기술 개발. 멀티 디바이스 지원이 가능한 사용자 접속 구조 개발하여 다양한 인터랙티브를
+      멀티 디바이스에서 체험 가능
+  en:
+    title: Interactive visitor response detection and tracking
+    desc: >-
+      Responsive data was added beyond base data for immersive use of heritage assets, with user
+      tracking and a multi-device access structure so interactions can be experienced across devices.
+
+# ─────────────── 1차년도 ───────────────
+# 현행 사이트에 대분류가 없어 내용 기준으로 역매핑했다 (M-13 검수 대상).
+
+- id: y1-01
+  year: 1
+  category: acquisition
+  order: 201
+  ko:
+    title: 초해상화 고품질 변환
+    desc: >-
+      인공지능 기반의 문화유산 영상 이미지 고해상화 변환. 4x SR일 때, PSNR: 27.421, SSIM 0.7978 획득
+  en:
+    title: Super-resolution high-quality conversion
+    desc: >-
+      AI-based super-resolution of heritage imagery, achieving PSNR 27.421 and SSIM 0.7978 at 4× SR.
+
+- id: y1-02
+  year: 1
+  category: asset
+  order: 202
+  ko:
+    title: 문화유산 데이터 표준 정의
+    desc: >-
+      문화유산 표준속성에 대한 정의를 재질/빛에 대한 반사등으로 제한, 표준 물리 기반 렌더링(PBR)
+      템플릿 30종 구성
+  en:
+    title: Standard definition of heritage data
+    desc: >-
+      Standard attributes were scoped to material and light reflectance, and 30 physically based
+      rendering (PBR) templates were composed.
+
+- id: y1-03
+  year: 1
+  category: acquisition
+  order: 203
+  ko:
+    title: 문화유산 획득 가이드라인
+    desc: >-
+      2D 기가 픽셀 구축을 위한 다중 2D 이미지 데이터 획득 가이드라인 및 고해상도 3D 모델링 데이터
+      생성을 위한 다중 2D 이미지 데이터 획득 가이드라인 제시
+  en:
+    title: Heritage acquisition guidelines
+    desc: >-
+      Guidelines were presented for multi-image 2D acquisition, both for gigapixel 2D construction
+      and for generating high-resolution 3D modelling data.
+
+- id: y1-04
+  year: 1
+  category: acquisition
+  order: 204
+  ko:
+    title: 로봇팔을 이용한 자동획득장치
+    desc: >-
+      기존의 시간적 노력과 촬영자의 숙련도에 따른 품질 차이 개선을 위한 자동장치를 활용한 최초 개발 시도
+  en:
+    title: Automatic acquisition device using a robotic arm
+    desc: >-
+      A first attempt at an automatic device addressing the time cost and the quality variation
+      caused by differences in operator skill.
+
+- id: y1-05
+  year: 1
+  category: asset
+  order: 205
+  ko:
+    title: 애셋 스키마 설계
+    desc: >-
+      국립중앙박물관의 큐레이터, 보존과학부, 교육부서 등의 요구 사항 기반 문화유산 애셋 스키마 정의
+      및 시스템 설계
+  en:
+    title: Asset schema design
+    desc: >-
+      A heritage asset schema and system design based on requirements from the National Museum of
+      Korea's curators, conservation science department and education department.
+
+- id: y1-06
+  year: 1
+  category: asset
+  order: 206
+  ko:
+    title: 애셋 생성/변환
+    desc: >-
+      원본데이터에서 애셋으로 변환하거나, 애셋 간의 변환을 가능하게 하는 모듈 개발로 데이터 호환성 증대
+  en:
+    title: Asset generation and conversion
+    desc: >-
+      Modules enabling conversion from source data to assets and between assets, increasing data
+      compatibility.
+
+- id: y1-07
+  year: 1
+  category: asset
+  order: 207
+  ko:
+    title: 애셋 가시화
+    desc: 애셋의 가시화를 활용해 큐레이터들의 요구사항인 직관적 데이터 관리 인터페이스 제공
+  en:
+    title: Asset visualisation
+    desc: >-
+      Asset visualisation provides the intuitive data management interface curators asked for.
+
+- id: y1-08
+  year: 1
+  category: analysis
+  order: 208
+  ko:
+    title: 개체 분할 기술
+    desc: >-
+      딥러닝 기반 Multi-object Detection 네트워크 분석 및 적용, COCO dataset 학습 기반 2D 개체
+      검출 기술 적용
+  en:
+    title: Object segmentation
+    desc: >-
+      Deep-learning multi-object detection networks were analysed and applied, with 2D object
+      detection trained on the COCO dataset.
+
+- id: y1-09
+  year: 1
+  category: analysis
+  order: 209
+  ko:
+    title: 속성기반 데이터 분석
+    desc: >-
+      큐레이터의 요구사항을 반영, 이뮤지엄 문화유산 데이터 분석. 텍스트 데이터 속성 18종 선정,
+      이미지 데이터 속성 26종 선정
+  en:
+    title: Attribute-based data analysis
+    desc: >-
+      e-museum heritage data was analysed against curator requirements, selecting 18 text data
+      attributes and 26 image data attributes.
+
+- id: y1-10
+  year: 1
+  category: analysis
+  order: 210
+  ko:
+    title: AI기반 객체 의미 분석
+    desc: 개체명 인식기를 이용한 문화유산 데이터의 속성 추출. 딥러닝 기반의 개체명인식기술 이용
+  en:
+    title: AI-based semantic analysis of objects
+    desc: >-
+      Attributes were extracted from heritage data using a deep-learning named entity recogniser.
+
+- id: y1-11
+  year: 1
+  category: analysis
+  order: 211
+  ko:
+    title: 데이터셋 구축 기술
+    desc: >-
+      문화유산의 검색을 위한 말뭉치와 이미지 데이터셋 구축 도구 개발. 웹 기반의 어노테이션 도구로
+      업데이트와 접근성 확보
+  en:
+    title: Dataset construction
+    desc: >-
+      Tools were developed to build corpora and image datasets for heritage search, using a
+      web-based annotation tool for easy updating and access.
+
+- id: y1-12
+  year: 1
+  category: analysis
+  order: 212
+  ko:
+    title: 개체간 지식그래프 도출
+    desc: 지식 관계망 구축을 통한 기록물 데이터 새로운 접근 방향 제시 및 시각화
+  en:
+    title: Knowledge graph derivation between entities
+    desc: >-
+      A knowledge network was constructed, proposing and visualising a new way of approaching
+      archival record data.
+
+- id: y1-13
+  year: 1
+  category: platform
+  order: 213
+  ko:
+    title: 지능형 큐레이션 플랫폼
+    desc: 애셋관리자, 큐레이터, 일반사용자 등으로 구분하고 이를 설계에 반영
+  en:
+    title: Intelligent curation platform
+    desc: >-
+      Users were separated into asset managers, curators and general users, and this was reflected
+      in the design.
+
+- id: y1-14
+  year: 1
+  category: platform
+  order: 214
+  ko:
+    title: 웹뷰 출력 기술
+    desc: >-
+      고해상도 이미지, 고품질 3D 데이터에 대한 웹에서의 디스플레이를 위한 엔진 구성 및 GUI설계
+  en:
+    title: Web view rendering
+    desc: >-
+      An engine and GUI were designed for displaying high-resolution imagery and high-quality 3D
+      data on the web.
+
+- id: y1-15
+  year: 1
+  category: service
+  order: 215
+  ko:
+    title: MR기반 시범콘텐츠
+    desc: 홀로렌즈2를 활용한 MR기반 문화유산 해설 및 체험 콘텐츠 개발
+  en:
+    title: MR-based pilot content
+    desc: MR heritage interpretation and experience content developed on HoloLens 2.

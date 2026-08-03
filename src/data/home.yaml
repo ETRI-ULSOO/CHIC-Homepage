@@ -7,7 +7,7 @@
     지정과제로 선정되어 2020년 7월부터 2022년 12월까지 수행된 "실감형 문화유산 체험을 위한
     애셋 기반 지능형 큐레이션 및 서비스 운영기술 개발" 과제입니다.
   kpis:
-    - { value: '38', key: '연구 결과물' }
+    - { value: AUTO_RESULTS, key: '연구 결과물' }
     - { value: '8,353', key: '아카이브 디지털화 (장)' }
     - { value: '92 / 14', key: '데이터 속성 / 관계 정의' }
     - { value: '7', key: '참여 기관' }
@@ -33,7 +33,7 @@
     December 2022 under the title "Development of asset-based intelligent curation and
     service operation technology for immersive cultural heritage experiences".
   kpis:
-    - { value: '38', key: 'Research outputs' }
+    - { value: AUTO_RESULTS, key: 'Research outputs' }
     - { value: '8,353', key: 'Archive items digitised' }
     - { value: '92 / 14', key: 'Attributes / relations defined' }
     - { value: '7', key: 'Partner organisations' }

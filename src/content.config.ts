@@ -90,4 +90,22 @@ const concept = defineCollection({
   }),
 });
 
-export const collections = { news, consortium, home, project, contact, concept };
+export const resultCategories = ['acquisition', 'asset', 'analysis', 'platform', 'service'] as const;
+
+const localised = z.object({ title: z.string(), desc: z.string() });
+
+const results = defineCollection({
+  loader: file('./src/data/results.yaml', { parser: (text) => parseYaml(text) }),
+  schema: z.object({
+    year: z.union([z.literal(1), z.literal(2)]),
+    category: z.enum(resultCategories),
+    order: z.number(),
+    ko: localised,
+    en: localised,
+    /** 결과물 이미지는 원본 화질·저작권 미확인 상태다 (PLAN P-04).
+     *  없으면 텍스트 전용으로 렌더되므로 이미지 대기가 페이지를 막지 않는다. */
+    image: z.string().optional(),
+  }),
+});
+
+export const collections = { news, consortium, home, project, contact, concept, results };

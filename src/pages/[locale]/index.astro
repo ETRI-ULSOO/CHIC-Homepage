@@ -22,6 +22,12 @@ if (!home || !project || !contact) throw new Error(`'${locale}' 항목이 데이
 
 // getCollection은 id 알파벳순이다. 기관 서열이 뒤집히므로 명시 정렬이 필수.
 const orgs = (await getCollection('consortium')).sort((a, b) => a.data.order - b.data.order);
+
+// 결과물 수는 세지 않고 데이터에서 산출한다 — 손으로 센 값은 틀린다 (실제로 38로 잘못 셌다).
+const resultCount = (await getCollection('results')).length;
+const kpis = home.data.kpis.map((k) =>
+  k.value === 'AUTO_RESULTS' ? { ...k, value: String(resultCount) } : k,
+);
 ---
 
 <BaseLayout>
@@ -34,7 +40,7 @@ const orgs = (await getCollection('consortium')).sort((a, b) => a.data.order - b
         <em>{locale === 'ko' ? '지능형 큐레이션' : 'cultural heritage'}</em>
       </h1>
       <p class="lead measure">{home.data.lead}</p>
-      <KpiStat items={home.data.kpis} />
+      <KpiStat items={kpis} />
     </div>
   </section>
 
