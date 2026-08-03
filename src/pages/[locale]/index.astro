@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import DiagramFigure from '../../components/DiagramFigure.astro';
 import KpiStat from '../../components/KpiStat.astro';
 import { locales, type Locale } from '../../i18n/ui';
-import { useTranslations } from '../../i18n/utils';
+import { useTranslations, diagramSrc } from '../../i18n/utils';
 
 // 14개 페이지를 언어마다 복제하지 않는다. 언어는 라우트 파라미터이고
 // 콘텐츠는 컬렉션에서 언어로 조회한다 — 이 패턴을 전 페이지에 적용한다.
@@ -49,7 +49,7 @@ const kpis = home.data.kpis.map((k) =>
     <h2>{t('section.project')}</h2>
 
     <DiagramFigure
-      src="/images/diagrams/project-overview.svg"
+      src={diagramSrc('/images/diagrams/project-overview.svg', locale)}
       alt={locale === 'ko'
         ? 'CHIC 과제 개요 — 4대 연구 축과 실증 대상'
         : 'CHIC project overview — four research axes and validation targets'}
@@ -100,7 +100,7 @@ const kpis = home.data.kpis.map((k) =>
     <p class="micro">03</p>
     <h2>{t('section.rationale')}</h2>
     <DiagramFigure
-      src="/images/diagrams/necessity.svg"
+      src={diagramSrc('/images/diagrams/necessity.svg', locale)}
       alt={locale === 'ko'
         ? 'CHIC 연구개발의 필요성 — 현황 및 문제점, 기술적 요구, 기대 성과와 5개 연구개발 체계'
         : 'Rationale for CHIC — current problems, technical requirements, expected outcomes and the five research areas'}
@@ -115,7 +115,7 @@ const kpis = home.data.kpis.map((k) =>
     <p class="micro">04</p>
     <h2>{t('section.consortium')}</h2>
     <DiagramFigure
-      src="/images/diagrams/consortium-structure.svg"
+      src={diagramSrc('/images/diagrams/consortium-structure.svg', locale)}
       alt={locale === 'ko'
         ? 'CHIC 연구개발 추진체계 — 주관기관 ETRI, 참여기관 4곳, 협력기관 2곳'
         : 'CHIC research structure — ETRI as lead, four partners and two collaborating institutions'}

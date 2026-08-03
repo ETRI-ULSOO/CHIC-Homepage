@@ -12,7 +12,10 @@ const news = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/news' }),
   schema: z.object({
     title: z.string(),
-    date: z.coerce.date(),
+    /** 현행 게시물 5건 중 2건은 날짜 표기가 없다. 없는 날짜를 지어내지 않는다. */
+    date: z.coerce.date().optional(),
+    /** 현행 사이트의 게시 순서. 날짜가 없는 항목이 있어 날짜 정렬로는 순서가 무너진다. */
+    order: z.number(),
     /** 일시·장소처럼 날짜로 환원되지 않는 부가 정보 */
     when: z.string().optional(),
     where: z.string().optional(),

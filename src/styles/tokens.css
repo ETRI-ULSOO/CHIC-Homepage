@@ -19,8 +19,8 @@
 
   /* Type */
   --f-serif-ko: 'Noto Serif KR', serif;
-  --f-serif-en: 'Playfair Display', Georgia, serif;
-  --f-sans: Pretendard, -apple-system, 'Apple SD Gothic Neo', system-ui, sans-serif;
+  --f-serif-en: 'Playfair Display Variable', 'Playfair Display', Georgia, serif;
+  --f-sans: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', system-ui, sans-serif;
 
   --t-micro: 11px;
   --t-body-sm: 13px;

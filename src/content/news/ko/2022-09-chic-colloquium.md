@@ -1,6 +1,7 @@
 ---
 title: 2022 CHIC Colloquium
 date: 2022-09-15
+order: 1
 when: 2022/09/15, 10:00 ~ 17:30
 where: 경주 화백컨벤션센터 101-102호
 links:

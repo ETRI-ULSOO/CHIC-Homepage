@@ -39,7 +39,7 @@
     - key: process
       title: Immersive content exhibition process
       body: ''
-      image: /images/diagrams/concept-process.svg
+      image: /images/diagrams/concept-process-en.svg
       width: 1280
       height: 330
     - key: platform
@@ -49,18 +49,18 @@
         tailored information — heritage assets, visual search, previsualisation, visitor
         tracking and analysis, and rights management — so that curators can produce the
         immersive exhibition and experience content they intend.
-      image: /images/diagrams/concept-platform.svg
+      image: /images/diagrams/concept-platform-en.svg
       width: 1280
       height: 400
     - key: asset
       title: What is a cultural heritage asset?
       body: ''
-      image: /images/diagrams/concept-asset.svg
+      image: /images/diagrams/concept-asset-en.svg
       width: 1280
       height: 360
     - key: strategy
       title: R&D differentiation strategy
       body: ''
-      image: /images/diagrams/concept-strategy.svg
+      image: /images/diagrams/concept-strategy-en.svg
       width: 1280
       height: 400

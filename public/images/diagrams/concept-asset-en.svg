@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- English variant of concept-asset.svg. Keep geometry in sync with the Korean original.
+     The three-stage structure is derived, not taken from the original — subject to review (M-11). -->
+<svg viewBox="0 0 1280 360" width="1280" height="360" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <rect width="1280" height="360" fill="#111820"/>
+  <text x="40" y="46" font-size="20" font-weight="700" fill="#e6edf3">Cultural heritage assets</text>
+  <line x1="40" y1="62" x2="1240" y2="62" stroke="#223140"/>
+
+  <defs>
+    <marker id="a6" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#6b7b8a"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="98" width="252" height="150" rx="8" fill="#0b0e11" stroke="#223140"/>
+  <text x="58" y="126" font-size="11" fill="#93a4b3">SOURCE DATA</text>
+  <text x="58" y="154" font-size="12.5" font-weight="700" fill="#e6edf3">Digital heritage</text>
+  <text x="58" y="182" font-size="10.5" fill="#93a4b3">High-resolution 2D imagery</text>
+  <text x="58" y="202" font-size="10.5" fill="#93a4b3">Ultra-precise 3D models</text>
+  <text x="58" y="222" font-size="10.5" fill="#93a4b3">Text records · video</text>
+
+  <path d="M292 173 L330 173" stroke="#6b7b8a" stroke-width="1.5" marker-end="url(#a6)"/>
+
+  <rect x="338" y="98" width="604" height="150" rx="8" fill="#0b0e11" stroke="#35e0c4"/>
+  <text x="358" y="126" font-size="11" letter-spacing="0.12em" fill="#35e0c4">ASSET CONVERSION</text>
+  <text x="358" y="152" font-size="12.5" font-weight="700" fill="#e6edf3">Into reusable units with a standard schema</text>
+  <g font-size="10.5" fill="#93a4b3">
+    <rect x="358" y="168" width="270" height="30" rx="6" fill="#111820" stroke="#223140"/>
+    <text x="372" y="188">2D/3D asset generation and conversion</text>
+    <rect x="644" y="168" width="278" height="30" rx="6" fill="#111820" stroke="#223140"/>
+    <text x="658" y="188">3D visualisation and rendering</text>
+    <rect x="358" y="206" width="270" height="30" rx="6" fill="#111820" stroke="#223140"/>
+    <text x="372" y="226">Asset schema definition</text>
+    <rect x="644" y="206" width="278" height="30" rx="6" fill="#111820" stroke="#223140"/>
+    <text x="658" y="226">Rights management data attached</text>
+  </g>
+
+  <path d="M942 173 L980 173" stroke="#6b7b8a" stroke-width="1.5" marker-end="url(#a6)"/>
+
+  <rect x="988" y="98" width="252" height="150" rx="8" fill="#0b0e11" stroke="#223140"/>
+  <text x="1006" y="126" font-size="11" fill="#93a4b3">USE</text>
+  <text x="1006" y="154" font-size="12.5" font-weight="700" fill="#e6edf3">Exhibition · education</text>
+  <text x="1006" y="182" font-size="10.5" fill="#93a4b3">Automatic virtual exhibitions</text>
+  <text x="1006" y="202" font-size="10.5" fill="#93a4b3">AR/VR and web content</text>
+  <text x="1006" y="222" font-size="10.5" fill="#93a4b3">Educational materials</text>
+
+  <rect x="40" y="276" width="1200" height="52" rx="8" fill="#0b0e11" stroke="#223140"/>
+  <text x="58" y="300" font-size="11" fill="#35e0c4">THE POINT</text>
+  <text x="58" y="320" font-size="11" fill="#93a4b3">An asset is made once and reused across services — 177 items acquired → 129 turned into assets, 8,353 archive sheets digitised</text>
+</svg>

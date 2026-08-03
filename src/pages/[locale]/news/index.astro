@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { locales, type Locale } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+import { formatDate } from '../../../i18n/date';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const t = useTranslations(locale);
+
+// 날짜가 없는 게시물이 있어 날짜 정렬로는 순서가 무너진다. 현행 사이트의 게시 순서를 따른다.
+const posts = (await getCollection('news', (e) => e.id.startsWith(`${locale}/`))).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const slugOf = (id: string) => id.split('/').slice(1).join('/');
+---
+
+<BaseLayout title={t('news.title')} description={t('news.intro')}>
+  <section class="wrap block">
+    <p class="micro">{t('news.title')}</p>
+    <h1>{t('news.title')}</h1>
+    <p class="intro measure">{t('news.intro')}</p>
+
+    <ul class="list">
+      {
+        posts.map((post) => {
+          const date = formatDate(post.data.date, locale);
+          return (
+            <li>
+              <article>
+                <p class="meta micro">
+                  {date ?? t('news.nodate')}
+                  {post.data.where && <span class="where"> · {post.data.where}</span>}
+                </p>
+                <h2>
+                  <a href={`/${locale}/news/${slugOf(post.id)}/`}>{post.data.title}</a>
+                </h2>
+                {post.data.when && <p class="when">{post.data.when}</p>}
+                {post.data.links.length > 0 && (
+                  <p class="attach micro">
+                    {t('news.attachments')} {post.data.links.length}
+                  </p>
+                )}
+              </article>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .block { padding-block: var(--s-72); }
+  h1 {
+    font-size: var(--t-display-ko);
+    line-height: var(--lh-display-ko);
+    margin: var(--s-8) 0 var(--s-16);
+  }
+  .intro { margin: 0 0 var(--s-48); color: var(--c-muted); }
+
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { border-top: 1px solid var(--c-border); }
+  .list li:last-child { border-bottom: 1px solid var(--c-border); }
+  article { padding-block: var(--s-32); }
+
+  .meta { margin: 0; color: var(--c-accent); }
+  .where { color: var(--c-muted); }
+  h2 {
+    font-size: var(--t-heading);
+    line-height: 1.35;
+    margin: var(--s-12) 0;
+  }
+  h2 a { text-decoration: none; }
+  h2 a:hover { color: var(--c-accent); }
+  .when { margin: 0; font-size: var(--t-body-sm); color: var(--c-muted); }
+  .attach { margin: var(--s-12) 0 0; }
+</style>

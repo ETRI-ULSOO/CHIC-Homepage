@@ -22,3 +22,9 @@ export function alternatePath(url: URL, to: Locale): string {
 export function otherLocale(locale: Locale): Locale {
   return locale === 'ko' ? 'en' : 'ko';
 }
+
+/** 다이어그램은 텍스트가 그림 안에 있으므로 언어별 파일로 존재한다: `foo.svg` / `foo-en.svg`.
+ *  래스터였다면 불가능했을 일이고, SVG로 재제작한 실질적 이득이 여기서 나온다. */
+export function diagramSrc(base: string, locale: Locale): string {
+  return locale === 'ko' ? base : base.replace(/\.svg$/, `-${locale}.svg`);
+}

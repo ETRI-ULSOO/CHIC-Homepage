@@ -1,6 +1,7 @@
 ---
 title: 2022 CHIC Colloquium
 date: 2022-09-15
+order: 1
 when: 15 Sep 2022, 10:00 – 17:30
 where: HICO, Gyeongju — Room 101-102
 links:

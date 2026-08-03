@@ -1,0 +1,16 @@
+# Cloudflare Pages 응답 헤더 (https://developers.cloudflare.com/pages/configuration/headers/)
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# Astro가 내용 해시를 파일명에 넣으므로 영구 캐시가 안전하다.
+# 폰트 100여 개가 여기 들어가며, 재방문 시 재다운로드가 없어야 의미가 있다.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 다이어그램 SVG는 해시가 없다. 교체 가능성이 있으므로 재검증을 걸어 둔다.
+/images/*
+  Cache-Control: public, max-age=3600, must-revalidate
