@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHIC 사이트 — G3 디자인 방향 4안</title>
+<style>
+  /* ============ 공통 셸 (프로토타입 뷰어 전용, 디자인 대상 아님) ============ */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; }
+  .switcher {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; gap: 2px; padding: 10px 16px;
+    background: #111; color: #fff; flex-wrap: wrap; align-items: center;
+  }
+  .switcher b { font-size: 12px; letter-spacing: .08em; margin-right: 12px; opacity: .6; text-transform: uppercase; }
+  .switcher a {
+    color: #fff; text-decoration: none; font-size: 13px;
+    padding: 6px 14px; border: 1px solid #444; border-radius: 999px;
+  }
+  .switcher a:hover { background: #fff; color: #111; }
+  .marker {
+    padding: 40px 16px 20px; background: #111; color: #fff;
+    font-size: 13px; line-height: 1.7;
+  }
+  .marker h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.01em; }
+  .marker p { margin: 0; max-width: 780px; opacity: .75; }
+  .marker .axis { display: inline-block; margin-top: 10px; font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; opacity: .5; }
+  img { max-width: 100%; display: block; }
+  /* 대역 다이어그램 — 현행 사이트 다이어그램의 라벨 밀도(11px급)를 모사한다.
+     실제 원본 확보(A-02) 시 <img>로 교체. 판독성 판정용이지 디자인 요소가 아니다. */
+  .diagram-slot svg { display: block; width: 100%; height: auto; background: #fff; }
+
+  /* ================================================================
+     A. 뮤지엄 커스토디얼 — 국립박물관 도록(圖錄)의 조판
+     축: 권위 / 정적 / 유물 중심 / 세리프
+     ================================================================ */
+  .A { background: #faf7f2; color: #1c1a17; font-family: "AppleMyungjo", "Nanum Myeongjo", serif; }
+  .A .wrap { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+  .A .head { display: flex; justify-content: space-between; align-items: baseline;
+    padding: 28px 0; border-bottom: 1px solid #ded6c8; }
+  .A .mark { font-size: 20px; letter-spacing: .3em; }
+  .A .nav { font-family: -apple-system, sans-serif; font-size: 12px; letter-spacing: .08em; color: #6b6255; }
+  .A .nav span { margin-left: 22px; }
+  .A .hero { padding: 96px 0 72px; text-align: center; border-bottom: 1px solid #ded6c8; }
+  .A .kicker { font-family: -apple-system, sans-serif; font-size: 11px; letter-spacing: .22em;
+    color: #8a7f6d; text-transform: uppercase; }
+  .A .hero h1 { font-size: 76px; font-weight: 400; letter-spacing: .06em; margin: 24px 0 8px; }
+  .A .hero .sub { font-size: 15px; color: #6b6255; letter-spacing: .1em; }
+  .A .lead { max-width: 640px; margin: 40px auto 0; font-size: 17px; line-height: 2.1;
+    color: #3a352d; word-break: keep-all; }
+  .A .meta { font-family: -apple-system, sans-serif; margin-top: 32px; font-size: 12px;
+    letter-spacing: .06em; color: #8a7f6d; }
+  .A .sect { padding: 80px 0; border-bottom: 1px solid #ded6c8; }
+  .A .sect-h { display: flex; align-items: baseline; gap: 18px; margin-bottom: 44px; }
+  .A .sect-h .no { font-family: -apple-system, sans-serif; font-size: 11px; letter-spacing: .2em; color: #a89c86; }
+  .A .sect-h h2 { font-size: 34px; font-weight: 400; margin: 0; letter-spacing: .02em; }
+  .A .effects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .A .eff { padding: 0 28px; border-left: 1px solid #ded6c8; }
+  .A .eff:first-child { padding-left: 0; border-left: none; }
+  .A .eff .n { font-family: -apple-system, sans-serif; font-size: 11px; letter-spacing: .18em; color: #a89c86; }
+  .A .eff h3 { font-size: 17px; font-weight: 400; line-height: 1.7; margin: 14px 0 14px; word-break: keep-all; }
+  .A .eff p { font-family: -apple-system, sans-serif; font-size: 13px; line-height: 1.9;
+    color: #6b6255; margin: 0; word-break: keep-all; }
+  .A figure { margin: 0; }
+  .A figure img { border: 1px solid #ded6c8; background: #fff; }
+  .A figcaption { font-family: -apple-system, sans-serif; font-size: 12px; color: #8a7f6d;
+    margin-top: 14px; letter-spacing: .04em; }
+  .A .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .A .res .thumb { aspect-ratio: 4/3; background: #efe9df; border: 1px solid #ded6c8;
+    display: grid; place-items: center; }
+  .A .res h4 { font-size: 17px; font-weight: 400; margin: 18px 0 8px; word-break: keep-all; }
+  .A .res p { font-family: -apple-system, sans-serif; font-size: 12.5px; line-height: 1.85;
+    color: #6b6255; margin: 0; word-break: keep-all; }
+  .A .orgs { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid #ded6c8; }
+  .A .org { flex: 1 1 25%; padding: 24px 20px; border-right: 1px solid #ded6c8;
+    border-bottom: 1px solid #ded6c8; }
+  .A .org .ko { font-size: 15px; }
+  .A .org .en { font-family: -apple-system, sans-serif; font-size: 11px; color: #8a7f6d;
+    margin-top: 6px; letter-spacing: .03em; }
+  .A .ph { display: grid; place-items: center; color: #a89c86; font-family: -apple-system, sans-serif;
+    font-size: 12px; letter-spacing: .1em; }
+
+  /* ================================================================
+     B. 리서치 브루탈리스트 — 학술 프리프린트 / 연구실 문서
+     축: 정보 밀도 극대 / 모노스페이스 / 장식 0 / 하드 그리드
+     ================================================================ */
+  .B { background: #fff; color: #000;
+       font-family: "SF Mono", Menlo, "D2Coding", monospace; }
+  .B .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  .B .head { display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 0; border-bottom: 3px solid #000; }
+  .B .mark { font-size: 15px; font-weight: 700; letter-spacing: -.02em; }
+  .B .nav { font-size: 11px; }
+  .B .nav span { margin-left: 16px; text-decoration: underline; }
+  .B .hero { padding: 56px 0; border-bottom: 3px solid #000; }
+  .B .tag { display: inline-block; font-size: 10px; border: 2px solid #000;
+    padding: 3px 8px; margin-bottom: 22px; }
+  .B .hero h1 { font-size: clamp(40px, 7vw, 84px); line-height: .98; letter-spacing: -.045em;
+    margin: 0 0 18px; font-weight: 700; }
+  .B .hero h1 em { font-style: normal; background: #000; color: #fff; padding: 0 6px; }
+  .B .hero .lead { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif;
+    max-width: 720px; font-size: 15px; line-height: 1.85; word-break: keep-all; }
+  .B .facts { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #000;
+    margin-top: 34px; }
+  .B .fact { padding: 14px 0; border-right: 1px solid #000; padding-right: 14px; }
+  .B .fact:last-child { border-right: none; }
+  .B .fact .k { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: #666; }
+  .B .fact .v { font-size: 18px; font-weight: 700; margin-top: 6px; letter-spacing: -.02em; }
+  .B .sect { padding: 52px 0; border-bottom: 3px solid #000; }
+  .B .sect-h { font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    border-bottom: 1px solid #000; padding-bottom: 8px; margin-bottom: 28px; display: flex;
+    justify-content: space-between; }
+  .B .effects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #000;
+    border: 1px solid #000; }
+  .B .eff { background: #fff; padding: 20px; }
+  .B .eff .n { font-size: 10px; font-weight: 700; }
+  .B .eff h3 { font-family: -apple-system, sans-serif; font-size: 14px; line-height: 1.65;
+    margin: 10px 0 10px; word-break: keep-all; }
+  .B .eff p { font-family: -apple-system, sans-serif; font-size: 12px; line-height: 1.8;
+    color: #444; margin: 0; word-break: keep-all; }
+  .B figure { margin: 0; border: 2px solid #000; }
+  .B figure img { }
+  .B figcaption { font-size: 10px; padding: 8px 10px; border-top: 2px solid #000;
+    text-transform: uppercase; letter-spacing: .1em; }
+  .B table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .B th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .12em;
+    border-bottom: 2px solid #000; padding: 8px 10px 8px 0; }
+  .B td { border-bottom: 1px solid #ccc; padding: 12px 10px 12px 0; vertical-align: top;
+    font-family: -apple-system, sans-serif; line-height: 1.7; word-break: keep-all; }
+  .B td.id { font-family: "SF Mono", Menlo, monospace; font-size: 11px; white-space: nowrap; color: #666; }
+  .B td.ti { font-weight: 600; width: 26%; }
+  .B .orgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #000;
+    border: 1px solid #000; }
+  .B .org { background: #fff; padding: 14px; }
+  .B .org .ko { font-family: -apple-system, sans-serif; font-size: 13px; font-weight: 600; }
+  .B .org .en { font-size: 10px; color: #666; margin-top: 4px; line-height: 1.5; }
+  .B .ph { display: grid; place-items: center; background: repeating-linear-gradient(45deg,
+      #f2f2f2 0 8px, #fff 8px 16px); color: #999; font-size: 11px; letter-spacing: .1em; }
+
+  /* ================================================================
+     C. 다크 랩 — 지식그래프 / AI 기술 전면
+     축: 기술감 / 발광 / 데이터 시각 모티프
+     ================================================================ */
+  .C { background: #0b0e11; color: #e6ebf0;
+       font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; }
+  .C .wrap { max-width: 1140px; margin: 0 auto; padding: 0 36px; }
+  .C .head { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; }
+  .C .mark { font-size: 17px; font-weight: 700; letter-spacing: -.01em; }
+  .C .mark i { font-style: normal; color: #35e0c4; }
+  .C .nav { font-size: 12.5px; color: #8b98a5; }
+  .C .nav span { margin-left: 20px; }
+  .C .hero { padding: 90px 0 70px; position: relative; overflow: hidden; }
+  .C .grid-bg { position: absolute; inset: 0;
+    background-image: linear-gradient(#141a20 1px, transparent 1px),
+                      linear-gradient(90deg, #141a20 1px, transparent 1px);
+    background-size: 44px 44px; mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%); }
+  .C .hero > * { position: relative; }
+  .C .pill { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px;
+    letter-spacing: .08em; color: #35e0c4; border: 1px solid #1d3a37; background: #0e1a19;
+    padding: 6px 14px; border-radius: 999px; }
+  .C .hero h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.12; letter-spacing: -.02em;
+    margin: 26px 0 0; font-weight: 700; word-break: keep-all; max-width: 900px; }
+  .C .hero h1 em { font-style: normal;
+    background: linear-gradient(96deg, #35e0c4, #6aa8ff); -webkit-background-clip: text;
+    background-clip: text; color: transparent; }
+  .C .hero .lead { max-width: 680px; margin-top: 22px; font-size: 15.5px; line-height: 1.9;
+    color: #9aa8b6; word-break: keep-all; }
+  .C .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 46px; }
+  .C .kpi { border: 1px solid #1a2229; border-radius: 12px; padding: 18px; background: #10151a; }
+  .C .kpi .v { font-size: 26px; font-weight: 700; color: #35e0c4; letter-spacing: -.02em; }
+  .C .kpi .k { font-size: 11px; color: #74838f; margin-top: 6px; letter-spacing: .06em; }
+  .C .sect { padding: 74px 0; border-top: 1px solid #161d24; }
+  .C .sect-h { display: flex; align-items: center; gap: 14px; margin-bottom: 34px; }
+  .C .sect-h .dot { width: 6px; height: 6px; border-radius: 50%; background: #35e0c4;
+    box-shadow: 0 0 12px #35e0c4; }
+  .C .sect-h h2 { font-size: 27px; margin: 0; letter-spacing: -.015em; }
+  .C .effects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .C .eff { border: 1px solid #1a2229; border-radius: 14px; padding: 24px; background: #10151a; }
+  .C .eff .n { font-size: 11px; color: #35e0c4; letter-spacing: .12em; }
+  .C .eff h3 { font-size: 15.5px; line-height: 1.6; margin: 12px 0 12px; word-break: keep-all; }
+  .C .eff p { font-size: 13px; line-height: 1.85; color: #8b98a5; margin: 0; word-break: keep-all; }
+  .C figure { margin: 0; border: 1px solid #1a2229; border-radius: 14px; overflow: hidden;
+    background: #fff; }
+  .C figcaption { font-size: 12px; color: #74838f; padding: 12px 16px; background: #10151a;
+    border-top: 1px solid #1a2229; }
+  .C .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .C .res { border: 1px solid #1a2229; border-radius: 14px; overflow: hidden; background: #10151a; }
+  .C .res .thumb { aspect-ratio: 16/10; background: #0d1216; display: grid; place-items: center; }
+  .C .res .body { padding: 18px; }
+  .C .res .yr { font-size: 10.5px; color: #35e0c4; letter-spacing: .1em; }
+  .C .res h4 { font-size: 15px; margin: 9px 0 9px; line-height: 1.5; word-break: keep-all; }
+  .C .res p { font-size: 12.5px; line-height: 1.8; color: #8b98a5; margin: 0; word-break: keep-all; }
+  .C .orgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .C .org { border: 1px solid #1a2229; border-radius: 12px; padding: 16px; background: #10151a; }
+  .C .org .ko { font-size: 14px; font-weight: 600; }
+  .C .org .en { font-size: 10.5px; color: #74838f; margin-top: 5px; line-height: 1.5; }
+  .C .ph { display: grid; place-items: center; color: #3f4b56; font-size: 11px; letter-spacing: .1em; }
+
+  /* ================================================================
+     D. 단청 컬러블록 — 전통 오방색을 대담한 면으로
+     축: 대중 친화 / 고채도 / 굵은 산세리프 / 블록 대비
+     ================================================================ */
+  .D { background: #f4f1ea; color: #16130f;
+       font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; }
+  .D .wrap { max-width: 1160px; margin: 0 auto; padding: 0 34px; }
+  .D .head { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .D .mark { font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
+  .D .mark i { font-style: normal; color: #c0392b; }
+  .D .nav { font-size: 13px; font-weight: 600; }
+  .D .nav span { margin-left: 20px; }
+  .D .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 0; border: 3px solid #16130f;
+    border-radius: 22px; overflow: hidden; margin-bottom: 34px; }
+  .D .hero .l { padding: 52px 44px; background: #f6d34a; border-right: 3px solid #16130f; }
+  .D .hero .r { background: #16130f; color: #f4f1ea; padding: 44px; display: flex;
+    flex-direction: column; justify-content: center; gap: 18px; }
+  .D .hero .badge { display: inline-block; background: #16130f; color: #f6d34a; font-size: 11.5px;
+    font-weight: 700; letter-spacing: .08em; padding: 6px 12px; border-radius: 999px; }
+  .D .hero h1 { font-size: clamp(36px, 5.4vw, 62px); line-height: 1.1; letter-spacing: -.035em;
+    font-weight: 800; margin: 22px 0 16px; word-break: keep-all; }
+  .D .hero .lead { font-size: 15px; line-height: 1.85; word-break: keep-all; max-width: 460px; }
+  .D .hero .r .n { font-size: 34px; font-weight: 800; letter-spacing: -.03em; }
+  .D .hero .r .n b { color: #f6d34a; }
+  .D .hero .r .k { font-size: 12px; color: #a49c8f; margin-top: 2px; }
+  .D .sect { padding: 60px 0 20px; }
+  .D .sect-h { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+  .D .sect-h .sq { width: 16px; height: 16px; border-radius: 4px; border: 2.5px solid #16130f; }
+  .D .sect-h h2 { font-size: 30px; font-weight: 800; letter-spacing: -.03em; margin: 0; }
+  .D .effects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .D .eff { border: 3px solid #16130f; border-radius: 18px; padding: 26px; }
+  .D .eff:nth-child(1) { background: #2d6cdf; color: #fff; }
+  .D .eff:nth-child(2) { background: #23a094; color: #fff; }
+  .D .eff:nth-child(3) { background: #e2593f; color: #fff; }
+  .D .eff .n { font-size: 12px; font-weight: 800; letter-spacing: .1em; opacity: .85; }
+  .D .eff h3 { font-size: 17px; line-height: 1.55; font-weight: 800; margin: 12px 0 12px;
+    letter-spacing: -.02em; word-break: keep-all; }
+  .D .eff p { font-size: 13px; line-height: 1.8; margin: 0; opacity: .92; word-break: keep-all; }
+  .D figure { margin: 0; border: 3px solid #16130f; border-radius: 18px; overflow: hidden;
+    background: #fff; }
+  .D figcaption { font-size: 13px; font-weight: 700; padding: 14px 18px; background: #16130f;
+    color: #f4f1ea; }
+  .D .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .D .res { border: 3px solid #16130f; border-radius: 18px; overflow: hidden; background: #fff; }
+  .D .res .thumb { aspect-ratio: 16/10; border-bottom: 3px solid #16130f; display: grid;
+    place-items: center; }
+  .D .res:nth-child(1) .thumb { background: #ffe9a8; }
+  .D .res:nth-child(2) .thumb { background: #cfe6ff; }
+  .D .res:nth-child(3) .thumb { background: #ffd9cf; }
+  .D .res .body { padding: 20px; }
+  .D .res .yr { display: inline-block; font-size: 11px; font-weight: 800; background: #16130f;
+    color: #fff; padding: 3px 9px; border-radius: 999px; }
+  .D .res h4 { font-size: 16px; font-weight: 800; letter-spacing: -.02em; margin: 12px 0 9px;
+    line-height: 1.45; word-break: keep-all; }
+  .D .res p { font-size: 12.5px; line-height: 1.8; color: #4a443b; margin: 0; word-break: keep-all; }
+  .D .orgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding-bottom: 60px; }
+  .D .org { border: 3px solid #16130f; border-radius: 14px; padding: 16px; background: #fff; }
+  .D .org .ko { font-size: 14.5px; font-weight: 800; letter-spacing: -.02em; }
+  .D .org .en { font-size: 10.5px; color: #6b6459; margin-top: 5px; line-height: 1.5; }
+  .D .ph { display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #8d8578; }
+
+  @media (max-width: 900px) {
+    .A .effects, .B .effects, .C .effects, .D .effects,
+    .A .results, .C .results, .D .results { grid-template-columns: 1fr; }
+    .B .facts, .C .kpis, .B .orgs, .C .orgs, .D .orgs { grid-template-columns: repeat(2, 1fr); }
+    .A .eff { border-left: none; padding: 0 0 24px; }
+    .D .hero { grid-template-columns: 1fr; }
+    .D .hero .l { border-right: none; border-bottom: 3px solid #16130f; }
+  }
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <b>G3 · 4 directions</b>
+  <a href="#A">A 뮤지엄 커스토디얼</a>
+  <a href="#B">B 리서치 브루탈리스트</a>
+  <a href="#C">C 다크 랩</a>
+  <a href="#D">D 단청 컬러블록</a>
+</div>
+
+<!-- ================= A ================= -->
+<div class="marker" id="A">
+  <h2>A. 뮤지엄 커스토디얼 (Museum Custodial)</h2>
+  <p>국립박물관 전시 도록(圖錄)의 조판을 웹으로 옮긴다. 명조 세리프, 넓은 여백, 얇은 규칙선, 중앙 정렬 표제. 사이트가 스스로를 “기록물”로 취급한다. 화려함 대신 권위와 영속성을 택하는 방향 — 과제가 종료된 아카이브라는 성격에 가장 정직하다.</p>
+  <span class="axis">축: 권위 · 정적 · 세리프 · 저채도</span>
+</div>
+<div class="A">
+  <div class="wrap">
+    <div class="head">
+      <div class="mark">C H I C</div>
+      <div class="nav"><span>과제 소개</span><span>연구 성과</span><span>참여 기관</span><span>소식</span><span>EN</span></div>
+    </div>
+    <div class="hero">
+      <div class="kicker">Cultural Heritage Intelligent Curation</div>
+      <h1>지능형 큐레이션</h1>
+      <div class="sub">실감형 문화유산 체험을 위한 애셋 기반 지능형 큐레이션 및 서비스 운영기술 개발</div>
+      <p class="lead">문화체육관광부 문화기술 연구개발 지정과제로 선정되어, 국립중앙박물관·국립무형유산원과 협력하여 문화유산 큐레이터의 요구사항에 기반한 플랫폼을 개발하고 실감형 체험콘텐츠로 실증하였습니다.</p>
+      <div class="meta">2020. 07 — 2022. 12 · 문화체육관광부 문화기술 연구개발 지정과제</div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="no">01</span><h2>기대효과</h2></div>
+      <div class="effects">
+        <div class="eff">
+          <div class="n">I</div>
+          <h3>국립중앙박물관·국립무형유산원과 협력한 플랫폼 개발 및 실증</h3>
+          <p>큐레이터 중심의 지능형 문화유산 큐레이션 지원서비스 개발로, 지속적이고 효과적인 문화유산 기반 체험형 서비스 제공</p>
+        </div>
+        <div class="eff">
+          <div class="n">II</div>
+          <h3>국민이 일상에서 더 가까이 찾는 박물관·미술관 진흥에 기여</h3>
+          <p>학예사의 전문적 기능 및 역량이 기술적 요구사항과 결합되어 다양하고 효율적인 실감형 콘텐츠 제작으로 이어져 문화가 있는 대한민국 발전에 기여</p>
+        </div>
+        <div class="eff">
+          <div class="n">III</div>
+          <h3>사용자 중심 개인 맞춤형 큐레이션 핵심응용 기술로 글로벌 경쟁력 기여</h3>
+          <p>필요한 정보만을 추출·선별·조합하는 큐레이션 기술은 문화체험 콘텐츠뿐 아니라 의류·미디어 등 다방면의 콘텐츠 분야에 적용 가능</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="no">02</span><h2>연구개발의 필요성</h2></div>
+      <figure>
+        <div class="diagram-slot"></div>
+        <figcaption>圖 1. CHIC 연구개발의 필요성 — 클릭하여 확대</figcaption>
+      </figure>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="no">03</span><h2>연구 성과</h2></div>
+      <div class="results">
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <h4>문화유산 애셋 표준 생성</h4>
+          <p>애셋 표준 생성을 위한 데이터 취득 작업 진행(177점 취득 → 129점 애셋화), 문화유산 아카이브 데이터 디지털화 8,353장 진행</p>
+        </div>
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <h4>초해상화 고품질 변환</h4>
+          <p>인공지능 기반의 문화유산 영상 이미지 고해상화 변환. 4× SR일 때 PSNR 27.421, SSIM 0.7978 획득</p>
+        </div>
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <h4>개체간 지식그래프 도출</h4>
+          <p>지식 관계망 구축을 통한 기록물 데이터의 새로운 접근 방향 제시 및 시각화</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect" style="border-bottom:none">
+      <div class="sect-h"><span class="no">04</span><h2>참여 기관</h2></div>
+      <div class="orgs">
+        <div class="org"><div class="ko">한국전자통신연구원</div><div class="en">ETRI</div></div>
+        <div class="org"><div class="ko">문화유산기술연구소</div><div class="en">TRIC</div></div>
+        <div class="org"><div class="ko">SQI소프트</div><div class="en">SQI Soft</div></div>
+        <div class="org"><div class="ko">한국전통문화대학교</div><div class="en">NUCH</div></div>
+        <div class="org"><div class="ko">디캐릭</div><div class="en">dcarrick</div></div>
+        <div class="org"><div class="ko">국립중앙박물관</div><div class="en">National Museum of Korea</div></div>
+        <div class="org"><div class="ko">국립무형유산원</div><div class="en">NIHC</div></div>
+        <div class="org" style="background:#f5f1ea"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= B ================= -->
+<div class="marker" id="B">
+  <h2>B. 리서치 브루탈리스트 (Research Brutalist)</h2>
+  <p>연구 문서 그 자체의 미감. 흰 바탕, 모노스페이스, 굵은 검은 규칙선, 장식 0. 38건의 연구 결과물을 카드가 아니라 <b>표</b>로 제시해 훑어보기·검색·인용을 최우선한다. 정보 밀도가 가장 높고 구현·유지보수가 가장 가볍다.</p>
+  <span class="axis">축: 정보 밀도 · 학술 · 무채색 · 하드 그리드</span>
+</div>
+<div class="B">
+  <div class="wrap">
+    <div class="head">
+      <div class="mark">CHIC/</div>
+      <div class="nav"><span>project</span><span>results</span><span>consortium</span><span>news</span><span>[EN]</span></div>
+    </div>
+    <div class="hero">
+      <div class="tag">MCST CT R&amp;D · 2020.07—2022.12 · COMPLETED</div>
+      <h1>Cultural Heritage<br><em>Intelligent Curation</em></h1>
+      <p class="lead">실감형 문화유산 체험을 위한 애셋 기반 지능형 큐레이션 및 서비스 운영기술 개발. 국립중앙박물관·국립무형유산원과 협력하여 큐레이터 요구사항 기반 플랫폼을 개발하고 실감형 체험콘텐츠로 실증하였다.</p>
+      <div class="facts">
+        <div class="fact"><div class="k">연구 결과물</div><div class="v">38건</div></div>
+        <div class="fact"><div class="k">애셋 표준화</div><div class="v">129점</div></div>
+        <div class="fact"><div class="k">아카이브 디지털화</div><div class="v">8,353장</div></div>
+        <div class="fact"><div class="k">참여 기관</div><div class="v">7</div></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span>01 / EXPECTED IMPACT</span><span>기대효과</span></div>
+      <div class="effects">
+        <div class="eff">
+          <div class="n">[01]</div>
+          <h3>국립중앙박물관·국립무형유산원 협력 플랫폼 개발 및 실증</h3>
+          <p>큐레이터 중심의 지능형 문화유산 큐레이션 지원서비스 개발로, 지속적이고 효과적인 문화유산 기반 체험형 서비스 제공</p>
+        </div>
+        <div class="eff">
+          <div class="n">[02]</div>
+          <h3>박물관·미술관 진흥 기여</h3>
+          <p>학예사의 전문적 기능 및 역량이 기술적 요구사항과 결합되어 다양하고 효율적인 실감형 콘텐츠 제작으로 이어짐</p>
+        </div>
+        <div class="eff">
+          <div class="n">[03]</div>
+          <h3>맞춤형 큐레이션 핵심응용 기술 · 글로벌 경쟁력</h3>
+          <p>큐레이션 기술은 문화체험 콘텐츠뿐 아니라 의류·미디어 등 다방면의 콘텐츠 분야에 적용 가능</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span>02 / RATIONALE</span><span>연구개발의 필요성</span></div>
+      <figure>
+        <div class="diagram-slot"></div>
+        <figcaption>FIG.1 — 연구개발의 필요성 / CLICK TO ENLARGE</figcaption>
+      </figure>
+    </div>
+
+    <div class="sect" style="border-bottom:none">
+      <div class="sect-h"><span>03 / RESULTS (38)</span><span>연구 결과물</span></div>
+      <table>
+        <thead><tr><th style="width:8%">ID</th><th style="width:26%">TITLE</th><th style="width:22%">CATEGORY</th><th>DESCRIPTION</th></tr></thead>
+        <tbody>
+          <tr><td class="id">Y2-02-04</td><td class="ti">문화유산 애셋 표준 생성</td><td>애셋 기술</td>
+              <td>애셋 표준 생성을 위한 데이터 취득 작업 진행(177점 취득 → 129점 애셋화), 문화유산 아카이브 데이터 디지털화 8,353장 진행</td></tr>
+          <tr><td class="id">Y1-01</td><td class="ti">초해상화 고품질 변환</td><td>데이터 품질 개선</td>
+              <td>인공지능 기반의 문화유산 영상 이미지 고해상화 변환. 4× SR일 때 PSNR 27.421, SSIM 0.7978 획득</td></tr>
+          <tr><td class="id">Y1-12</td><td class="ti">개체간 지식그래프 도출</td><td>지능형 분석·검색</td>
+              <td>지식 관계망 구축을 통한 기록물 데이터의 새로운 접근 방향 제시 및 시각화</td></tr>
+          <tr><td class="id">Y2-03-01</td><td class="ti">지능형 검색 대규모 데이터셋 구축</td><td>지능형 분석·검색</td>
+              <td>문화유산 검색을 위한 데이터 및 관계 정의(데이터속성 92종, 관계 14종). 국립중앙박물관 e-museum 데이터의 속성 및 관계 태깅 수행</td></tr>
+          <tr><td class="id">Y2-05-01</td><td class="ti">AR/VR 박물관 시범 서비스</td><td>전시·체험 서비스</td>
+              <td>문화유산 애셋 생성 데이터를 활용하여 시범 콘텐츠 제작(7종)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sect-h" style="margin-top:48px"><span>04 / CONSORTIUM</span><span>참여 기관</span></div>
+      <div class="orgs">
+        <div class="org"><div class="ko">한국전자통신연구원</div><div class="en">ETRI</div></div>
+        <div class="org"><div class="ko">문화유산기술연구소</div><div class="en">TRIC</div></div>
+        <div class="org"><div class="ko">SQI소프트</div><div class="en">SQI Soft</div></div>
+        <div class="org"><div class="ko">한국전통문화대학교</div><div class="en">NUCH</div></div>
+        <div class="org"><div class="ko">디캐릭</div><div class="en">dcarrick</div></div>
+        <div class="org"><div class="ko">국립중앙박물관</div><div class="en">National Museum of Korea</div></div>
+        <div class="org"><div class="ko">국립무형유산원</div><div class="en">NIHC</div></div>
+        <div class="org" style="background:#f7f7f7"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= C ================= -->
+<div class="marker" id="C">
+  <h2>C. 다크 랩 (Dark Lab)</h2>
+  <p>과제의 알맹이가 AI·지식그래프·3D라는 점을 전면에 세운다. 짙은 배경 위 청록 발광 악센트, 격자 배경, 카드 UI. 다이어그램이 어두운 배경에서 발광 패널처럼 떠오른다. 기술 과제로서의 최신성이 가장 강하게 읽히지만, 문화유산의 물성과는 가장 멀다.</p>
+  <span class="axis">축: 기술감 · 다크 · 고채도 악센트 · 카드 UI</span>
+</div>
+<div class="C">
+  <div class="wrap">
+    <div class="head">
+      <div class="mark">CHIC<i>.</i></div>
+      <div class="nav"><span>과제</span><span>성과</span><span>참여기관</span><span>소식</span><span>EN</span></div>
+    </div>
+    <div class="hero">
+      <div class="grid-bg"></div>
+      <div class="pill">● 2020.07 — 2022.12 · 문화체육관광부 문화기술 연구개발 지정과제</div>
+      <h1>문화유산을 읽는 <em>지능형 큐레이션</em> 플랫폼</h1>
+      <p class="lead">실감형 문화유산 체험을 위한 애셋 기반 지능형 큐레이션 및 서비스 운영기술 개발. 국립중앙박물관·국립무형유산원과 협력하여 큐레이터 요구사항 기반 플랫폼을 개발하고 실감형 체험콘텐츠로 실증했습니다.</p>
+      <div class="kpis">
+        <div class="kpi"><div class="v">38</div><div class="k">연구 결과물</div></div>
+        <div class="kpi"><div class="v">8,353</div><div class="k">아카이브 디지털화 (장)</div></div>
+        <div class="kpi"><div class="v">92 / 14</div><div class="k">데이터 속성 / 관계 정의</div></div>
+        <div class="kpi"><div class="v">7</div><div class="k">참여 기관</div></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="dot"></span><h2>기대효과</h2></div>
+      <div class="effects">
+        <div class="eff">
+          <div class="n">01</div>
+          <h3>국립중앙박물관·국립무형유산원 협력 플랫폼 개발 및 실증</h3>
+          <p>큐레이터 중심의 지능형 문화유산 큐레이션 지원서비스 개발로, 지속적이고 효과적인 문화유산 기반 체험형 서비스 제공</p>
+        </div>
+        <div class="eff">
+          <div class="n">02</div>
+          <h3>박물관·미술관 진흥 기여</h3>
+          <p>학예사의 전문적 기능 및 역량이 기술적 요구사항과 결합되어 다양하고 효율적인 실감형 콘텐츠 제작으로 이어짐</p>
+        </div>
+        <div class="eff">
+          <div class="n">03</div>
+          <h3>맞춤형 큐레이션 핵심응용 기술 · 글로벌 경쟁력</h3>
+          <p>큐레이션 기술은 문화체험 콘텐츠뿐 아니라 의류·미디어 등 다방면 콘텐츠 분야에 적용 가능</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="dot"></span><h2>연구개발의 필요성</h2></div>
+      <figure>
+        <div class="diagram-slot"></div>
+        <figcaption>연구개발의 필요성 — 클릭하여 확대</figcaption>
+      </figure>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="dot"></span><h2>연구 성과</h2></div>
+      <div class="results">
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <div class="body">
+            <div class="yr">2차년도 · 애셋 기술</div>
+            <h4>문화유산 애셋 표준 생성</h4>
+            <p>데이터 취득 177점 → 129점 애셋화, 아카이브 디지털화 8,353장 진행</p>
+          </div>
+        </div>
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <div class="body">
+            <div class="yr">1차년도 · 품질 개선</div>
+            <h4>초해상화 고품질 변환</h4>
+            <p>AI 기반 문화유산 영상 고해상화. 4× SR 시 PSNR 27.421, SSIM 0.7978</p>
+          </div>
+        </div>
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <div class="body">
+            <div class="yr">1차년도 · 지능형 분석</div>
+            <h4>개체간 지식그래프 도출</h4>
+            <p>지식 관계망 구축을 통한 기록물 데이터 새로운 접근 방향 제시 및 시각화</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="dot"></span><h2>참여 기관</h2></div>
+      <div class="orgs">
+        <div class="org"><div class="ko">한국전자통신연구원</div><div class="en">ETRI</div></div>
+        <div class="org"><div class="ko">문화유산기술연구소</div><div class="en">TRIC</div></div>
+        <div class="org"><div class="ko">SQI소프트</div><div class="en">SQI Soft</div></div>
+        <div class="org"><div class="ko">한국전통문화대학교</div><div class="en">NUCH</div></div>
+        <div class="org"><div class="ko">디캐릭</div><div class="en">dcarrick</div></div>
+        <div class="org"><div class="ko">국립중앙박물관</div><div class="en">National Museum of Korea</div></div>
+        <div class="org"><div class="ko">국립무형유산원</div><div class="en">NIHC</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= D ================= -->
+<div class="marker" id="D">
+  <h2>D. 단청 컬러블록 (Dancheong Color-block)</h2>
+  <p>단청의 오방색을 큰 면으로 쓰고 굵은 산세리프와 두꺼운 검은 테두리로 블록을 구성한다. 네 방향 중 가장 대중 친화적이고 활기차다. 일반 국민·언론 대상 홍보에는 가장 강하지만, 연구 아카이브로서의 무게감은 가장 약하다.</p>
+  <span class="axis">축: 대중성 · 고채도 · 굵은 산세리프 · 블록 대비</span>
+</div>
+<div class="D">
+  <div class="wrap">
+    <div class="head">
+      <div class="mark">CHIC<i>.</i></div>
+      <div class="nav"><span>과제 소개</span><span>연구 성과</span><span>참여 기관</span><span>소식</span><span>EN</span></div>
+    </div>
+    <div class="hero">
+      <div class="l">
+        <span class="badge">문화체육관광부 문화기술 연구개발 지정과제</span>
+        <h1>문화유산을<br>지능형으로<br>큐레이션하다</h1>
+        <p class="lead">실감형 문화유산 체험을 위한 애셋 기반 지능형 큐레이션 및 서비스 운영기술 개발 — 국립중앙박물관·국립무형유산원과 함께한 3년의 기록</p>
+      </div>
+      <div class="r">
+        <div><div class="n"><b>38</b>건</div><div class="k">연구 결과물</div></div>
+        <div><div class="n"><b>8,353</b>장</div><div class="k">아카이브 디지털화</div></div>
+        <div><div class="n"><b>7</b>개</div><div class="k">참여 기관</div></div>
+        <div><div class="n">2020<b>—</b>2022</div><div class="k">연구 기간</div></div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="sq"></span><h2>기대효과</h2></div>
+      <div class="effects">
+        <div class="eff">
+          <div class="n">01</div>
+          <h3>박물관·유산원과 함께 만들고 실증한 플랫폼</h3>
+          <p>큐레이터 중심의 지능형 문화유산 큐레이션 지원서비스 개발로, 지속적이고 효과적인 문화유산 기반 체험형 서비스 제공</p>
+        </div>
+        <div class="eff">
+          <div class="n">02</div>
+          <h3>일상에서 더 가까운 박물관·미술관</h3>
+          <p>학예사의 전문 역량이 기술과 결합되어 다양하고 효율적인 실감형 콘텐츠 제작으로 이어져 문화가 있는 대한민국 발전에 기여</p>
+        </div>
+        <div class="eff">
+          <div class="n">03</div>
+          <h3>맞춤형 큐레이션으로 글로벌 경쟁력</h3>
+          <p>큐레이션 기술은 문화체험 콘텐츠뿐 아니라 의류·미디어 등 다방면의 콘텐츠 분야에 적용 가능</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="sq"></span><h2>연구개발의 필요성</h2></div>
+      <figure>
+        <div class="diagram-slot"></div>
+        <figcaption>CHIC 연구개발의 필요성 — 클릭하여 확대</figcaption>
+      </figure>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="sq"></span><h2>연구 성과</h2></div>
+      <div class="results">
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <div class="body">
+            <span class="yr">2차년도</span>
+            <h4>문화유산 애셋 표준 생성</h4>
+            <p>데이터 취득 177점 → 129점 애셋화, 아카이브 디지털화 8,353장 진행</p>
+          </div>
+        </div>
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <div class="body">
+            <span class="yr">1차년도</span>
+            <h4>초해상화 고품질 변환</h4>
+            <p>AI 기반 문화유산 영상 고해상화. 4× SR 시 PSNR 27.421, SSIM 0.7978</p>
+          </div>
+        </div>
+        <div class="res">
+          <div class="thumb ph">이미지</div>
+          <div class="body">
+            <span class="yr">1차년도</span>
+            <h4>개체간 지식그래프 도출</h4>
+            <p>지식 관계망 구축을 통한 기록물 데이터 새로운 접근 방향 제시 및 시각화</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <div class="sect-h"><span class="sq"></span><h2>참여 기관</h2></div>
+      <div class="orgs">
+        <div class="org"><div class="ko">한국전자통신연구원</div><div class="en">ETRI</div></div>
+        <div class="org"><div class="ko">문화유산기술연구소</div><div class="en">TRIC</div></div>
+        <div class="org"><div class="ko">SQI소프트</div><div class="en">SQI Soft</div></div>
+        <div class="org"><div class="ko">한국전통문화대학교</div><div class="en">NUCH</div></div>
+        <div class="org"><div class="ko">디캐릭</div><div class="en">dcarrick</div></div>
+        <div class="org"><div class="ko">국립중앙박물관</div><div class="en">National Museum of Korea</div></div>
+        <div class="org"><div class="ko">국립무형유산원</div><div class="en">NIHC</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 대역 다이어그램 주입 — 현행 CHIC '연구개발의 필요성' 다이어그램의 구조·라벨 밀도를 모사.
+// 원본 폭 1280px 기준 11px 라벨이 각 방향의 칼럼 폭에서 어떻게 읽히는지 판정하기 위한 것.
+const DIAGRAM = `
+<svg viewBox="0 0 1280 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect width="1280" height="470" fill="#ffffff"/>
+  <text x="40" y="46" font-size="20" font-weight="700" fill="#1a1a1a">CHIC 연구개발의 필요성</text>
+  <line x1="40" y1="62" x2="1240" y2="62" stroke="#d5d5d5"/>
+
+  <g>
+    <rect x="40" y="90" width="370" height="150" fill="#eef3fb" stroke="#a9c0e4"/>
+    <text x="58" y="118" font-size="14" font-weight="700" fill="#1f4e9c">현황 및 문제점</text>
+    <text x="58" y="146" font-size="11" fill="#333">· 문화유산 디지털 데이터의 품질 편차와 표준 부재</text>
+    <text x="58" y="168" font-size="11" fill="#333">· 취득자 숙련도에 따른 결과물 차이 발생</text>
+    <text x="58" y="190" font-size="11" fill="#333">· 큐레이터가 직접 활용 가능한 도구의 부재</text>
+    <text x="58" y="212" font-size="11" fill="#333">· 실감콘텐츠 제작 시 애셋 재활용률 저조</text>
+  </g>
+
+  <g>
+    <rect x="455" y="90" width="370" height="150" fill="#fdf3e6" stroke="#e5bc84"/>
+    <text x="473" y="118" font-size="14" font-weight="700" fill="#9a6512">기술적 요구</text>
+    <text x="473" y="146" font-size="11" fill="#333">· 고품질 2D/3D 문화유산 데이터 획득·변환</text>
+    <text x="473" y="168" font-size="11" fill="#333">· AI 기반 의미·비주얼 검색 및 관계 분석</text>
+    <text x="473" y="190" font-size="11" fill="#333">· 애셋 표준 스키마 및 저작권 관리</text>
+    <text x="473" y="212" font-size="11" fill="#333">· 큐레이터 중심 UI/UX의 통합 플랫폼</text>
+  </g>
+
+  <g>
+    <rect x="870" y="90" width="370" height="150" fill="#edf7f2" stroke="#93cbb1"/>
+    <text x="888" y="118" font-size="14" font-weight="700" fill="#1c6b48">기대 성과</text>
+    <text x="888" y="146" font-size="11" fill="#333">· 지능형 문화유산 통합 관리 플랫폼 확보</text>
+    <text x="888" y="168" font-size="11" fill="#333">· 실감형 체험콘텐츠 제작 기간·비용 절감</text>
+    <text x="888" y="190" font-size="11" fill="#333">· 박물관·미술관 콘텐츠 진흥 기여</text>
+    <text x="888" y="212" font-size="11" fill="#333">· 타 산업(의류·미디어) 확산 가능성</text>
+  </g>
+
+  <path d="M410 165 L455 165" stroke="#888" stroke-width="1.5" marker-end="url(#ar)"/>
+  <path d="M825 165 L870 165" stroke="#888" stroke-width="1.5" marker-end="url(#ar)"/>
+  <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+    <path d="M0,0 L9,4.5 L0,9 z" fill="#888"/></marker></defs>
+
+  <rect x="40" y="278" width="1200" height="150" fill="#f7f7f7" stroke="#d5d5d5"/>
+  <text x="58" y="306" font-size="14" font-weight="700" fill="#1a1a1a">CHIC 연구개발 체계</text>
+  <g font-size="10.5" fill="#333">
+    <rect x="58" y="322" width="222" height="42" fill="#fff" stroke="#bfbfbf"/>
+    <text x="70" y="340">1. 문화유산 디지털 데이터</text><text x="70" y="356">획득 및 품질 개선</text>
+    <rect x="300" y="322" width="222" height="42" fill="#fff" stroke="#bfbfbf"/>
+    <text x="312" y="340">2. 문화유산 애셋 기술</text><text x="312" y="356">(생성·변환·가시화·표준)</text>
+    <rect x="542" y="322" width="222" height="42" fill="#fff" stroke="#bfbfbf"/>
+    <text x="554" y="340">3. 지능형 분석·검색</text><text x="554" y="356">가시화 기술</text>
+    <rect x="784" y="322" width="222" height="42" fill="#fff" stroke="#bfbfbf"/>
+    <text x="796" y="340">4. 큐레이션 지원 및</text><text x="796" y="356">서비스 플랫폼</text>
+    <rect x="1026" y="322" width="196" height="42" fill="#fff" stroke="#bfbfbf"/>
+    <text x="1038" y="340">5. 전시·체험</text><text x="1038" y="356">실증 서비스</text>
+  </g>
+  <text x="58" y="392" font-size="10.5" fill="#666">협력: 국립중앙박물관 · 국립무형유산원   |   수행기간: 2020.07 — 2022.12   |   문화체육관광부 문화기술 연구개발 지정과제</text>
+  <text x="58" y="412" font-size="10.5" fill="#666">참여기관: ETRI · TRIC · SQI소프트 · 한국전통문화대학교 · 디캐릭</text>
+</svg>`;
+document.querySelectorAll('.diagram-slot').forEach(el => { el.innerHTML = DIAGRAM; });
+</script>
+</body>
+</html>

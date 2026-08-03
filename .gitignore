@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+
+# Heritage-ULSOO 저장소 파일의 사본 — 그쪽이 단일 원천이므로 복제하지 않는다.
+# 참고가 필요하면 gh api로 다시 받는다.
+_migration/ulsoo-*
+_migration/raw/
