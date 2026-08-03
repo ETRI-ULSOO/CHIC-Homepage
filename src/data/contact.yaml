@@ -1,0 +1,29 @@
+# Contact — 현행 /contact-us 실측 (2026-08-03). 원문이 이미 영문이므로 국·영문이 거의 같다.
+# 원문 오타 교정: Eletronics → Electronics.
+# A-01 확정: 문의 폼 없이 이메일 표기만 (백엔드 계층 0).
+
+- id: ko
+  org: 한국전자통신연구원 (ETRI)
+  unit:
+    - 통신미디어연구소
+    - 창의콘텐츠연구실
+  people:
+    - name: 이재호
+      title: 책임연구원
+      emails: [jhlee3@etri.re.kr]
+    - name: 김희권 · 박찬우
+      title: 선임연구원
+      emails: [hkkim79@etri.re.kr, gamer@etri.re.kr]
+
+- id: en
+  org: Electronics and Telecommunications Research Institute (ETRI)
+  unit:
+    - Communication & Media Research Lab.
+    - Creative Contents Research Division
+  people:
+    - name: Jae-Ho Lee, Ph.D.
+      title: Principal Researcher
+      emails: [jhlee3@etri.re.kr]
+    - name: Hee Kwon Kim · Chan-Woo Park
+      title: Senior Researcher
+      emails: [hkkim79@etri.re.kr, gamer@etri.re.kr]

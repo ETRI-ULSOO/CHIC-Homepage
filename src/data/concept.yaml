@@ -1,0 +1,66 @@
+# Concept and Approach — 현행 /project/concept-and-approach 실측 (2026-08-03).
+# 다이어그램 4점은 시스템 팔레트 SVG로 재제작 완료 (D-16 개정 — Concept도 재제작 대상).
+#
+# 영문 항목의 image 경로는 현재 국문 SVG를 그대로 가리킨다. SVG는 텍스트가 편집
+# 가능하므로 영문판 제작이 가능하나 아직 만들지 않았다 (WORKLOG M-10).
+
+- id: ko
+  items:
+    - key: process
+      title: 실감콘텐츠 전시 프로세스
+      body: ''
+      image: /images/diagrams/concept-process.svg
+      width: 1280
+      height: 330
+    - key: platform
+      title: 지능형 큐레이션 플랫폼이란?
+      body: >-
+        큐레이터가 의도한 문화유산 체험/전시의 실감콘텐츠 제작을 위해 인공지능 기반으로
+        문화유산 애셋, 비주얼 검색, 사전시각화, 관람객 추적/분석, 저작권 등의 정보를
+        맞춤형으로 제공하는 지능형 큐레이션 기술에 기반한 문화유산 플랫폼입니다.
+      image: /images/diagrams/concept-platform.svg
+      width: 1280
+      height: 400
+    - key: asset
+      title: 문화유산 애셋이란?
+      body: ''
+      image: /images/diagrams/concept-asset.svg
+      width: 1280
+      height: 360
+    - key: strategy
+      title: 연구개발 차별화 전략
+      body: ''
+      image: /images/diagrams/concept-strategy.svg
+      width: 1280
+      height: 400
+
+- id: en
+  items:
+    - key: process
+      title: Immersive content exhibition process
+      body: ''
+      image: /images/diagrams/concept-process.svg
+      width: 1280
+      height: 330
+    - key: platform
+      title: What is an intelligent curation platform?
+      body: >-
+        A heritage platform built on intelligent curation technology that uses AI to deliver
+        tailored information — heritage assets, visual search, previsualisation, visitor
+        tracking and analysis, and rights management — so that curators can produce the
+        immersive exhibition and experience content they intend.
+      image: /images/diagrams/concept-platform.svg
+      width: 1280
+      height: 400
+    - key: asset
+      title: What is a cultural heritage asset?
+      body: ''
+      image: /images/diagrams/concept-asset.svg
+      width: 1280
+      height: 360
+    - key: strategy
+      title: R&D differentiation strategy
+      body: ''
+      image: /images/diagrams/concept-strategy.svg
+      width: 1280
+      height: 400

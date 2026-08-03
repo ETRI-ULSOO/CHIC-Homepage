@@ -1,0 +1,67 @@
+---
+import LangSwitch from './LangSwitch.astro';
+import { getLocale, useTranslations } from '../i18n/utils';
+
+const locale = getLocale(Astro.url);
+const t = useTranslations(locale);
+
+const nav = [
+  { href: `/${locale}/#project`, label: t('nav.project') },
+  { href: `/${locale}/results/`, label: t('nav.results') },
+  { href: `/${locale}/#consortium`, label: t('nav.consortium') },
+  { href: `/${locale}/news/`, label: t('nav.news') },
+  { href: `/${locale}/#contact`, label: t('nav.contact') },
+];
+---
+
+<header>
+  <div class="wrap bar">
+    <a class="mark" href={`/${locale}/`}>CHIC<span>.</span></a>
+    <nav aria-label="주 메뉴">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <LangSwitch />
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--c-border);
+    background: var(--c-canvas);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-24);
+    padding-block: var(--s-16);
+  }
+  .mark {
+    font-family: var(--f-serif-en);
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .mark span { color: var(--c-accent); }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: var(--s-24);
+    flex-wrap: wrap;
+  }
+  /* Ghost Link — 텍스트만, 배경 없음, hover에서만 강조 (DESIGN.md) */
+  nav a {
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: var(--c-accent);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 720px) {
+    .bar { flex-direction: column; align-items: flex-start; }
+  }
+</style>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  'CHIC 연구개발 추진체계' — 재제작 (2026-08-03).
+  기관명·영문명은 현행 Consortium 페이지 원문 (content-inventory.md §2.5).
+  주관/참여/협력 구분은 현행 페이지의 배치 순서와 협력기관 표기를 따른다.
+  ※ 기관별 담당 과업은 현행 사이트에 명시되어 있지 않으므로 표시하지 않는다 (추정 금지).
+-->
+<svg viewBox="0 0 1280 400" width="1280" height="400" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect width="1280" height="400" fill="#111820"/>
+
+  <text x="40" y="46" font-size="20" font-weight="700" fill="#e6edf3">CHIC 연구개발 추진체계</text>
+  <line x1="40" y1="62" x2="1240" y2="62" stroke="#223140"/>
+
+  <!-- 주관 -->
+  <rect x="465" y="86" width="350" height="64" rx="8" fill="#0b0e11" stroke="#35e0c4"/>
+  <text x="485" y="110" font-size="11" letter-spacing="0.12em" fill="#35e0c4">주관기관</text>
+  <text x="485" y="134" font-size="13.5" font-weight="700" fill="#e6edf3">한국전자통신연구원 (ETRI)</text>
+
+  <!-- 연결선 -->
+  <path d="M640 150 L640 176" stroke="#6b7b8a" stroke-width="1.5"/>
+  <path d="M170 176 L1110 176" stroke="#6b7b8a" stroke-width="1.5"/>
+  <path d="M170 176 L170 200" stroke="#6b7b8a" stroke-width="1.5"/>
+  <path d="M483 176 L483 200" stroke="#6b7b8a" stroke-width="1.5"/>
+  <path d="M796 176 L796 200" stroke="#6b7b8a" stroke-width="1.5"/>
+  <path d="M1110 176 L1110 200" stroke="#6b7b8a" stroke-width="1.5"/>
+
+  <!-- 참여기관 4 -->
+  <text x="40" y="194" font-size="11" letter-spacing="0.12em" fill="#93a4b3">참여기관</text>
+  <g>
+    <rect x="40" y="200" width="260" height="70" rx="8" fill="#0b0e11" stroke="#223140"/>
+    <text x="58" y="228" font-size="12.5" font-weight="700" fill="#e6edf3">문화유산기술연구소</text>
+    <text x="58" y="250" font-size="10.5" fill="#93a4b3">TRIC</text>
+
+    <rect x="353" y="200" width="260" height="70" rx="8" fill="#0b0e11" stroke="#223140"/>
+    <text x="371" y="228" font-size="12.5" font-weight="700" fill="#e6edf3">SQI소프트</text>
+    <text x="371" y="250" font-size="10.5" fill="#93a4b3">SQI Soft</text>
+
+    <rect x="666" y="200" width="260" height="70" rx="8" fill="#0b0e11" stroke="#223140"/>
+    <text x="684" y="228" font-size="12.5" font-weight="700" fill="#e6edf3">한국전통문화대학교</text>
+    <text x="684" y="250" font-size="10.5" fill="#93a4b3">NUCH</text>
+
+    <rect x="980" y="200" width="260" height="70" rx="8" fill="#0b0e11" stroke="#223140"/>
+    <text x="998" y="228" font-size="12.5" font-weight="700" fill="#e6edf3">디캐릭</text>
+    <text x="998" y="250" font-size="10.5" fill="#93a4b3">dcarrick</text>
+  </g>
+
+  <!-- 협력기관 2 -->
+  <text x="40" y="308" font-size="11" letter-spacing="0.12em" fill="#93a4b3">협력기관 · 실증</text>
+  <rect x="40" y="316" width="586" height="60" rx="8" fill="#0b0e11" stroke="#223140" stroke-dasharray="4 3"/>
+  <text x="58" y="342" font-size="12.5" font-weight="700" fill="#e6edf3">국립중앙박물관</text>
+  <text x="58" y="362" font-size="10.5" fill="#93a4b3">National Museum of Korea</text>
+
+  <rect x="654" y="316" width="586" height="60" rx="8" fill="#0b0e11" stroke="#223140" stroke-dasharray="4 3"/>
+  <text x="672" y="342" font-size="12.5" font-weight="700" fill="#e6edf3">국립무형유산원</text>
+  <text x="672" y="362" font-size="10.5" fill="#93a4b3">National Intangible Heritage Center (NIHC)</text>
+</svg>

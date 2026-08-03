@@ -1,0 +1,104 @@
+/* 먹빛 전시실 (Meokbit Gallery) — 디자인 토큰
+   단일 원천은 DESIGN.md. 이 파일은 그 구현이며, 값을 여기서 임의로 바꾸지 않는다. */
+
+:root {
+  /* Dark — 지배 계열 */
+  --c-canvas: #0b0e11;
+  --c-surface: #111820;
+  --c-border: #223140;
+  --c-text: #e6edf3;
+  --c-muted: #93a4b3;
+  --c-accent: #35e0c4;
+  --c-accent-2: #6aa8ff;
+
+  /* Light — 장문 본문·표 전용 (페이지당 1구간) */
+  --c-paper: #f2f5f7;
+  --c-ink: #0b0e11;
+  --c-ink-muted: #4d5a66;
+  --c-accent-deep: #0d7a68;
+
+  /* Type */
+  --f-serif-ko: 'Noto Serif KR', serif;
+  --f-serif-en: 'Playfair Display', Georgia, serif;
+  --f-sans: Pretendard, -apple-system, 'Apple SD Gothic Neo', system-ui, sans-serif;
+
+  --t-micro: 11px;
+  --t-body-sm: 13px;
+  --t-body: 15px;
+  --t-lead: 17px;
+  --t-heading-sm: 22px;
+  --t-heading: 30px;
+  --t-display-ko: clamp(34px, 5.2vw, 60px);
+  --t-display-en: clamp(44px, 7vw, 92px);
+
+  --lh-body: 1.8;
+  --lh-display-ko: 1.2;
+  --tracking-display-ko: -0.01em;
+
+  /* Space & Shape */
+  --s-4: 4px;
+  --s-8: 8px;
+  --s-12: 12px;
+  --s-16: 16px;
+  --s-24: 24px;
+  --s-32: 32px;
+  --s-48: 48px;
+  --s-72: 72px;
+  --s-104: 104px;
+
+  --radius-card: 14px;
+  --radius-pill: 999px;
+
+  --measure: 68ch;
+  --content-max: 1140px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* 한글 단어가 중간에서 끊기면 판독이 급격히 나빠진다 — 전역 적용 (DESIGN.md) */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+body {
+  margin: 0;
+  background: var(--c-canvas);
+  color: var(--c-text);
+  font-family: var(--f-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 한글 헤딩은 명조 weight 600. 다크 배경에서 명조 400은 획이 사라진다 (DESIGN.md) */
+h1, h2, h3 {
+  font-family: var(--f-serif-ko);
+  font-weight: 600;
+  letter-spacing: var(--tracking-display-ko);
+  margin: 0;
+}
+
+a { color: inherit; }
+
+.wrap {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--s-24);
+}
+
+/* 장문 본문 컬럼 상한 */
+.measure { max-width: var(--measure); }
+
+.micro {
+  font-size: var(--t-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+}

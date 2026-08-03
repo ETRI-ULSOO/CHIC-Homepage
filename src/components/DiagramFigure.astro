@@ -1,0 +1,129 @@
+---
+/**
+ * DiagramFigure — 이 시스템에서 가장 중요한 컴포넌트 (DESIGN.md).
+ *
+ * 현행 CHIC 다이어그램은 원본 1280px에 11px급 라벨이 박혀 있어, 본문 컬럼 폭에서
+ * 6px급으로 축소되면 판독이 불가능하다 (2026-08-03 프로토타입 실측).
+ * 따라서 확대는 편의 기능이 아니라 기능 요건이며, 확대 가능함이 눈에 보여야 한다.
+ */
+import { getLocale, useTranslations } from '../i18n/utils';
+
+interface Props {
+  src: string;
+  alt: string;
+  caption: string;
+  /** 캡션 번호. 지정하면 `圖 N.` 접두가 붙는다. */
+  no?: number;
+  width: number;
+  height: number;
+}
+
+const { src, alt, caption, no, width, height } = Astro.props;
+const t = useTranslations(getLocale(Astro.url));
+const label = no ? `${t('figure.prefix')} ${no}. ${caption}` : caption;
+---
+
+<figure class="diagram">
+  <button class="frame" type="button" data-diagram-src={src} data-diagram-alt={alt}>
+    <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+    <span class="zoom" aria-hidden="true">＋</span>
+  </button>
+  <figcaption>
+    {label}
+    <span class="hint">{` — ${t('figure.zoom')}`}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .diagram {
+    margin: 0;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    /* 그림자 없음 — 시스템은 플랫하다 (DESIGN.md) */
+  }
+  .frame {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    /* 다이어그램은 시스템 팔레트로 재제작한다 (2026-08-03 개정).
+       흰 배경을 강제하면 재색조 가능한 SVG까지 액자에 갇힌다. */
+    background: var(--c-surface);
+    cursor: zoom-in;
+  }
+  .frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .zoom {
+    position: absolute;
+    right: var(--s-12);
+    bottom: var(--s-12);
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-pill);
+    background: var(--c-canvas);
+    color: var(--c-accent);
+    font-size: 16px;
+    line-height: 1;
+  }
+  figcaption {
+    padding: var(--s-12) var(--s-16);
+    background: var(--c-surface);
+    border-top: 1px solid var(--c-border);
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+  }
+  .hint { color: var(--c-accent); }
+</style>
+
+<script>
+  // 페이지당 하나의 <dialog>를 공유한다. <dialog>를 쓰는 이유는 Esc 닫기와
+  // 포커스 트랩이 브라우저 기본 동작으로 제공되기 때문이다.
+  const dialog = document.createElement('dialog');
+  dialog.className = 'diagram-lightbox';
+  dialog.innerHTML = '<img alt="">';
+  document.body.append(dialog);
+
+  const img = dialog.querySelector('img')!;
+
+  document.addEventListener('click', (event) => {
+    const trigger = (event.target as HTMLElement).closest<HTMLElement>('[data-diagram-src]');
+    if (trigger) {
+      img.src = trigger.dataset.diagramSrc!;
+      img.alt = trigger.dataset.diagramAlt ?? '';
+      dialog.showModal();
+      return;
+    }
+    // 백드롭 클릭과 이미지 클릭 양쪽으로 닫는다. Esc는 <dialog> 기본 동작.
+    if (event.target === dialog || event.target === img) dialog.close();
+  });
+</script>
+
+<style is:global>
+  .diagram-lightbox {
+    border: 0;
+    padding: 0;
+    max-width: 96vw;
+    max-height: 96vh;
+    background: transparent;
+  }
+  .diagram-lightbox::backdrop {
+    background: rgb(11 14 17 / 0.92);
+  }
+  .diagram-lightbox img {
+    display: block;
+    max-width: 96vw;
+    max-height: 96vh;
+    width: auto;
+    height: auto;
+    background: var(--c-surface);
+    border-radius: var(--radius-card);
+    cursor: zoom-out;
+  }
+</style>

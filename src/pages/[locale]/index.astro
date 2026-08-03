@@ -1,0 +1,306 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DiagramFigure from '../../components/DiagramFigure.astro';
+import KpiStat from '../../components/KpiStat.astro';
+import { locales, type Locale } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+// 14개 페이지를 언어마다 복제하지 않는다. 언어는 라우트 파라미터이고
+// 콘텐츠는 컬렉션에서 언어로 조회한다 — 이 패턴을 전 페이지에 적용한다.
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const t = useTranslations(locale);
+
+const home = await getEntry('home', locale);
+const project = await getEntry('project', locale);
+const contact = await getEntry('contact', locale);
+if (!home || !project || !contact) throw new Error(`'${locale}' 항목이 데이터 파일에 없습니다`);
+
+// getCollection은 id 알파벳순이다. 기관 서열이 뒤집히므로 명시 정렬이 필수.
+const orgs = (await getCollection('consortium')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="pill">{t('hero.period')}</p>
+      <h1>
+        {locale === 'ko' ? '문화유산을 읽는 ' : 'Intelligent curation for '}
+        <em>{locale === 'ko' ? '지능형 큐레이션' : 'cultural heritage'}</em>
+      </h1>
+      <p class="lead measure">{home.data.lead}</p>
+      <KpiStat items={home.data.kpis} />
+    </div>
+  </section>
+
+  <section id="project" class="wrap block">
+    <p class="micro">01</p>
+    <h2>{t('section.project')}</h2>
+
+    <DiagramFigure
+      src="/images/diagrams/project-overview.svg"
+      alt={locale === 'ko'
+        ? 'CHIC 과제 개요 — 4대 연구 축과 실증 대상'
+        : 'CHIC project overview — four research axes and validation targets'}
+      caption={t('section.project')}
+      no={1}
+      width={1280}
+      height={470}
+    />
+
+    <div class="cols">
+      <div>
+        <h3>{t('section.goals')}</h3>
+        <p class="stmt">{project.data.goalLead}</p>
+        <ul>{project.data.goals.map((g) => <li>{g}</li>)}</ul>
+      </div>
+      <div>
+        <h3>{t('section.scope')}</h3>
+        <p class="stmt">{project.data.scopeLead}</p>
+        <ul>{project.data.scope.map((s) => <li>{s}</li>)}</ul>
+      </div>
+    </div>
+
+    <h3 class="mt">{t('section.outputs')}</h3>
+    <ul class="measure">{project.data.outputs.map((o) => <li>{o}</li>)}</ul>
+
+    <p class="mt">
+      <a class="ghost" href={`/${locale}/concept/`}>{t('concept.link')} ↗</a>
+    </p>
+  </section>
+
+  <section class="wrap block">
+    <p class="micro">02</p>
+    <h2>{t('section.impact')}</h2>
+    <div class="impacts">
+      {
+        home.data.impacts.map((item, i) => (
+          <article class="card">
+            <p class="no">{String(i + 1).padStart(2, '0')}</p>
+            <h3>{item.title}</h3>
+            <p class="detail">{item.detail}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <p class="micro">03</p>
+    <h2>{t('section.rationale')}</h2>
+    <DiagramFigure
+      src="/images/diagrams/necessity.svg"
+      alt={locale === 'ko'
+        ? 'CHIC 연구개발의 필요성 — 현황 및 문제점, 기술적 요구, 기대 성과와 5개 연구개발 체계'
+        : 'Rationale for CHIC — current problems, technical requirements, expected outcomes and the five research areas'}
+      caption={t('section.rationale')}
+      no={2}
+      width={1280}
+      height={470}
+    />
+  </section>
+
+  <section id="consortium" class="wrap block">
+    <p class="micro">04</p>
+    <h2>{t('section.consortium')}</h2>
+    <DiagramFigure
+      src="/images/diagrams/consortium-structure.svg"
+      alt={locale === 'ko'
+        ? 'CHIC 연구개발 추진체계 — 주관기관 ETRI, 참여기관 4곳, 협력기관 2곳'
+        : 'CHIC research structure — ETRI as lead, four partners and two collaborating institutions'}
+      caption={locale === 'ko' ? 'CHIC 연구개발 추진체계' : 'CHIC research structure'}
+      no={3}
+      width={1280}
+      height={400}
+    />
+    <ul class="orgs">
+      {
+        orgs.map((org) => (
+          <li class="card">
+            <a href={org.data.url} target="_blank" rel="noopener noreferrer">
+              <span class="org-name">{locale === 'ko' ? org.data.ko : org.data.en}</span>
+              <span class="org-abbr micro">{org.data.abbr} ↗</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section id="contact" class="wrap block">
+    <p class="micro">05</p>
+    <h2>{t('section.contact')}</h2>
+    <div class="contact">
+      <div>
+        <p class="org-line">{contact.data.org}</p>
+        {contact.data.unit.map((u) => <p class="unit">{u}</p>)}
+      </div>
+      <ul class="people">
+        {
+          contact.data.people.map((p) => (
+            <li>
+              <span class="p-name">{p.name}</span>
+              <span class="p-title micro">{p.title}</span>
+              <span class="p-mail">
+                {p.emails.map((e, i) => (
+                  <>
+                    {i > 0 && <span aria-hidden="true">, </span>}
+                    <a class="ghost" href={`mailto:${e}`}>{e}</a>
+                  </>
+                ))}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--s-104);
+  }
+  /* 격자 배경 — ULSOO의 한지 질감 자리를 데이터 구조의 은유가 대신한다 (DESIGN.md) */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(#141a20 1px, transparent 1px),
+      linear-gradient(90deg, #141a20 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+  }
+  .hero .wrap { position: relative; }
+
+  .pill {
+    display: inline-block;
+    margin: 0;
+    font-size: var(--t-micro);
+    letter-spacing: 0.08em;
+    color: var(--c-accent);
+    background: #0e1a19;
+    border: 1px solid #1d3a37;
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+  }
+  h1 {
+    font-size: var(--t-display-ko);
+    line-height: var(--lh-display-ko);
+    margin: var(--s-24) 0 0;
+    max-width: 18ch;
+  }
+  /* 텍스트 그라디언트는 페이지당 1개소만 허용 (DESIGN.md) */
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(96deg, var(--c-accent), var(--c-accent-2));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  .lead {
+    margin: var(--s-24) 0 0;
+    font-size: var(--t-lead);
+    line-height: 1.9;
+    color: var(--c-muted);
+  }
+
+  .block { padding-block: var(--s-72); }
+  .block h2 {
+    font-size: var(--t-heading);
+    margin: var(--s-8) 0 var(--s-32);
+  }
+  h3 {
+    font-size: var(--t-heading-sm);
+    line-height: 1.5;
+    margin: 0 0 var(--s-12);
+  }
+  .mt { margin-top: var(--s-48); }
+
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--s-48);
+    margin-top: var(--s-48);
+  }
+  .stmt {
+    margin: 0 0 var(--s-16);
+    color: var(--c-text);
+  }
+  ul {
+    margin: 0;
+    padding-left: 1.1em;
+    color: var(--c-muted);
+    font-size: var(--t-body-sm);
+  }
+  li + li { margin-top: var(--s-8); }
+
+  .ghost { color: var(--c-accent); text-decoration: none; }
+  .ghost:hover { text-decoration: underline; }
+
+  .impacts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--s-16);
+  }
+  .card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+    padding: var(--s-24);
+  }
+  .no {
+    margin: 0;
+    font-size: var(--t-micro);
+    letter-spacing: 0.12em;
+    color: var(--c-accent);
+  }
+  .impacts h3 { margin: var(--s-12) 0; }
+  .detail {
+    margin: 0;
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+  }
+
+  .orgs {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--s-12);
+  }
+  .orgs li + li { margin-top: 0; }
+  .orgs a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-8);
+    text-decoration: none;
+  }
+  .org-name { font-weight: 500; color: var(--c-text); }
+  .orgs a:hover .org-name { color: var(--c-accent); }
+
+  .contact {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--s-48);
+  }
+  .org-line { margin: 0 0 var(--s-8); font-weight: 500; }
+  .unit { margin: 0; font-size: var(--t-body-sm); color: var(--c-muted); }
+  .people { list-style: none; padding: 0; }
+  .people li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    padding-block: var(--s-16);
+    border-top: 1px solid var(--c-border);
+  }
+  .p-name { color: var(--c-text); font-weight: 500; }
+  .p-mail { font-size: var(--t-body-sm); }
+</style>

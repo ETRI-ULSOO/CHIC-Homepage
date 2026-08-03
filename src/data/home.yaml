@@ -1,0 +1,52 @@
+# Home 페이지 본문 — 현행 사이트 실측 문구 (2026-08-03).
+# 검증 수치의 표기·단위는 임의로 바꾸지 않는다 (DESIGN.md 절대 규칙).
+
+- id: ko
+  lead: >-
+    CHIC (Cultural Heritage Intelligent Curation) 은 문화체육관광부 문화기술 연구개발
+    지정과제로 선정되어 2020년 7월부터 2022년 12월까지 수행된 "실감형 문화유산 체험을 위한
+    애셋 기반 지능형 큐레이션 및 서비스 운영기술 개발" 과제입니다.
+  kpis:
+    - { value: '38', key: '연구 결과물' }
+    - { value: '8,353', key: '아카이브 디지털화 (장)' }
+    - { value: '92 / 14', key: '데이터 속성 / 관계 정의' }
+    - { value: '7', key: '참여 기관' }
+  impacts:
+    - title: 국립중앙박물관·국립무형유산원과 협력한 플랫폼 개발 및 실증
+      detail: >-
+        큐레이터 중심의 지능형 문화유산 큐레이션 지원서비스 개발로, 지속적이고 효과적인
+        문화유산 기반 체험형 서비스 제공
+    - title: 국민이 일상생활 속에서 더욱 가까이 찾는 박물관·미술관 진흥에 기여
+      detail: >-
+        학예사의 전문적 기능 및 역량이 기술적 요구사항과 결합되어 다양하고 효율적인 실감형
+        콘텐츠 제작으로 이어져 문화가 있는 대한민국 발전에 기여
+    - title: 사용자 중심의 개인 맞춤형 큐레이션 핵심응용 기술개발로 글로벌 경쟁력 기여
+      detail: >-
+        하루 2조5000억MB의 방대한 양의 정보가 넘쳐나는 사회에서 필요한 정보만을 추출하여,
+        선별 및 조합하는 큐레이션 기술은 문화체험 콘텐츠뿐 아니라, 의류 산업, 미디어 산업 등
+        다방면의 콘텐츠 분야에 적용 가능
+
+- id: en
+  lead: >-
+    CHIC (Cultural Heritage Intelligent Curation) was a designated Culture Technology R&D
+    project of the Ministry of Culture, Sports and Tourism, carried out from July 2020 to
+    December 2022 under the title "Development of asset-based intelligent curation and
+    service operation technology for immersive cultural heritage experiences".
+  kpis:
+    - { value: '38', key: 'Research outputs' }
+    - { value: '8,353', key: 'Archive items digitised' }
+    - { value: '92 / 14', key: 'Attributes / relations defined' }
+    - { value: '7', key: 'Partner organisations' }
+  impacts:
+    - title: Platform development and field validation with NMK and NIHC
+      detail: >-
+        A curator-centred intelligent curation support service that sustains effective,
+        heritage-based experiential services.
+    - title: Contributing to museums and galleries closer to everyday life
+      detail: >-
+        Curatorial expertise combined with technical requirements leads to more varied and
+        efficient production of immersive content.
+    - title: Global competitiveness through user-centred personalised curation
+      detail: >-
+        Curation technology that extracts, selects and recombines only the information
+        needed applies beyond heritage to fashion, media and other content industries.

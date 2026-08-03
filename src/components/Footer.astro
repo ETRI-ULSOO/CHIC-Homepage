@@ -1,0 +1,36 @@
+---
+import { getLocale } from '../i18n/utils';
+
+const locale = getLocale(Astro.url);
+const tagline =
+  locale === 'ko'
+    ? 'CHIC (Cultural Heritage Intelligent Curation) Project'
+    : 'CHIC (Cultural Heritage Intelligent Curation) Project';
+---
+
+<footer>
+  <div class="wrap inner">
+    <p class="tagline">{tagline}</p>
+    <p class="micro">2020.07 — 2022.12 · ETRI</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--c-border);
+    margin-top: var(--s-104);
+    padding-block: var(--s-48);
+  }
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-16);
+    flex-wrap: wrap;
+  }
+  .tagline {
+    font-family: var(--f-serif-en);
+    font-size: var(--t-body);
+    margin: 0;
+  }
+  .micro { margin: 0; }
+</style>

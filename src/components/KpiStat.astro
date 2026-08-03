@@ -1,0 +1,36 @@
+---
+interface Props {
+  items: { value: string; key: string }[];
+}
+const { items } = Astro.props;
+---
+
+<dl class="kpis">
+  {
+    items.map((item) => (
+      <div>
+        <dt class="v">{item.value}</dt>
+        <dd class="k micro">{item.key}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  /* 보더·배경 없음 — 숫자 자체가 유일한 강조다 (DESIGN.md) */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--s-32);
+    margin: var(--s-48) 0 0;
+  }
+  .v {
+    font-family: var(--f-sans);
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    color: var(--c-accent);
+    line-height: 1.2;
+  }
+  .k { margin: var(--s-8) 0 0; }
+</style>

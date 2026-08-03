@@ -1,0 +1,58 @@
+# 참여 기관 — 현행 사이트 Consortium 페이지 실측 (2026-08-03)
+# 국·영문을 한 항목에 병기한다. 언어별 파일로 쪼개면 URL이 어긋날 때 대응이 끊긴다.
+
+- id: etri
+  ko: 한국전자통신연구원
+  en: Electronics and Telecommunications Research Institute
+  abbr: ETRI
+  url: https://www.etri.re.kr/intro.html
+  role: lead
+  order: 1
+
+- id: tric
+  ko: 문화유산기술연구소
+  en: Technology Research Institute for Culture & Heritages
+  abbr: TRIC
+  url: http://tric.or.kr/
+  role: partner
+  order: 2
+
+- id: sqisoft
+  ko: SQI소프트
+  en: Software Quality Innovation Soft
+  abbr: SQI Soft
+  url: http://www.sqisoft.com/ko/main
+  role: partner
+  order: 3
+
+- id: nuch
+  ko: 한국전통문화대학교
+  en: Korea National University of Cultural Heritage
+  abbr: NUCH
+  url: https://www.nuch.ac.kr/main.do
+  role: partner
+  order: 4
+
+- id: dcarrick
+  ko: 디캐릭
+  en: dcarrick
+  abbr: dcarrick
+  url: https://www.dcarrick.co.kr/
+  role: partner
+  order: 5
+
+- id: museum
+  ko: 국립중앙박물관
+  en: National Museum of Korea
+  abbr: NMK
+  url: https://www.museum.go.kr/site/main/home
+  role: collaborator
+  order: 6
+
+- id: nihc
+  ko: 국립무형유산원
+  en: National Intangible Heritage Center
+  abbr: NIHC
+  url: https://www.nihc.go.kr/
+  role: collaborator
+  order: 7

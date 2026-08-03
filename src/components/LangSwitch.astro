@@ -1,0 +1,28 @@
+---
+import { getLocale, useTranslations, alternatePath, otherLocale } from '../i18n/utils';
+
+const locale = getLocale(Astro.url);
+const t = useTranslations(locale);
+const other = otherLocale(locale);
+---
+
+<a class="lang" href={alternatePath(Astro.url, other)} lang={other} hreflang={other}>
+  {t('lang.switch')}
+</a>
+
+<style>
+  .lang {
+    font-size: var(--t-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-text);
+    text-decoration: none;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+  }
+  .lang:hover {
+    border-color: var(--c-accent);
+    color: var(--c-accent);
+  }
+</style>

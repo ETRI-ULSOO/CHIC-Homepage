@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  '문화유산 애셋이란?' — 재제작 (2026-08-03).
+  현행 Concept 페이지에는 이 항목의 설명 텍스트가 없다. 구성은 Results 페이지의
+  '문화유산 애셋 기술' 4개 항목(생성·변환 / 3D 가시화 / 가상공간 전시 / 표준 생성)과
+  1차년도 '애셋 스키마 설계'·'애셋 생성/변환'·'애셋 가시화' 기술을 근거로 했다
+  (content-inventory.md §2.7). ※ 원본과 구분이 다를 수 있으므로 검수 필요.
+-->
+<svg viewBox="0 0 1280 360" width="1280" height="360" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Apple SD Gothic Neo', sans-serif">
+  <rect width="1280" height="360" fill="#111820"/>
+
+  <text x="40" y="46" font-size="20" font-weight="700" fill="#e6edf3">문화유산 애셋</text>
+  <line x1="40" y1="62" x2="1240" y2="62" stroke="#223140"/>
+
+  <defs>
+    <marker id="a6" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#6b7b8a"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="98" width="252" height="150" rx="8" fill="#0b0e11" stroke="#223140"/>
+  <text x="58" y="126" font-size="11" fill="#93a4b3">원본 데이터</text>
+  <text x="58" y="154" font-size="12.5" font-weight="700" fill="#e6edf3">디지털 문화유산</text>
+  <text x="58" y="182" font-size="10.5" fill="#93a4b3">고해상도 2D 이미지</text>
+  <text x="58" y="202" font-size="10.5" fill="#93a4b3">초정밀 3D 모델</text>
+  <text x="58" y="222" font-size="10.5" fill="#93a4b3">텍스트 기록 · 동영상</text>
+
+  <path d="M292 173 L330 173" stroke="#6b7b8a" stroke-width="1.5" marker-end="url(#a6)"/>
+
+  <rect x="338" y="98" width="604" height="150" rx="8" fill="#0b0e11" stroke="#35e0c4"/>
+  <text x="358" y="126" font-size="11" letter-spacing="0.12em" fill="#35e0c4">애셋화</text>
+  <text x="358" y="152" font-size="12.5" font-weight="700" fill="#e6edf3">표준 스키마를 갖춘 재사용 단위로 변환</text>
+  <g font-size="10.5" fill="#93a4b3">
+    <rect x="358" y="168" width="270" height="30" rx="6" fill="#111820" stroke="#223140"/>
+    <text x="372" y="188">2D/3D 애셋 생성·변환</text>
+    <rect x="644" y="168" width="278" height="30" rx="6" fill="#111820" stroke="#223140"/>
+    <text x="658" y="188">3D 가시화 · 랜더링</text>
+    <rect x="358" y="206" width="270" height="30" rx="6" fill="#111820" stroke="#223140"/>
+    <text x="372" y="226">애셋 표준 스키마 정의</text>
+    <rect x="644" y="206" width="278" height="30" rx="6" fill="#111820" stroke="#223140"/>
+    <text x="658" y="226">저작권 관리 정보 결합</text>
+  </g>
+
+  <path d="M942 173 L980 173" stroke="#6b7b8a" stroke-width="1.5" marker-end="url(#a6)"/>
+
+  <rect x="988" y="98" width="252" height="150" rx="8" fill="#0b0e11" stroke="#223140"/>
+  <text x="1006" y="126" font-size="11" fill="#93a4b3">활용</text>
+  <text x="1006" y="154" font-size="12.5" font-weight="700" fill="#e6edf3">전시 · 교육 · 콘텐츠</text>
+  <text x="1006" y="182" font-size="10.5" fill="#93a4b3">가상공간 전시 자동 생성</text>
+  <text x="1006" y="202" font-size="10.5" fill="#93a4b3">AR/VR · 웹 콘텐츠</text>
+  <text x="1006" y="222" font-size="10.5" fill="#93a4b3">교육 자료 제작</text>
+
+  <rect x="40" y="276" width="1200" height="52" rx="8" fill="#0b0e11" stroke="#223140"/>
+  <text x="58" y="300" font-size="11" fill="#35e0c4">핵심</text>
+  <text x="58" y="320" font-size="11" fill="#93a4b3">애셋은 한 번 만들어 여러 서비스에 재사용된다 — 실증 기준 177점 취득 → 129점 애셋화, 아카이브 8,353장 디지털화</text>
+</svg>

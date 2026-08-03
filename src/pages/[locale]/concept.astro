@@ -1,0 +1,77 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DiagramFigure from '../../components/DiagramFigure.astro';
+import { locales, type Locale } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const t = useTranslations(locale);
+
+const concept = await getEntry('concept', locale);
+if (!concept) throw new Error(`concept.yaml에 '${locale}' 항목이 없습니다`);
+
+const title = locale === 'ko' ? '개념과 접근 방법' : 'Concept and Approach';
+---
+
+<BaseLayout title={title}>
+  <section class="wrap block">
+    <p class="micro">{locale === 'ko' ? '과제 소개' : 'The Project'}</p>
+    <h1>{title}</h1>
+
+    {
+      concept.data.items.map((item, i) => (
+        <article class="item">
+          <h2>
+            <span class="no micro">{String(i + 1).padStart(2, '0')}</span>
+            {item.title}
+          </h2>
+          {item.body && <p class="body measure">{item.body}</p>}
+          <DiagramFigure
+            src={item.image}
+            alt={item.title}
+            caption={item.title}
+            no={i + 1}
+            width={item.width}
+            height={item.height}
+          />
+        </article>
+      ))
+    }
+
+    <p class="back">
+      <a class="ghost" href={`/${locale}/#project`}>
+        ← {locale === 'ko' ? '과제 소개로 돌아가기' : 'Back to the project'}
+      </a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .block { padding-block: var(--s-72); }
+  h1 {
+    font-size: var(--t-display-ko);
+    line-height: var(--lh-display-ko);
+    margin: var(--s-8) 0 var(--s-48);
+  }
+  .item + .item { margin-top: var(--s-72); }
+  h2 {
+    font-size: var(--t-heading);
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-16);
+    margin: 0 0 var(--s-16);
+  }
+  .no { color: var(--c-accent); }
+  .body {
+    margin: 0 0 var(--s-24);
+    color: var(--c-muted);
+  }
+  .back { margin-top: var(--s-72); }
+  .ghost { color: var(--c-accent); text-decoration: none; }
+  .ghost:hover { text-decoration: underline; }
+</style>
