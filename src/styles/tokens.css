@@ -22,18 +22,28 @@
   --f-serif-en: 'Playfair Display Variable', 'Playfair Display', Georgia, serif;
   --f-sans: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', system-ui, sans-serif;
 
-  --t-micro: 11px;
-  --t-body-sm: 13px;
-  --t-body: 15px;
-  --t-lead: 17px;
-  --t-heading-sm: 22px;
-  --t-heading: 30px;
-  --t-display-ko: clamp(34px, 5.2vw, 60px);
+  /* 2026-08-05 상향 개정. 개정 전 스케일은 G3 프로토타입(4방향을 한 화면에 나란히 놓는
+     축소 목업)의 실측값을 그대로 승격한 것이라, '읽기'가 아니라 '분위기 식별'을 위한
+     크기였다. 실측 결과 본문 토큰은 랜딩에서 5회만 쓰이고 실제 텍스트의 대부분이
+     11px·13px로 떨어져 있었다 — 값보다 배정이 무너져 있었다. */
+  --t-micro: 12px;
+  --t-body-sm: 15px;
+  --t-body: 17px;
+  --t-lead: 19px;
+  --t-heading-sm: 24px;
+  --t-heading: 32px;
+  --t-display-ko: clamp(36px, 5vw, 60px);
   --t-display-en: clamp(44px, 7vw, 92px);
 
-  --lh-body: 1.8;
+  /* 검증 수치(KPI·집계) 전용. KpiStat과 publications에 26px가 복제돼 있던 것을 회수한다.
+     Pretendard는 디스플레이 임무를 맡지 않는다는 상한 28px를 지킨다 (DESIGN.md). */
+  --t-kpi: 28px;
+
+  --lh-body: 1.75;
   --lh-display-ko: 1.2;
   --tracking-display-ko: -0.01em;
+  /* 대문자 라틴 라벨의 자간. 한글에는 적용하지 않는다 — 아래 .micro 참조. */
+  --tracking-micro: 0.08em;
 
   /* Space & Shape */
   --s-4: 4px;
@@ -91,11 +101,21 @@ a { color: inherit; }
 /* 장문 본문 컬럼 상한 */
 .measure { max-width: var(--measure); }
 
+/* 대문자 변환과 자간 확대는 라틴 소문자를 위한 장치다. 한글에는 대문자가 없어
+   text-transform이 무효이고, 자간만 남아 어절 결합을 깨뜨린다 — 낱글자로 흩어져 읽힌다.
+   언어는 <html lang>과 LangSwitch의 lang 속성이 이미 정확히 알려주므로 :lang()으로 가른다.
+   (국문 페이지의 'English' 링크는 lang="en"을 달고 있어 라틴 처리를 유지한다.) */
 .micro {
   font-size: var(--t-micro);
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-micro);
   text-transform: uppercase;
   color: var(--c-muted);
+}
+
+:lang(ko).micro,
+:lang(ko) .micro {
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
 
 :where(a, button):focus-visible {

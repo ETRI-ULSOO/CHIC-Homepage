@@ -244,7 +244,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
     display: inline-block;
     margin: 0;
     font-size: var(--t-micro);
-    letter-spacing: 0.08em;
+    letter-spacing: var(--tracking-micro);
     color: var(--c-accent);
     background: #0e1a19;
     border: 1px solid #1d3a37;
@@ -268,7 +268,8 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
   .lead {
     margin: var(--s-24) 0 0;
     font-size: var(--t-lead);
-    line-height: 1.9;
+    /* 19px에 1.9는 36px 행간이 되어 행이 흩어진다. 절대 여백을 유지하는 값으로 낮춘다. */
+    line-height: 1.7;
     color: var(--c-muted);
   }
 
@@ -300,7 +301,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
 
   .cols {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: var(--s-48);
     margin-top: var(--s-48);
   }
@@ -314,6 +315,14 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
     color: var(--c-muted);
     font-size: var(--t-body-sm);
   }
+  /* 연구목표·연구내용·주요 성과물은 완결된 문장이다 — 부가 정보가 아니라 본문이다.
+     태그 선택자가 사례(.apps)·기관(.orgs)·연락처(.people) 목록까지 잡으므로
+     산문 리스트만 명시해서 올린다. */
+  .cols ul,
+  ul.measure {
+    font-size: var(--t-body);
+    color: var(--c-text);
+  }
   li + li { margin-top: var(--s-8); }
 
   .ghost { color: var(--c-accent); text-decoration: none; }
@@ -321,7 +330,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
 
   .impacts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
     gap: var(--s-16);
   }
   .card {
@@ -333,7 +342,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
   .no {
     margin: 0;
     font-size: var(--t-micro);
-    letter-spacing: 0.12em;
+    letter-spacing: var(--tracking-micro);
     color: var(--c-accent);
   }
   .impacts h3 { margin: var(--s-12) 0; }
@@ -360,7 +369,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: var(--s-4) var(--s-32);
   }
   .apps li {
@@ -377,7 +386,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
     list-style: none;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
     gap: var(--s-12);
   }
   .orgs li + li { margin-top: 0; }
@@ -392,7 +401,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
 
   .contact {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: var(--s-48);
   }
   .org-line { margin: 0 0 var(--s-8); font-weight: 500; }

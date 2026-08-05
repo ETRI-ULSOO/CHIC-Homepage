@@ -10,7 +10,7 @@ const { items } = Astro.props;
     items.map((item) => (
       <div>
         <dt class="v">{item.value}</dt>
-        <dd class="k micro">{item.key}</dd>
+        <dd class="k">{item.key}</dd>
       </div>
     ))
   }
@@ -20,17 +20,23 @@ const { items } = Astro.props;
   /* 보더·배경 없음 — 숫자 자체가 유일한 강조다 (DESIGN.md) */
   .kpis {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
     gap: var(--s-32);
     margin: var(--s-48) 0 0;
   }
   .v {
     font-family: var(--f-sans);
     font-weight: 700;
-    font-size: 26px;
+    font-size: var(--t-kpi);
     letter-spacing: -0.02em;
     color: var(--c-accent);
     line-height: 1.2;
   }
-  .k { margin: var(--s-8) 0 0; }
+  /* 히어로에서 가장 눈에 띄는 작은 글자다. .micro(라벨)가 아니라 본문 보조 크기를 쓴다 —
+     표제 수치가 무엇을 세는지 알려주는 캡션이므로 라벨보다 한 급 위다. */
+  .k {
+    margin: var(--s-8) 0 0;
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+  }
 </style>

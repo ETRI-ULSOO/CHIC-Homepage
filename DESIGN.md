@@ -71,21 +71,48 @@ CHIC는 종료된 국가 R&D 과제의 아카이브다. 이 사이트의 시각�
 
 **본문·UI — Pretendard**
 - Weights: 400, 500, 700(숫자 전용)
-- 본문 행간 **1.8**, 캡션 1.7. 한글 시각 밀도가 라틴보다 높으므로 넉넉히 잡는다
-- **11px 미만 금지.** 디스플레이 임무를 맡지 않는다 (상한 28px)
+- 본문 행간 **1.75**, 캡션 1.7. 한글 시각 밀도가 라틴보다 높으므로 넉넉히 잡는다
+- **12px 미만 금지** (2026-08-05 개정, 종전 11px). 한글은 음절이 정사각 안에서 자모로
+  분할되므로 판별 단위가 라틴 글리프보다 작다 — 같은 px에서 더 작게 읽힌다
+- 디스플레이 임무를 맡지 않는다 (상한 28px). KPI 수치 `--t-kpi`가 이 상한이다
 
 ### Type Scale
 
+**2026-08-05 상향 개정.** 개정 전 값은 G3 프로토타입(4방향을 한 화면에 나란히 놓는 축소
+목업)의 실측값을 반올림해 승격한 것이라, '읽기'가 아니라 '분위기 식별'을 위한 크기였다.
+실측 결과 `--t-body`는 랜딩에서 5회만 쓰이고 실제 텍스트의 대부분(11px 52회 + 13px 61회)이
+그 아래 두 칸에 몰려 있었다 — 값보다 **배정**이 무너져 있었다. 아래 배정 규칙이 값만큼 중요하다.
+
 | Role | Size | Line Height | Tracking | Token |
 |------|------|-------------|----------|-------|
-| micro (uppercase 라벨) | 11px | 1.4 | +0.12em | `--t-micro` |
-| body-sm | 13px | 1.75 | 0 | `--t-body-sm` |
-| body | 15px | 1.8 | 0 | `--t-body` |
-| lead | 17px | 1.9 | 0 | `--t-lead` |
-| heading-sm (serif) | 22px | 1.5 | -0.005em | `--t-heading-sm` |
-| heading (serif) | 30px | 1.35 | -0.01em | `--t-heading` |
-| display-ko (serif) | clamp(34px, 5.2vw, 60px) | 1.2 | -0.01em | `--t-display-ko` |
+| micro (라벨) | 12px | 1.4 | +0.08em (한글 +0.02em) | `--t-micro` |
+| body-sm | 15px | 1.75 | 0 | `--t-body-sm` |
+| body | 17px | 1.75 | 0 | `--t-body` |
+| lead | 19px | 1.7 | 0 | `--t-lead` |
+| heading-sm (serif) | 24px | 1.5 | -0.005em | `--t-heading-sm` |
+| heading (serif) | 32px | 1.35 | -0.01em | `--t-heading` |
+| kpi (Pretendard 700) | 28px | 1.2 | -0.02em | `--t-kpi` |
+| display-ko (serif) | clamp(36px, 5vw, 60px) | 1.2 | -0.01em | `--t-display-ko` |
 | display-en (Playfair) | clamp(44px, 7vw, 92px) | 0.95 | -0.02em | `--t-display-en` |
+
+> `--t-display-en`은 현재 사용처가 0건이다 (2026-08-05 실측). 라틴 디스플레이 조판은
+> 워드마크가 `--t-heading-sm`으로, 404 숫자가 자체 clamp로 각각 처리한다.
+
+### 배정 규칙 — 값보다 이것이 먼저다
+
+**연속해서 읽는 문장은 예외 없이 `--t-body`다.** 리스트 항목도 문장이면 본문이다.
+내비게이션 라벨·카드 설명·메타데이터는 문장이 아니므로 `--t-body-sm`.
+`.micro`는 라벨 전용이며 본문 텍스트에 쓰지 않는다.
+
+토큰명이 중요도(sm = 덜 중요)로 읽히는 한 구현자는 계속 '중요도'로 고르고 계속 아래로
+굴러떨어진다. 값만 올리고 이 규칙을 적지 않으면 `--t-body`는 다시 죽은 토큰이 된다.
+
+### 대문자 변환과 자간은 라틴 전용
+
+`text-transform: uppercase`는 한글에 아무 효과가 없고, 확대된 자간만 남아 **어절 결합을
+깨뜨려 낱글자로 흩어져 읽힌다.** 언어는 `<html lang>`과 LangSwitch의 `lang` 속성이 이미
+정확히 알려주므로 `:lang(ko)`로 가른다 — 클래스를 나누지 않는다.
+(국문 페이지의 'English' 링크는 `lang="en"`을 달고 있어 라틴 처리를 유지한다.)
 
 `word-break: keep-all; overflow-wrap: break-word;`를 전역 적용한다 — 한글 단어가 중간에서 끊기면 판독이 급격히 나빠진다.
 
@@ -117,7 +144,20 @@ CHIC는 종료된 국가 R&D 과제의 아카이브다. 이 사이트의 시각�
 
 **Role:** 연구 다이어그램의 표준 제시 방식
 
-현행 CHIC 사이트의 다이어그램은 원본 폭 1280px에 **11px급 라벨**이 박혀 있다. 실측 결과 본문 컬럼 폭(~730px)에서 라벨이 6px급으로 축소되어 **판독이 불가능하다** (2026-08-03 프로토타입에서 확인). 따라서 확대 기능은 편의가 아니라 **기능 요건**이다.
+다이어그램은 원본 폭 1280px에 **10.5~11px 라벨**이 박혀 있다. 이것을 컨테이너 폭에 맞춰
+축소하면 라벨이 같은 배율로 함께 줄어든다 — 2026-08-05 실측: 본문 폭 1092px(배율 0.85)에서
+**8.96px**, 모바일 325px(배율 0.26)에서 **2.67px**.
+
+> 2026-08-03 서술("본문 컬럼 폭 ~730px에서 6px급")은 **틀린 기록이었다.** DiagramFigure는
+> `.measure`(689px) 안이 아니라 `.wrap`(1092px)에 놓인다. 실측으로 교정한다.
+
+따라서 판독 불가의 원인은 "도해가 작다"가 아니라 **원본을 컨테이너에 우겨넣어 축소한다**는
+데 있다. 그래서 **축소를 금지한다** (2026-08-05 개정).
+
+- 폭이 모자라면 줄이는 대신 가로로 스크롤한다 (`min-width` = 원본 폭). 모바일 실측 10.50px
+- 1200px 이상에서는 반대로 본문 컬럼 밖으로 빼 원본보다 크게 띄운다 (최대 1440px). 실측 11.27px
+- 확대(라이트박스)는 **반드시 인라인보다 커야 한다.** 종전 규칙(`width:auto` + `max-width:96vw`)은
+  모바일에서 1.11배(325→360px)에 그쳐 확대가 사실상 무동작이었다. 현재 `max(96vw, 1600px)`
 
 - `<figure>` + `<figcaption>` 구조 고정. 캡션 접두는 언어별로 다르다 (`圖 N.` / `Fig. N.`)
 - **다이어그램은 시스템 팔레트로 재제작한 SVG를 원칙으로 한다** (2026-08-03 개정). 배경 `var(--c-surface)`
@@ -193,7 +233,9 @@ Surface 카드에 국문명(Pretendard 600) + 영문명(micro Muted) + 외부 �
 - Mint 원색을 라이트 배경 텍스트로 사용 금지 (1.52:1 실측)
 - Mint와 Blue를 같은 면에서 경쟁시키지 말 것 — Blue는 링크 전용
 - 명조로 본문 조판 금지, 그로테스크로 디스플레이 조판 금지
-- 11px 미만 텍스트 금지
+- 12px 미만 텍스트 금지 (2026-08-05 개정)
+- 한글에 `text-transform: uppercase`나 확대 자간을 걸지 말 것 — `:lang(ko)`로 가른다
+- 그리드 최소 트랙에 맨 px를 쓰지 말 것 — `minmax(min(300px, 100%), 1fr)`. 320px에서 넘친다
 - 다이어그램을 카드 배경·장식으로 쓰지 말 것 — 다이어그램은 증거이지 분위기가 아니다
 - 사진을 액자(보더·radius·캡션)에 넣지 말 것 — 그 처리는 다이어그램의 것이다 (PhotoPanel 참조)
 - 시스템 팔레트 SVG와 흰 배경 원본 이미지를 같은 페이지에 섞지 말 것 — 조각보가 된다. 한 페이지의 다이어그램은 전부 재제작하거나 전부 원본이어야 한다
@@ -231,17 +273,19 @@ Surface 카드에 국문명(Pretendard 600) + 영문명(micro Muted) + 외부 �
   --f-serif-en: 'Playfair Display', Georgia, serif;
   --f-sans: Pretendard, -apple-system, 'Apple SD Gothic Neo', sans-serif;
 
-  --t-micro: 11px;
-  --t-body-sm: 13px;
-  --t-body: 15px;
-  --t-lead: 17px;
-  --t-heading-sm: 22px;
-  --t-heading: 30px;
-  --t-display-ko: clamp(34px, 5.2vw, 60px);
+  --t-micro: 12px;
+  --t-body-sm: 15px;
+  --t-body: 17px;
+  --t-lead: 19px;
+  --t-heading-sm: 24px;
+  --t-heading: 32px;
+  --t-kpi: 28px;
+  --t-display-ko: clamp(36px, 5vw, 60px);
   --t-display-en: clamp(44px, 7vw, 92px);
-  --lh-body: 1.8;
+  --lh-body: 1.75;
   --lh-display-ko: 1.2;
   --tracking-display-ko: -0.01em;
+  --tracking-micro: 0.08em;
 
   /* Space & Shape */
   --s-4: 4px;   --s-8: 8px;   --s-12: 12px; --s-16: 16px;
@@ -268,13 +312,13 @@ Surface 카드에 국문명(Pretendard 600) + 영문명(micro Muted) + 외부 �
 
 ### Example Component Prompts
 
-1. **Hero** — 풀블리드 `#0b0e11`. 배경에 44px 격자(`#141a20` 1px 선)를 radial mask로 중앙만 남김. 상단 pill(11px, Mint 텍스트, `#0e1a19` 배경, `#1d3a37` 보더)에 과제 정보. 헤딩은 Noto Serif KR weight 600 `clamp(34px,5.2vw,60px)` 행간 1.2, 강조 어절 1개만 Mint→Blue 그라디언트. 리드는 Pretendard 17px 행간 1.9 `#93a4b3`, 68ch 상한. 하단 KPI 4종(숫자 Pretendard 700 Mint 26px + 라벨 11px uppercase Muted).
+1. **Hero** — 풀블리드 `#0b0e11`. 배경에 44px 격자(`#141a20` 1px 선)를 radial mask로 중앙만 남김. 상단 pill(12px, Mint 텍스트, `#0e1a19` 배경, `#1d3a37` 보더)에 과제 정보. 헤딩은 Noto Serif KR weight 600 `clamp(36px,5vw,60px)` 행간 1.2, 강조 어절 1개만 Mint→Blue 그라디언트. 리드는 Pretendard 19px 행간 1.7 `#93a4b3`, 68ch 상한. 하단 KPI 4종(숫자 Pretendard 700 Mint 28px + 라벨 15px Muted).
 
-2. **DiagramFigure** — `<figure>` radius 14px, 보더 1px `#223140`, 내부 `<img>` 배경 `#fff`, 우하단 확대 아이콘 오버레이. `<figcaption>`은 `#111820` 배경 위 13px `#93a4b3`, 상단 보더 1px. 클릭 시 `#0b0e11` 92% 오버레이 lightbox에 원본 해상도 표시.
+2. **DiagramFigure** — `<figure>` radius 14px, 보더 1px `#223140`, 내부 배경 `#111820`(시스템 팔레트 SVG이므로 흰 액자를 쓰지 않는다), 우하단 확대 아이콘 오버레이. 폭이 원본(1280px)보다 좁으면 축소하지 않고 가로 스크롤한다. `<figcaption>`은 `#111820` 배경 위 15px `#93a4b3`, 상단 보더 1px. 클릭 시 `#0b0e11` 92% 오버레이 lightbox에 `max(96vw, 1600px)`로 — 항상 인라인보다 크게 — 표시.
 
-3. **Results 그리드** — 상단에 연차·대분류 필터 칩(Ghost, 활성 시 Mint 보더+텍스트). 카드는 `#111820`, radius 14px, 보더 1px `#223140`. 상단 이미지 16:10, 본문 영역 padding 24px에 연차 태그(11px Mint) → 제목(Noto Serif KR 22px `#e6edf3`) → 설명(13px `#93a4b3` 행간 1.8).
+3. **Results 그리드** — 상단에 연차·대분류 필터 칩(Ghost, 활성 시 Mint 보더+텍스트). 카드는 `#111820`, radius 14px, 보더 1px `#223140`. 상단 이미지 16:10, 본문 영역 padding 24px에 연차 태그(12px Mint) → 제목(Noto Serif KR 24px `#e6edf3`) → 설명(15px `#93a4b3` 행간 1.75).
 
-4. **라이트 본문 섹션** — 풀블리드 `#f2f5f7`, 텍스트 `#0b0e11`, 컬럼 68ch 중앙. 헤딩은 명조 30px weight 600. 링크·강조는 `#0d7a68`. 이 섹션은 페이지당 1회만 등장한다.
+4. **라이트 본문 섹션** — 풀블리드 `#f2f5f7`, 텍스트 `#0b0e11`, 컬럼 68ch 중앙. 헤딩은 명조 32px weight 600. 링크·강조는 `#0d7a68`. 이 섹션은 페이지당 1회만 등장한다.
 
 ---
 

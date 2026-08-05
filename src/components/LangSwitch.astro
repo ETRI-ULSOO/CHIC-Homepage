@@ -13,13 +13,19 @@ const other = otherLocale(locale);
 <style>
   .lang {
     font-size: var(--t-micro);
-    letter-spacing: 0.12em;
+    letter-spacing: var(--tracking-micro);
     text-transform: uppercase;
     color: var(--c-text);
     text-decoration: none;
     border: 1px solid var(--c-border);
     border-radius: var(--radius-pill);
     padding: 6px 14px;
+  }
+  /* 반대 언어가 한글일 때(영문 페이지의 '한국어') 대문자·자간을 끈다 —
+     한글에는 대문자가 없고 자간만 남아 어절이 흩어진다. */
+  .lang:lang(ko) {
+    letter-spacing: 0.02em;
+    text-transform: none;
   }
   .lang:hover {
     border-color: var(--c-accent);
