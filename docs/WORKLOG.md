@@ -288,6 +288,39 @@ Error: No such module "node:fs".
 
 **교훈:** 빌드 성공 로그를 보고 판단하지 않는다. Cloudflare는 build 단계와 deploy 단계가 분리되어 있고 **deploy 단계에서 프로젝트를 재구성할 수 있다.**
 
+### 기관 도메인(chic.etri.re.kr) 가능성 조사 (2026-08-05)
+
+**배경:** 배포 주소가 `chic-homepage.hkkim79.workers.dev`로 **개인 Gmail 계정 서브도메인이 노출**된다. 종료 과제 아카이브 주소로 부적절하고 계정 종속 위험이 있어 기관 도메인 연결 가능성을 조사했다.
+
+**방법:** 3개 주제(Workers / Pages / GitHub Pages)를 병렬 조사 후 각각 적대적 검증. **3건 모두 반증 실패, 신뢰도 high** (2026-08-05, 공식 문서 원문 직접 대조).
+
+**결정적 사실:**
+
+> "Unlike Pages, **Workers does not support any domain whose nameservers are not managed by Cloudflare**."
+> — developers.cloudflare.com/workers/static-assets/migrate-from-pages
+
+`etri.re.kr` 네임서버는 ETRI에 있고 Cloudflare로 이전 불가하므로, **현재의 Workers 배포로는 기관 도메인을 붙일 수 없다.** 호환성 매트릭스에도 "Custom domains outside Cloudflare zones" = Workers ❌ / Pages ✅ 로 명시.
+
+**역설:** D-03에서 "기관 도메인 정책이 열리면 CNAME으로 이관"을 염두에 두고 Cloudflare를 골랐는데, Workers로 배포되면서 바로 그 경로가 막혔다.
+
+| 경로 | 기관 도메인 | 비용 | 개인 계정 종속 | 비고 |
+|---|---|---|---|---|
+| A. Cloudflare Pages 전환 | ✅ 서브도메인 CNAME | 0원 | 남음 | `_headers`·빌드 그대로 유지 |
+| B. GitHub Pages (ETRI-ULSOO) | ✅ CNAME → `ETRI-ULSOO.github.io` | 0원 | **없음** | 형제 사이트와 동일 방식, `_headers` 사용 불가 |
+| C. Cloudflare for SaaS | ✅ | 0원(100건 내) | 남음 | 별도 소유 도메인 필요, 구성 복잡 |
+| D. 존 이전 (full setup) | ✅ | 0원 | 남음 | **기관 네임서버 변경 — 사실상 불가** |
+| E. CNAME setup (partial zone) | ✅ | **$200+/월** | 남음 | Business 플랜 전용, 비용상 배제 |
+
+**공통 전제:** ETRI 정보화 부서가 `chic.etri.re.kr` CNAME 레코드를 생성해야 한다. **외부 호스팅으로의 CNAME 허용 여부가 첫 관문.**
+
+**공통 주의(양쪽 공식 문서 경고):** 반드시 **호스팅 쪽에 도메인을 먼저 등록한 뒤 DNS 레코드를 만든다.** 역순은 서브도메인 탈취 위험. Pages는 역순 시 522 오류.
+
+**GitHub Pages 세부 (확인됨):** CNAME 대상은 `<organization>.github.io`이며 **저장소명을 포함하지 않는다.** HTTPS는 Let's Encrypt로 자동 발급(최대 1시간), Enforce HTTPS 옵션은 최대 24시간. 도메인 검증(TXT)은 권장이나 필수 아님. 커스텀 Actions 워크플로 게시 시 CNAME 파일이 무시되므로 저장소 설정으로만 관리.
+
+**Cloudflare Pages 세부 (확인됨):** 2026년 현재 신규 프로젝트 생성 **여전히 가능**. 다만 공식 권고는 "신규 프로젝트는 Workers 권장". 검색 상단의 "Pages deprecated" 서술은 전부 제3자 블로그이며 공식 폐기 공지는 없음.
+
+**현재 상태:** 사용자 판단 보류. 배포는 Workers(`chic-homepage.hkkim79.workers.dev`) 유지 (M-21).
+
 ### 남은 미해결
 
 | # | 항목 |
@@ -308,7 +341,8 @@ Error: No such module "node:fs".
 | ~~M-16~~ | ~~사업화 공개 여부~~ → **결정 (2026-08-05, D-22): 사례명만 공개, 금액·계약 상대 비공개.** 랜딩 04 '기술 활용 사례' 섹션에 21건 게재. 빌드 산출물에서 금액 0건·별도 계약상대 0건 실측 확인 |
 | M-16-b | 원 판단 근거 (보관) — 성과보고서에 사업화 23건·매출 59.2억(2020 9.2억/2021 18.9억/2022 31.0억)·직접고용 13명이 있다. 사례명(미륵사지 석등 디지털복원, 조선왕릉 실감콘텐츠, 클리블랜드미술관, 광화벽화 등)은 공개형 사업이나 **계약 상대·금액은 대외비 성격**이라 사용자 판단 전까지 사이트에 싣지 않았다 |
 | ~~M-18~~ | ~~히스토리 유출~~ → **해소 (2026-08-05).** 저장소 삭제·재생성으로 완전 제거, 실증 확인 |
-| M-19 | 빈 저장소 `ETRI-ULSOO/chic-site` 삭제 (혼선 방지) |
+| M-19 | 빈 저장소 `ETRI-ULSOO/chic-site` 삭제 (혼선 방지) — 2026-08-05 확인 시 여전히 존재, 내용은 비어 있어 위험 없음 |
+| M-21 | **기관 도메인 연결 경로 미결.** Workers로는 불가하므로 Pages 또는 GitHub Pages 전환이 선행되어야 한다. 조사 결과는 위 절 참조 |
 | ~~M-20~~ | ~~Cloudflare 빌드 설정~~ → **해소 (2026-08-05).** `wrangler.jsonc`로 Workers 정적 자산 배포 구성, dry-run 검증 완료 |
 | M-20-b | 구 기술 — `NODE_VERSION=22` 필수 (Astro 7 engines `>=22.12.0`, 기본값으로는 빌드 실패). 프로젝트명을 `chic-homepage`로 생성 — `astro.config.mjs`의 `site` 값과 일치시켜야 함 |
 | M-17 | **반입 이미지의 저작권·공개 범위 확인.** 최종보고서 수록 이미지이며 상당수가 국립중앙박물관 소장품 촬영·3D 스캔 결과다. 과제 자체 홍보 사이트 사용은 통상적이나 확인이 필요하다 |
