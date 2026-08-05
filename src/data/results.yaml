@@ -14,6 +14,7 @@
   year: 2
   category: acquisition
   order: 101
+  image: /images/results/colour-correction.webp
   ko:
     title: 디지털 데이터 색상 개선
     desc: >-
@@ -31,6 +32,7 @@
   year: 2
   category: acquisition
   order: 102
+  image: /images/results/noise-reduction.webp
   ko:
     title: 디지털 데이터 노이즈 개선
     desc: >-
@@ -48,6 +50,7 @@
   year: 2
   category: acquisition
   order: 103
+  image: /images/results/deblurring.webp
   ko:
     title: 디지털 데이터 블러링 개선
     desc: 색상, 품질개선(블러링 개선 등)을 위해 Guided Filtering 사용
@@ -59,6 +62,7 @@
   year: 2
   category: acquisition
   order: 104
+  image: /images/results/ai-enhancement.webp
   ko:
     title: 인공지능 기반 저품질 디지털 데이터 개선
     desc: 페어드/언페어드 데이터셋 기반 CNN 모델 학습 모델 2종 연구
@@ -88,6 +92,7 @@
   year: 2
   category: acquisition
   order: 106
+  image: /images/results/robot-arm.webp
   ko:
     title: 문화유산 획득을 위한 로봇팔 기술
     desc: >-
@@ -103,6 +108,7 @@
   year: 2
   category: acquisition
   order: 107
+  image: /images/results/quality-chart.webp
   ko:
     title: 문화유산 데이터 품질 평가 가이드라인 구축
     desc: >-
@@ -118,6 +124,7 @@
   year: 2
   category: asset
   order: 108
+  image: /images/results/asset-manager.webp
   ko:
     title: 2D/3D 애셋 생성/변환 기술
     desc: >-
@@ -185,6 +192,7 @@
   year: 2
   category: analysis
   order: 112
+  image: /images/results/dataset-objects.webp
   ko:
     title: 지능형 검색을 위한 대규모 데이터셋 구축 및 응용 기술
     desc: >-
@@ -200,6 +208,7 @@
   year: 2
   category: analysis
   order: 113
+  image: /images/results/auto-tagging.webp
   ko:
     title: 문화유산 자동 분류/태깅 및 검색 기술
     desc: >-
@@ -249,6 +258,7 @@
   year: 2
   category: platform
   order: 116
+  image: /images/results/platform-architecture.webp
   ko:
     title: 큐레이션 지원 및 서비스 운영 플랫폼 설계 및 구축
     desc: >-
@@ -266,6 +276,7 @@
   year: 2
   category: platform
   order: 117
+  image: /images/results/visual-search.webp
   ko:
     title: 의미/비주얼 검색 기반 지능형 큐레이션 기술 개발
     desc: >-
@@ -281,6 +292,7 @@
   year: 2
   category: platform
   order: 118
+  image: /images/results/nl-search.webp
   ko:
     title: 자연어 및 연관 애셋 검색 연계 기술
     desc: >-
@@ -298,6 +310,7 @@
   year: 2
   category: platform
   order: 119
+  image: /images/results/asset-sharing.webp
   ko:
     title: 큐레이션 애셋 공유기술(2D 기반)
     desc: >-
@@ -315,6 +328,7 @@
   year: 2
   category: platform
   order: 120
+  image: /images/results/relation-analysis.webp
   ko:
     title: 큐레이션 애셋 기반 관계분석 기술
     desc: >-
@@ -330,6 +344,7 @@
   year: 2
   category: platform
   order: 121
+  image: /images/results/semantic-search.webp
   ko:
     title: 의미기반 지능형 검색 및 사용자 편의 기술 개발
     desc: >-
@@ -345,7 +360,7 @@
   year: 2
   category: service
   order: 122
-  image: /images/results/incense-burner-3d.webp
+  image: /images/results/arvr-service.webp
   ko:
     title: AR/VR 박물관 시범 서비스
     desc: 문화유산 애셋 생성 데이터를 활용하여 시범 콘텐츠 제작(7종)
@@ -357,6 +372,7 @@
   year: 2
   category: service
   order: 123
+  image: /images/results/web-museum.webp
   ko:
     title: 웹 기반의 박물관 컨텐츠
     desc: >-
@@ -374,6 +390,7 @@
   year: 2
   category: service
   order: 124
+  image: /images/results/visitor-tracking.webp
   ko:
     title: 인터랙티브 관람객 반응 감지 및 추적 기술
     desc: >-
@@ -407,6 +424,7 @@
   year: 1
   category: asset
   order: 202
+  image: /images/results/pbr-materials.webp
   ko:
     title: 문화유산 데이터 표준 정의
     desc: >-
@@ -422,6 +440,7 @@
   year: 1
   category: acquisition
   order: 203
+  image: /images/results/acquisition-guideline.webp
   ko:
     title: 문화유산 획득 가이드라인
     desc: >-
@@ -437,7 +456,7 @@
   year: 1
   category: acquisition
   order: 204
-  image: /images/results/robot-arm-device.webp
+  image: /images/results/robot-arm-capture.webp
   ko:
     title: 로봇팔을 이용한 자동획득장치
     desc: >-
@@ -452,6 +471,7 @@
   year: 1
   category: asset
   order: 205
+  image: /images/results/asset-schema.webp
   ko:
     title: 애셋 스키마 설계
     desc: >-
@@ -467,6 +487,7 @@
   year: 1
   category: asset
   order: 206
+  image: /images/results/asset-authoring.webp
   ko:
     title: 애셋 생성/변환
     desc: >-
@@ -494,6 +515,7 @@
   year: 1
   category: analysis
   order: 208
+  image: /images/results/object-segmentation.webp
   ko:
     title: 개체 분할 기술
     desc: >-
@@ -509,6 +531,7 @@
   year: 1
   category: analysis
   order: 209
+  image: /images/results/attribute-analysis.webp
   ko:
     title: 속성기반 데이터 분석
     desc: >-
@@ -524,6 +547,7 @@
   year: 1
   category: analysis
   order: 210
+  image: /images/results/semantic-analysis.webp
   ko:
     title: AI기반 객체 의미 분석
     desc: 개체명 인식기를 이용한 문화유산 데이터의 속성 추출. 딥러닝 기반의 개체명인식기술 이용
@@ -536,6 +560,7 @@
   year: 1
   category: analysis
   order: 211
+  image: /images/results/annotation-tool.webp
   ko:
     title: 데이터셋 구축 기술
     desc: >-
@@ -565,6 +590,7 @@
   year: 1
   category: platform
   order: 213
+  image: /images/results/curation-platform.webp
   ko:
     title: 지능형 큐레이션 플랫폼
     desc: 애셋관리자, 큐레이터, 일반사용자 등으로 구분하고 이를 설계에 반영
@@ -578,6 +604,7 @@
   year: 1
   category: platform
   order: 214
+  image: /images/results/web-viewer.webp
   ko:
     title: 웹뷰 출력 기술
     desc: >-
@@ -592,6 +619,7 @@
   year: 1
   category: service
   order: 215
+  image: /images/results/mr-content.webp
   ko:
     title: MR기반 시범콘텐츠
     desc: 홀로렌즈2를 활용한 MR기반 문화유산 해설 및 체험 콘텐츠 개발
