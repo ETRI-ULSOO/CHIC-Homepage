@@ -137,6 +137,17 @@ const outcomes = defineCollection({
   }),
 });
 
+const applications = defineCollection({
+  loader: file('./src/data/applications.yaml', { parser: (text) => parseYaml(text) }),
+  schema: z.object({
+    year: z.number(),
+    /** 수행한 참여기관. 계약 상대(사업화기관)는 대외비이므로 담지 않는다. */
+    org: z.string(),
+    ko: z.string(),
+    en: z.string(),
+  }),
+});
+
 export const collections = {
-  news, consortium, home, project, contact, concept, results, outcomes,
+  news, consortium, home, project, contact, concept, results, outcomes, applications,
 };

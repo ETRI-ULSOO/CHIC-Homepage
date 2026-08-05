@@ -1,0 +1,134 @@
+# 기술 활용 사례 — 과제 기술이 실제로 투입된 사업
+#
+# 원천: CHIC 최종 성과보고서(2023-02-22) '사업화 성과 세부내역'.
+# ⚠️ 보고서 원표는 23행이나 익산 미륵사지 석등(7·8행)과 대구 온라인 컨퍼런스
+#    플랫폼(17·18행)이 각각 두 번 기재되어 있다. 중복을 제거한 고유 사례는 21건이다.
+#
+# 사용자 지시(2026-08-05)에 따라 **사례명만** 싣는다.
+# 매출액·계약 상대(사업화기관명)는 대외비 성격이므로 이 파일에 담지 않는다.
+
+- id: a-2020-daejeon-mma
+  year: 2020
+  org: TRIC
+  ko: 대전시립미술관 미디어월용 DB 구축
+  en: Media wall database for the Daejeon Museum of Art
+
+- id: a-2020-nihc-network
+  year: 2020
+  org: TRIC
+  ko: 국립무형유산원 지식관계망 작성
+  en: Knowledge relation network for the National Intangible Heritage Center
+
+- id: a-2020-iksan
+  year: 2020
+  org: TRIC
+  ko: 국립익산박물관 문화유산 획득
+  en: Heritage data acquisition for the Iksan National Museum
+
+- id: a-2021-mireuksa
+  year: 2021
+  org: TRIC
+  ko: 익산 미륵사지 석등 디지털복원 사업
+  en: Digital restoration of the stone lantern at Mireuksa Temple Site, Iksan
+
+- id: a-2021-royal-tombs
+  year: 2021
+  org: TRIC
+  ko: 2021년 조선왕릉 실감형 콘텐츠 제작
+  en: Immersive content for the Royal Tombs of the Joseon Dynasty
+
+- id: a-2021-heritage-db
+  year: 2021
+  org: TRIC
+  ko: 문화유산 원형기록 통합DB 구축
+  en: Integrated database of original heritage records
+
+- id: a-2021-washington
+  year: 2021
+  org: TRIC
+  ko: 워싱턴 주미대한제국공사관 실감 콘텐츠 제작
+  en: Immersive content for the Old Korean Legation in Washington, D.C.
+
+- id: a-2021-nmk
+  year: 2021
+  org: TRIC
+  ko: 2021 국립중앙박물관 디지털 콘텐츠 제작 및 설치 용역
+  en: Digital content production and installation for the National Museum of Korea
+
+- id: a-2021-keti
+  year: 2021
+  org: SQI Soft
+  ko: 한국전자기술연구원 역사관 설치 공사
+  en: History hall installation for the Korea Electronics Technology Institute
+
+- id: a-2021-gwanghwa
+  year: 2021
+  org: TRIC
+  ko: 광화시대 5G 기반 고해상도 영상 및 공연콘텐츠 개발
+  en: 5G high-resolution video and performance content for the Gwanghwa Era project
+
+- id: a-2021-incheon
+  year: 2021
+  org: TRIC
+  ko: 인천국제공항 한국문화 브랜드(반가사유상) 영상 제작
+  en: Korean culture brand video (Pensive Bodhisattva) for Incheon International Airport
+
+- id: a-2021-jeongeup
+  year: 2021
+  org: SQI Soft
+  ko: 정읍시립박물관 스마트뮤지엄 아카이브월 시스템 구축 용역
+  en: Smart museum archive wall for the Jeongeup Municipal Museum
+
+- id: a-2021-daegu-metaverse
+  year: 2021
+  org: dcarrick
+  ko: 대구 온라인 컨퍼런스 플랫폼(메타버스) 제작
+  en: Online conference platform (metaverse) for Daegu
+
+- id: a-2021-ich-forum
+  year: 2021
+  org: dcarrick
+  ko: 2021년도 세계무형문화유산포럼 메타버스 진행 및 생중계
+  en: Metaverse hosting and live streaming for the World Forum for Intangible Cultural Heritage
+
+- id: a-2022-cleveland
+  year: 2022
+  org: TRIC
+  ko: 미국 클리블랜드미술관 소장 한국문화재 디지털 콘텐츠 제작
+  en: Digital content for Korean heritage in the Cleveland Museum of Art collection
+
+- id: a-2022-5g-platform
+  year: 2022
+  org: TRIC
+  ko: 2022년 5G 기반 실감데이터 공동활용 플랫폼 구축 및 운영
+  en: 5G-based shared immersive data platform — construction and operation
+
+- id: a-2022-gwanghwa-mural
+  year: 2022
+  org: TRIC
+  ko: 광화벽화 실감형 영상 콘텐츠 제작
+  en: Immersive video content for the Gwanghwa mural
+
+- id: a-2022-hwacheon
+  year: 2022
+  org: SQI Soft
+  ko: 2022년 화천박물관 스마트박물관 구축 용역
+  en: Smart museum construction for the Hwacheon Museum
+
+- id: a-2022-seoul-life
+  year: 2022
+  org: SQI Soft
+  ko: 2022년 스마트 서울생활사박물관 구축 사업(미디어아카이브월)
+  en: Smart Seoul Museum of History — media archive wall
+
+- id: a-2022-kamco
+  year: 2022
+  org: SQI Soft
+  ko: 자산관리공사 창립 60주년 기념 역사관 디지털화 리노베이션 용역
+  en: Digital renovation of the KAMCO 60th anniversary history hall
+
+- id: a-2022-heritage-db2
+  year: 2022
+  org: TRIC
+  ko: 2021-2022년 문화유산 원형기록 통합DB 구축
+  en: Integrated database of original heritage records (2021–2022)

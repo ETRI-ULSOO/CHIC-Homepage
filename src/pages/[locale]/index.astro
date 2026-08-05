@@ -33,6 +33,12 @@ const AUTO: Record<string, number> = {
 const kpis = home.data.kpis.map((k) =>
   k.value in AUTO ? { ...k, value: String(AUTO[k.value]) } : k,
 );
+
+// 기술 활용 사례 — 연도별로 묶어 최신이 위로 오게 한다.
+const apps = await getCollection('applications');
+const appYears = [...new Set(apps.map((a) => a.data.year))]
+  .sort((a, b) => b - a)
+  .map((year) => [year, apps.filter((a) => a.data.year === year)] as const);
 ---
 
 <BaseLayout>
@@ -135,8 +141,31 @@ const kpis = home.data.kpis.map((k) =>
     />
   </section>
 
-  <section id="consortium" class="wrap block">
+  <section id="applications" class="wrap block">
     <p class="micro">04</p>
+    <h2>{t('section.applications')}</h2>
+    <p class="lead-sm measure">{t('apps.intro')}</p>
+    {
+      appYears.map(([year, items]) => (
+        <div class="app-year">
+          <p class="year micro">
+            {year} <span class="cnt">· {items.length}{t('apps.count')}</span>
+          </p>
+          <ul class="apps">
+            {items.map((a) => (
+              <li>
+                <span class="app-name">{locale === 'ko' ? a.data.ko : a.data.en}</span>
+                <span class="app-org micro">{a.data.org}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  <section id="consortium" class="wrap block">
+    <p class="micro">05</p>
     <h2>{t('section.consortium')}</h2>
     <DiagramFigure
       src={diagramSrc('/images/diagrams/consortium-structure.svg', locale)}
@@ -163,7 +192,7 @@ const kpis = home.data.kpis.map((k) =>
   </section>
 
   <section id="contact" class="wrap block">
-    <p class="micro">05</p>
+    <p class="micro">06</p>
     <h2>{t('section.contact')}</h2>
     <div class="contact">
       <div>
@@ -312,6 +341,36 @@ const kpis = home.data.kpis.map((k) =>
     font-size: var(--t-body-sm);
     color: var(--c-muted);
   }
+
+  .lead-sm {
+    margin: 0 0 var(--s-48);
+    color: var(--c-muted);
+  }
+  .app-year + .app-year { margin-top: var(--s-48); }
+  .year {
+    margin: 0 0 var(--s-12);
+    color: var(--c-accent);
+    padding-bottom: var(--s-8);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .cnt { color: var(--c-muted); }
+  .apps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--s-4) var(--s-32);
+  }
+  .apps li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-12);
+    padding-block: var(--s-8);
+  }
+  .app-name { font-size: var(--t-body-sm); color: var(--c-text); }
+  .app-org { white-space: nowrap; }
 
   .orgs {
     list-style: none;
