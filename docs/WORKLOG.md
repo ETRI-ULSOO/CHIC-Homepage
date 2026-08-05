@@ -475,12 +475,32 @@ Astro는 번들 자산에는 base를 자동으로 붙이지만 **소스에 하�
 | # | 항목 |
 |---|---|
 | M-23 | **응답 헤더 부재.** `Referrer-Policy`만 meta로 대체했다. `X-Frame-Options`·`X-Content-Type-Options`는 meta 등가물이 없고 CSP `frame-ancestors`는 명세상 meta에서 무시된다. 공개 정적 사이트라 실질 위험은 낮음 |
-| M-24 | **저장소 Settings → Pages → Source 를 "GitHub Actions"로 지정** — 계정 접근 필요, 최초 1회 |
+| ~~M-24~~ | ~~Pages Source 지정~~ → **해소 (2026-08-05).** `gh api -X POST repos/ETRI-ULSOO/CHIC-Homepage/pages -f build_type=workflow`로 활성화. `https_enforced: true` |
 | M-22 | (갱신) Cloudflare Worker `chic-homepage` 삭제 — 이제 Pages 프로젝트 생성이 아니라 **Cloudflare 자원 정리** 항목이다 |
 | M-15 | (해소) ~~Cloudflare Pages 대시보드 연결~~ → D-24로 무효화 |
 
+### 배포 완료 — 라이브 실측 (2026-08-05)
+
+**https://etri-ulsoo.github.io/CHIC-Homepage/** 에서 서비스 중.
+워크플로 첫 실행은 Pages 활성화 **이전**에 시작되어 `configure-pages`가 *Get Pages site
+failed*로 실패했다 — 활성화 후 재실행하여 build 24초 · deploy 8초로 성공.
+
+| 검사 항목 | 결과 |
+|---|---|
+| 페이지 13개 (한/영 전 경로 + News 본문) | 전건 200 |
+| 구 URL 리다이렉트 6종 표본 | 전건 200, 정상 착지 |
+| 자산 (SVG 국·영문, 사진, Results 이미지) | 전건 200 |
+| Results 이미지 | **39/39 로드, 깨짐 0** |
+| 없는 경로 | 404 + **커스텀 404 페이지** 응답 확인 |
+| 스타일·폰트 적용 | `body` 배경 `rgb(11,14,17)`, `h1` = Noto Serif KR (자체호스팅 동작) |
+| HTTPS | `https_enforced: true` |
+
+`.nojekyll`이 실제로 동작함을 여기서 확인한 셈이다 — 없었다면 `_astro/`의 CSS가
+404가 되어 스타일 검사가 실패했을 것이다.
+
 ### 다음 단계
 
-1. 사용자가 M-24 수행 → 워크플로 첫 실행 확인
-2. 검수 3건 (M-11 · M-13 · D-17)
-3. 커스텀 도메인 `chic.etri.re.kr` 요청 (README 절차 순서 준수)
+1. 검수 3건 (M-11 · M-13 · D-17) — 사이트가 공개 배포된 상태이므로 최우선
+2. M-17 이미지 저작권·공개 범위 확인
+3. 커스텀 도메인 `chic.etri.re.kr` 요청 ([[README]] 절차 순서 준수)
+4. Cloudflare 자원 정리 (M-22), 빈 저장소 삭제 (M-19)
