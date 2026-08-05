@@ -7,6 +7,8 @@
  */
 type Line = string | { sub: string };
 interface Box {
+  /** 제목 위 작은 라벨 (STEP 1, 원본 데이터 …) */
+  eyebrow?: string;
   title: string;
   accent?: boolean;
   lines: Line[];
@@ -19,14 +21,18 @@ interface Stage {
 
 interface Props {
   stages: Stage[];
+  /** 넓은 화면에서도 단계를 세로로 쌓을지. 좁은 화면은 항상 세로다. */
+  flow?: 'row' | 'column';
   band?: { title: string; boxes: Box[] };
+  /** 도해 전체를 관통하는 한 줄 */
+  note?: { eyebrow?: string; text: string };
 }
 
-const { stages, band } = Astro.props;
+const { stages, flow = 'row', band, note } = Astro.props;
 const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
 ---
 
-<div class="flow">
+<div class:list={['flow', flow]}>
   {
     stages.map((stage, i) => (
       <>
@@ -36,6 +42,7 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
           <div class="boxes">
             {stage.boxes.map((box) => (
               <article class:list={['box', { accent: box.accent }]}>
+                {box.eyebrow && <p class="eyebrow micro">{box.eyebrow}</p>}
                 <h4>{box.title}</h4>
                 {box.lines.length > 0 && (
                   <ul>
@@ -54,6 +61,15 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
     ))
   }
 </div>
+
+{
+  note && (
+    <p class="note">
+      {note.eyebrow && <span class="note-eyebrow micro">{note.eyebrow}</span>}
+      <span>{note.text}</span>
+    </p>
+  )
+}
 
 {
   band && (
@@ -104,6 +120,12 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
     border-radius: 8px;
     padding: var(--s-16);
   }
+  .eyebrow {
+    margin: 0 0 var(--s-4);
+    color: var(--c-accent);
+  }
+  .box:not(.accent) .eyebrow { color: var(--c-muted); }
+
   .box h4 {
     font-family: var(--f-sans);
     font-size: var(--t-body-sm);
@@ -158,6 +180,22 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
     border-block: 4px solid transparent;
   }
 
+  /* 전 단계를 관통하는 한 줄 */
+  .note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-8) var(--s-12);
+    margin: var(--s-16) 0 0;
+    padding: var(--s-12) var(--s-16);
+    background: var(--c-canvas);
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+  }
+  .note-eyebrow { color: var(--c-accent); }
+
   /* 하단 띠 — 화살표 없이 나열된다 */
   .band {
     margin-top: var(--s-24);
@@ -178,6 +216,24 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
   }
   .box.compact { padding: var(--s-12) var(--s-16); }
   .box.compact h4 { font-weight: 500; }
+
+  /* flow="column" — 넓은 화면에서도 세로. 중심에서 갈래로 퍼지는 구조에 쓴다. */
+  .flow.column { flex-direction: column; gap: var(--s-8); }
+  .flow.column .stage:has(.boxes > :nth-child(2)) { flex-grow: 1; }
+  .flow.column .arrow {
+    width: 1px;
+    height: 18px;
+    margin-inline: auto;
+  }
+  .flow.column .arrow::after {
+    right: -3.5px;
+    top: auto;
+    bottom: -1px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 7px solid #6b7b8a;
+    border-bottom: 0;
+  }
 
   /* 좁은 화면: 단계가 세로로 쌓이고 화살표가 아래를 가리킨다.
      축소가 아니라 재배치다 — 글자 크기는 어느 폭에서도 본문과 같다. */

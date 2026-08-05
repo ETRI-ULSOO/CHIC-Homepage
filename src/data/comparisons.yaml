@@ -1,0 +1,68 @@
+# 대조형 도해 — 좌: 기존 방식의 한계 / 우: CHIC의 접근.
+#
+# 흐름도(diagrams.yaml)와 구조가 다르다. 흐름은 단계가 이어지지만 이쪽은 행마다
+# 좌우가 짝을 이루므로, 좁은 화면에서 세로로 쌓을 때 짝이 흩어지지 않아야 한다.
+#
+# ⚠ 이 도해는 현행 사이트에 설명 텍스트가 없어 2026-08-03에 재구성한 것이다.
+#    문안의 사실 검수가 아직 끝나지 않았다 (WORKLOG M-11).
+
+- id: concept-strategy
+  ko:
+    title: 연구개발 차별화 전략
+    leftLabel: 기존 방식의 한계
+    rightLabel: CHIC의 접근
+    rows:
+      - left:
+          title: 촬영자 숙련도에 따라 데이터 품질이 갈린다
+          desc: 시간과 노력이 많이 들고 결과가 일정하지 않음
+        right:
+          title: 로봇팔 기반 자동 획득 장치
+          desc: 획득 과정을 표준화해 숙련도 의존을 제거
+      - left:
+          title: 기술자 중심 도구 — 큐레이터가 직접 못 씀
+          desc: 인문학 전공자가 접근하기 어려운 인터페이스
+        right:
+          title: 큐레이터 요구사항 기반 UI/UX 설계
+          desc: 중앙박물관·무형유산원 학예사 요구를 직접 반영
+      - left:
+          title: 키워드 검색에 머무는 자료 탐색
+          desc: 유물 간 맥락과 연관성을 찾기 어려움
+        right:
+          title: 관계 네트워크 · 지식그래프 기반 탐색
+          desc: 데이터속성 92종 · 관계 14종 정의로 맥락 검색 구현
+      - left:
+          title: 콘텐츠마다 데이터를 새로 만든다
+          desc: 재활용률이 낮아 제작 비용이 반복 발생
+        right:
+          title: 애셋 표준화로 한 번 만들어 여러 번 활용
+          desc: 표준 스키마 · PBR 템플릿 30종 · 저작권 결합
+
+  en:
+    title: R&D differentiation strategy
+    leftLabel: Limits of existing practice
+    rightLabel: The CHIC approach
+    rows:
+      - left:
+          title: Data quality depends on the operator's skill
+          desc: Slow, effortful, and inconsistent in outcome
+        right:
+          title: Robotic arm acquisition device
+          desc: Standardises capture and removes the dependence on skill
+      - left:
+          title: Engineer-facing tools curators cannot use
+          desc: Interfaces hard to approach from a humanities background
+        right:
+          title: UI/UX designed from curator requirements
+          desc: Requirements gathered directly from NMK and NIHC curators
+      - left:
+          title: Search that stops at keywords
+          desc: Context and connections between artefacts stay hidden
+        right:
+          title: Relation network and knowledge graph search
+          desc: 92 data attributes and 14 relation types defined for contextual search
+      - left:
+          title: Data remade for every piece of content
+          desc: Low reuse means production cost recurs each time
+        right:
+          title: Standardised assets — make once, use many times
+          desc: Standard schema · 30 PBR templates · rights data attached

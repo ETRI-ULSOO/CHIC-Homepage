@@ -83,13 +83,11 @@ const concept = defineCollection({
   schema: z.object({
     items: z.array(
       z.object({
+        /** 도해 컴포넌트를 고르는 열쇠 — diagrams/comparisons의 `concept-<key>`와 짝을 이룬다 */
         key: z.string(),
         title: z.string(),
         /** 현행 사이트에 설명 텍스트가 없는 항목이 있다 — 빈 문자열 허용 */
         body: z.string(),
-        image: z.string(),
-        width: z.number(),
-        height: z.number(),
       }),
     ),
   }),
@@ -152,6 +150,8 @@ const applications = defineCollection({
 const diagramLine = z.union([z.string(), z.object({ sub: z.string() })]);
 
 const diagramBox = z.object({
+  /** 제목 위에 붙는 작은 라벨 (STEP 1, 원본 데이터 …) */
+  eyebrow: z.string().optional(),
   title: z.string(),
   /** 흐름의 시작·끝을 표시하는 강조 박스 (제목이 Mint) */
   accent: z.boolean().optional(),
@@ -160,6 +160,8 @@ const diagramBox = z.object({
 
 const diagramContent = z.object({
   title: z.string(),
+  /** 넓은 화면에서 단계를 가로로 흘릴지 세로로 쌓을지. 좁은 화면은 항상 세로다. */
+  flow: z.enum(['row', 'column']).default('row'),
   /** 화살표로 이어지는 단계들 */
   stages: z.array(
     z.object({
@@ -172,7 +174,22 @@ const diagramContent = z.object({
   ),
   /** 화살표 없이 나열되는 하단 띠 */
   band: z.object({ title: z.string(), boxes: z.array(diagramBox) }).optional(),
+  /** 도해 전체를 관통하는 한 줄 — 단계 아래에 폭 전체로 놓인다 */
+  note: z.object({ eyebrow: z.string().optional(), text: z.string() }).optional(),
   footer: z.array(z.string()).default([]),
+});
+
+/** 좌우 대조형 도해 (기존 한계 ↔ 우리 접근). 흐름도와 구조가 달라 따로 둔다. */
+const diagramCompare = z.object({
+  title: z.string(),
+  leftLabel: z.string(),
+  rightLabel: z.string(),
+  rows: z.array(
+    z.object({
+      left: z.object({ title: z.string(), desc: z.string() }),
+      right: z.object({ title: z.string(), desc: z.string() }),
+    }),
+  ),
 });
 
 /** 랜딩 도해. 종전에는 국·영문 SVG 2벌에 문안이 박혀 있었다 —
@@ -185,6 +202,12 @@ const diagrams = defineCollection({
   }),
 });
 
+/** 대조형 도해 (concept-strategy) */
+const comparisons = defineCollection({
+  loader: file('./src/data/comparisons.yaml', { parser: (text) => parseYaml(text) }),
+  schema: z.object({ ko: diagramCompare, en: diagramCompare }),
+});
+
 export const collections = {
-  news, consortium, home, project, contact, concept, results, outcomes, applications, diagrams,
+  news, consortium, home, project, contact, concept, results, outcomes, applications, diagrams, comparisons,
 };

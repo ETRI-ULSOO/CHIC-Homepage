@@ -1,0 +1,152 @@
+---
+/**
+ * DiagramCompare — 좌우 대조형 도해 (기존 한계 ↔ 우리 접근).
+ *
+ * 흐름도와 구조가 다르다. 흐름은 단계가 한 줄로 이어지지만 이쪽은 **행마다 좌우가 짝**이다.
+ * 그래서 좁은 화면에서 단순히 세로로 쌓으면 짝이 흩어진다 — 행 단위를 유지한 채
+ * 각 행 안에서만 세로로 접고, 어느 쪽 열인지 라벨을 박스 안으로 옮긴다.
+ */
+interface Side {
+  title: string;
+  desc: string;
+}
+
+interface Props {
+  leftLabel: string;
+  rightLabel: string;
+  rows: { left: Side; right: Side }[];
+}
+
+const { leftLabel, rightLabel, rows } = Astro.props;
+---
+
+<div class="cmp">
+  <div class="head" aria-hidden="true">
+    <p class="col-label micro">{leftLabel}</p>
+    <p class="col-label micro accent">{rightLabel}</p>
+  </div>
+
+  {
+    rows.map((row) => (
+      <div class="row">
+        <article class="side">
+          <p class="side-label micro">{leftLabel}</p>
+          <h4>{row.left.title}</h4>
+          <p class="desc">{row.left.desc}</p>
+        </article>
+        <div class="arrow" aria-hidden="true" />
+        <article class="side to">
+          <p class="side-label micro accent">{rightLabel}</p>
+          <h4>{row.right.title}</h4>
+          <p class="desc">{row.right.desc}</p>
+        </article>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .head {
+    display: grid;
+    grid-template-columns: 1fr 22px 1fr;
+    gap: var(--s-12);
+    margin-bottom: var(--s-8);
+  }
+  .col-label { margin: 0; color: var(--c-muted); }
+  /* 오른쪽 열 라벨은 화살표 칸을 건너뛴다 */
+  .col-label:last-child { grid-column: 3; }
+  .col-label.accent { color: var(--c-accent); }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 22px 1fr;
+    align-items: stretch;
+    gap: var(--s-12);
+  }
+  .row + .row { margin-top: var(--s-12); }
+
+  .side {
+    background: var(--c-canvas);
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    padding: var(--s-16);
+  }
+  /* 도달점이 강조된다 — 대조의 방향을 색이 알려준다 */
+  .side.to { border-color: var(--c-accent); }
+
+  .side h4 {
+    font-family: var(--f-sans);
+    font-size: var(--t-body-sm);
+    font-weight: 700;
+    letter-spacing: normal;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--c-muted);
+  }
+  .side.to h4 { color: var(--c-text); }
+
+  .desc {
+    margin: var(--s-8) 0 0;
+    font-size: var(--t-body-sm);
+    line-height: 1.6;
+    color: var(--c-muted);
+    opacity: 0.85;
+  }
+
+  /* 넓은 화면에서는 열 라벨이 위에 한 번만 있으면 된다 */
+  .side-label { display: none; }
+
+  .arrow {
+    align-self: center;
+    width: 22px;
+    height: 1px;
+    background: #6b7b8a;
+    position: relative;
+  }
+  .arrow::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: -3.5px;
+    border-left: 7px solid #6b7b8a;
+    border-block: 4px solid transparent;
+  }
+
+  /* 좁은 화면: 행 단위를 유지한 채 행 안에서만 접는다. 짝이 흩어지지 않는다. */
+  @media (max-width: 899px) {
+    .head { display: none; }
+
+    .row {
+      grid-template-columns: 1fr;
+      gap: var(--s-8);
+    }
+    .row + .row {
+      margin-top: var(--s-24);
+      padding-top: var(--s-24);
+      border-top: 1px solid var(--c-border);
+    }
+
+    /* 열 라벨을 박스 안으로 — 위 헤더가 사라졌으므로 여기서 알려준다 */
+    .side-label {
+      display: block;
+      margin: 0 0 var(--s-4);
+      color: var(--c-muted);
+    }
+    .side-label.accent { color: var(--c-accent); }
+
+    .arrow {
+      width: 1px;
+      height: 18px;
+      margin-inline: auto;
+    }
+    .arrow::after {
+      right: -3.5px;
+      top: auto;
+      bottom: -1px;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 7px solid #6b7b8a;
+      border-bottom: 0;
+    }
+  }
+</style>

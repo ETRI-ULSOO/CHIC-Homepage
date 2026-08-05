@@ -204,3 +204,112 @@
     footer:
       - 'Collaborating: National Museum of Korea · National Intangible Heritage Center | Period: Jul 2020 — Dec 2022 | MCST Culture Technology R&D'
       - 'Partners: ETRI · TRIC · SQI Soft · NUCH · dcarrick'
+
+# ── Concept 4점 중 흐름형 3점 (2026-08-05 재구축) ────────────────────────────────
+# 대조형인 concept-strategy는 구조가 달라 comparisons.yaml에 있다.
+
+- id: concept-process
+  ko:
+    title: 실감콘텐츠 전시 프로세스
+    stages:
+      - boxes: [{ eyebrow: STEP 1, title: 데이터 획득, lines: [2D 기가픽셀 · 3D 스캔, 로봇팔 자동 획득] }]
+      - boxes: [{ eyebrow: STEP 2, title: 품질 개선, lines: [색상·노이즈·블러 개선, AI 초해상화] }]
+      - boxes: [{ eyebrow: STEP 3, title: 애셋화, lines: [2D/3D 애셋 생성·변환, 표준 스키마 · 저작권] }]
+      - boxes: [{ eyebrow: STEP 4, title: 분석·검색, lines: [자동 태깅 · 관계 분석, 의미·비주얼 검색] }]
+      - boxes: [{ eyebrow: STEP 5, title: 전시·체험, accent: true, lines: [AR/VR · 웹 콘텐츠, 관람객 반응 추적] }]
+    note:
+      eyebrow: 전 단계 관통
+      text: 지능형 큐레이션 플랫폼 — 큐레이터가 각 단계의 결과를 직접 관리·검색·활용한다
+  en:
+    title: Immersive content exhibition process
+    stages:
+      - boxes: [{ eyebrow: STEP 1, title: Acquisition, lines: [Gigapixel 2D · 3D scanning, Robotic arm capture] }]
+      - boxes: [{ eyebrow: STEP 2, title: Quality improvement, lines: ['Colour, noise, deblurring', AI super-resolution] }]
+      - boxes: [{ eyebrow: STEP 3, title: Asset conversion, lines: [2D/3D asset generation, Schema · rights management] }]
+      - boxes: [{ eyebrow: STEP 4, title: Analysis & search, lines: [Auto tagging · relation analysis, Semantic and visual search] }]
+      - boxes: [{ eyebrow: STEP 5, title: Exhibition, accent: true, lines: [AR/VR · web content, Visitor response tracking] }]
+    note:
+      eyebrow: Across all stages
+      text: The intelligent curation platform — curators manage, search and reuse the output of each stage directly
+
+- id: concept-platform
+  ko:
+    title: 지능형 큐레이션 플랫폼
+    flow: column
+    stages:
+      - label: 중심
+        boxes: [{ title: 큐레이터가 의도한 체험·전시, accent: true }]
+      - label: 인공지능 기반 맞춤형 제공 정보
+        cols: 5
+        boxes:
+          - { title: 문화유산 애셋, lines: [체험 서비스에 바로 적용 가능한 형태] }
+          - { title: 비주얼 검색, lines: [의미 기반 탐색과 연관 관계 제시] }
+          - { title: 사전시각화, lines: [전시 구성을 제작 전에 미리 확인] }
+          - { title: 관람객 추적·분석, lines: [반응 감지 기반의 인터랙티브 대응] }
+          - { title: 저작권, lines: [애셋 활용 범위의 관리] }
+    note:
+      text: 위 정보를 맞춤형으로 제공하는 지능형 큐레이션 기술에 기반한 문화유산 플랫폼
+  en:
+    title: Intelligent curation platform
+    flow: column
+    stages:
+      - label: At the centre
+        boxes: [{ title: The experience the curator intends, accent: true }]
+      - label: Tailored information delivered by AI
+        cols: 5
+        boxes:
+          - { title: Heritage assets, lines: [In a form usable directly in experience services] }
+          - { title: Visual search, lines: [Semantic exploration and related-item suggestions] }
+          - { title: Previsualisation, lines: [Check the exhibition layout before production] }
+          - { title: Visitor tracking, lines: [Interactive response based on detected reactions] }
+          - { title: Rights, lines: [Management of how far each asset may be used] }
+    note:
+      text: A heritage platform built on intelligent curation technology that delivers the above as tailored information
+
+- id: concept-asset
+  ko:
+    title: 문화유산 애셋
+    stages:
+      - boxes:
+          - eyebrow: 원본 데이터
+            title: 디지털 문화유산
+            lines: [고해상도 2D 이미지, 초정밀 3D 모델, 텍스트 기록 · 동영상]
+      - boxes:
+          - eyebrow: 애셋화
+            title: 표준 스키마를 갖춘 재사용 단위로 변환
+            accent: true
+            lines:
+              - 2D/3D 애셋 생성·변환
+              - 3D 가시화 · 랜더링
+              - 애셋 표준 스키마 정의
+              - 저작권 관리 정보 결합
+      - boxes:
+          - eyebrow: 활용
+            title: 전시 · 교육 · 콘텐츠
+            lines: [가상공간 전시 자동 생성, AR/VR · 웹 콘텐츠, 교육 자료 제작]
+    note:
+      eyebrow: 핵심
+      text: 애셋은 한 번 만들어 여러 서비스에 재사용된다 — 실증 기준 177점 취득 → 129점 애셋화, 아카이브 8,353장 디지털화
+  en:
+    title: Cultural heritage assets
+    stages:
+      - boxes:
+          - eyebrow: Source data
+            title: Digital heritage
+            lines: [High-resolution 2D imagery, Ultra-precise 3D models, Text records · video]
+      - boxes:
+          - eyebrow: Asset conversion
+            title: Into reusable units with a standard schema
+            accent: true
+            lines:
+              - 2D/3D asset generation and conversion
+              - 3D visualisation and rendering
+              - Asset schema definition
+              - Rights management data attached
+      - boxes:
+          - eyebrow: Use
+            title: Exhibition · education
+            lines: [Automatic virtual exhibitions, AR/VR and web content, Educational materials]
+    note:
+      eyebrow: The point
+      text: An asset is made once and reused across services — 177 items acquired → 129 turned into assets, 8,353 archive sheets digitised

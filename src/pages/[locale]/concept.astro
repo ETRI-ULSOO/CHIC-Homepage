@@ -2,7 +2,9 @@
 import { getEntry } from 'astro:content';
 import { withBase } from '../../lib/url';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import DiagramFigure from '../../components/DiagramFigure.astro';
+import DiagramShell from '../../components/diagram/DiagramShell.astro';
+import DiagramStages from '../../components/diagram/DiagramStages.astro';
+import DiagramCompare from '../../components/diagram/DiagramCompare.astro';
 import { locales, type Locale } from '../../i18n/ui';
 import { useTranslations } from '../../i18n/utils';
 
@@ -17,6 +19,17 @@ const concept = await getEntry('concept', locale);
 if (!concept) throw new Error(`concept.yaml에 '${locale}' 항목이 없습니다`);
 
 const title = locale === 'ko' ? '개념과 접근 방법' : 'Concept and Approach';
+
+// 항목의 key가 도해 문안을 가리킨다. 셋은 흐름형, 차별화 전략만 대조형이다.
+const flows = new Map(
+  await Promise.all(
+    ['process', 'platform', 'asset'].map(async (k) => {
+      const entry = await getEntry('diagrams', `concept-${k}`);
+      return [k, entry!.data[locale]] as const;
+    }),
+  ),
+);
+const strategy = (await getEntry('comparisons', 'concept-strategy'))!.data[locale];
 ---
 
 <BaseLayout title={title}>
@@ -32,14 +45,28 @@ const title = locale === 'ko' ? '개념과 접근 방법' : 'Concept and Approac
             {item.title}
           </h2>
           {item.body && <p class="body measure">{item.body}</p>}
-          <DiagramFigure
-            src={withBase(item.image)}
-            alt={item.title}
-            caption={item.title}
-            no={i + 1}
-            width={item.width}
-            height={item.height}
-          />
+          {item.key === 'strategy' ? (
+            <DiagramShell title={strategy.title} caption={item.title} no={i + 1}>
+              <DiagramCompare
+                leftLabel={strategy.leftLabel}
+                rightLabel={strategy.rightLabel}
+                rows={strategy.rows}
+              />
+            </DiagramShell>
+          ) : (
+            <DiagramShell
+              title={flows.get(item.key)!.title}
+              caption={item.title}
+              no={i + 1}
+              footer={flows.get(item.key)!.footer}
+            >
+              <DiagramStages
+                stages={flows.get(item.key)!.stages}
+                flow={flows.get(item.key)!.flow}
+                note={flows.get(item.key)!.note}
+              />
+            </DiagramShell>
+          )}
         </article>
       ))
     }

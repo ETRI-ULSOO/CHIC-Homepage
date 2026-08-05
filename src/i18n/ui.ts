@@ -61,9 +61,6 @@ export const ui = {
     'apps.intro': '과제에서 개발한 기술이 실제 박물관·미술관 사업에 투입된 사례입니다.',
     'apps.count': '건',
     'figure.prefix': '圖',
-    'figure.zoom': '클릭하여 확대',
-    'figure.pan': '좌우로 밀어 보세요',
-    'figure.close': '닫기',
     'lang.switch': 'English',
   },
   en: {
@@ -120,9 +117,6 @@ export const ui = {
     'apps.intro': 'Museum and gallery projects that used technology developed in CHIC.',
     'apps.count': 'projects',
     'figure.prefix': 'Fig.',
-    'figure.zoom': 'Click to enlarge',
-    'figure.pan': 'Scroll sideways to see all',
-    'figure.close': 'Close',
     'lang.switch': '한국어',
   },
 } as const;
