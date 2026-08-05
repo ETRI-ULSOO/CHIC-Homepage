@@ -2,7 +2,10 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://chic-homepage.pages.dev',
+  // 배포 실주소. Worker 이름(wrangler.jsonc의 name)과 계정 서브도메인으로 결정된다.
+  // canonical·hreflang·OG URL이 이 값에서 생성되므로 실제 주소와 반드시 일치해야 한다.
+  // 기관 도메인(chic.etri.re.kr 등) 연결 시 이 값을 함께 바꾼다.
+  site: 'https://chic-homepage.hkkim79.workers.dev',
 
   // D-02: 한·영 완전 대응. 기본 언어에도 접두사를 붙여 /ko/ · /en/ 을 대칭으로 둔다.
   i18n: {

@@ -55,7 +55,7 @@ Git 연동 방식이며, 저장소는 `ETRI-ULSOO/CHIC-Homepage`다. `main`에 p
 ### 도메인
 
 Worker 이름이 그대로 서브도메인이 된다. `wrangler.jsonc`의 `name`이 `chic-homepage`이고
-`astro.config.mjs`의 `site`가 `https://chic-homepage.pages.dev`이므로 둘을 함께 바꿔야 한다 —
+`astro.config.mjs`의 `site`가 `https://chic-homepage.hkkim79.workers.dev`이므로 둘을 함께 바꿔야 한다 —
 `site` 값에서 canonical·hreflang·OG URL이 생성된다.
 기관 도메인 정책이 열리면 커스텀 도메인 연결로 이관 가능하다.
 
