@@ -321,6 +321,28 @@ Error: No such module "node:fs".
 
 **현재 상태:** 사용자 판단 보류. 배포는 Workers(`chic-homepage.hkkim79.workers.dev`) 유지 (M-21).
 
+### Cloudflare Pages로 전환 (2026-08-05, D-23)
+
+**결정 근거 두 가지:**
+1. **기관 도메인.** Workers는 네임서버가 Cloudflare 관리 하에 있지 않은 도메인을 지원하지 않는다(공식 문서). `chic.etri.re.kr`을 붙이려면 Pages가 유일한 무료 경로다.
+2. **주소에서 개인 계정명 제거.** Workers는 `<worker>.<계정서브도메인>.workers.dev`라 `hkkim79`가 노출됐다. Pages는 `<프로젝트명>.pages.dev`로 계정명이 들어가지 않는다.
+
+계정 서브도메인만 바꾸는 방법(`hkkim79` → `etri-chic`)도 확인했으나, 그 경우 나중에 기관 도메인을 붙일 때 결국 Pages로 옮겨야 하고 **주소가 두 번 바뀐다.** 색인·인용 주소의 흔들림을 한 번으로 줄이기 위해 지금 전환한다.
+
+**변경 내역**
+
+| 항목 | 처리 |
+|---|---|
+| `wrangler.jsonc` | 삭제 (Workers 전용) |
+| `wrangler` devDependency | 제거 |
+| `.gitignore`의 `.wrangler/` | 제거 |
+| `astro.config.mjs` `site` | `https://etri-chic.pages.dev` |
+| [[README]] 배포 절 | Pages 기준으로 재작성 + 커스텀 도메인 절차 |
+
+**유지되는 것:** 빌드 설정, `.nvmrc`(22), `public/_headers`(Pages도 지원), `src/pages/404.astro`(Pages가 `dist/404.html`을 자동 사용), 콘텐츠·이미지 전부.
+
+**남은 조치 (사용자):** ① Pages 프로젝트 `etri-chic` 생성 ② 기존 Worker `chic-homepage` 삭제(혼선 방지) ③ 이름이 선점돼 있으면 다른 이름 + `site` 값 동반 수정.
+
 ### 남은 미해결
 
 | # | 항목 |
@@ -342,7 +364,9 @@ Error: No such module "node:fs".
 | M-16-b | 원 판단 근거 (보관) — 성과보고서에 사업화 23건·매출 59.2억(2020 9.2억/2021 18.9억/2022 31.0억)·직접고용 13명이 있다. 사례명(미륵사지 석등 디지털복원, 조선왕릉 실감콘텐츠, 클리블랜드미술관, 광화벽화 등)은 공개형 사업이나 **계약 상대·금액은 대외비 성격**이라 사용자 판단 전까지 사이트에 싣지 않았다 |
 | ~~M-18~~ | ~~히스토리 유출~~ → **해소 (2026-08-05).** 저장소 삭제·재생성으로 완전 제거, 실증 확인 |
 | M-19 | 빈 저장소 `ETRI-ULSOO/chic-site` 삭제 (혼선 방지) — 2026-08-05 확인 시 여전히 존재, 내용은 비어 있어 위험 없음 |
-| M-21 | **기관 도메인 연결 경로 미결.** Workers로는 불가하므로 Pages 또는 GitHub Pages 전환이 선행되어야 한다. 조사 결과는 위 절 참조 |
+| ~~M-21~~ | ~~기관 도메인 경로~~ → **결정 (2026-08-05, D-23): Cloudflare Pages 전환.** 저장소 측 준비 완료, 대시보드 프로젝트 생성 대기 |
+| M-22 | Pages 프로젝트 `etri-chic` 생성 후 기존 Worker `chic-homepage` 삭제 (중복 배포 방지) |
+| M-21-b | 구 기술 — Workers로는 불가하므로 Pages 또는 GitHub Pages 전환이 선행되어야 한다. 조사 결과는 위 절 참조 |
 | ~~M-20~~ | ~~Cloudflare 빌드 설정~~ → **해소 (2026-08-05).** `wrangler.jsonc`로 Workers 정적 자산 배포 구성, dry-run 검증 완료 |
 | M-20-b | 구 기술 — `NODE_VERSION=22` 필수 (Astro 7 engines `>=22.12.0`, 기본값으로는 빌드 실패). 프로젝트명을 `chic-homepage`로 생성 — `astro.config.mjs`의 `site` 값과 일치시켜야 함 |
 | M-17 | **반입 이미지의 저작권·공개 범위 확인.** 최종보고서 수록 이미지이며 상당수가 국립중앙박물관 소장품 촬영·3D 스캔 결과다. 과제 자체 홍보 사이트 사용은 통상적이나 확인이 필요하다 |
