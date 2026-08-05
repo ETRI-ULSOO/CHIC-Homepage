@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+# main에 push하면 빌드해서 GitHub Pages에 배포한다.
+# 외부 서비스 토큰이 필요 없다 — GitHub이 발급하는 OIDC 토큰으로 인증한다.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Pages 배포에 필요한 최소 권한.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 동시 배포를 막되, 진행 중인 배포는 끊지 않는다.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # 저장소의 .nvmrc(=22)를 따른다. Astro 7은 node >=22.12.0을 요구한다.
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

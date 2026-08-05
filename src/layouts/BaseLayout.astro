@@ -26,6 +26,10 @@ const altHref = alternatePath(Astro.url, otherLocale(locale));
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
+    <!-- GitHub Pages는 응답 헤더를 설정할 수 없다. 헤더로 주던 보호 중 meta로 옮길 수 있는
+         것은 referrer 하나뿐이다 — X-Frame-Options·X-Content-Type-Options는 meta 등가물이
+         없고, CSP의 frame-ancestors는 명세상 meta에서 무시된다 (WORKLOG M-23). -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="alternate" hreflang={otherLocale(locale)} href={new URL(altHref, Astro.site)} />
 

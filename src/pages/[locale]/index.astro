@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
+import { withBase } from '../../lib/url';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DiagramFigure from '../../components/DiagramFigure.astro';
 import KpiStat from '../../components/KpiStat.astro';
@@ -87,7 +88,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
     <ul class="measure">{project.data.outputs.map((o) => <li>{o}</li>)}</ul>
 
     <p class="mt">
-      <a class="ghost" href={`/${locale}/concept/`}>{t('concept.link')} ↗</a>
+      <a class="ghost" href={withBase(`/${locale}/concept/`)}>{t('concept.link')} ↗</a>
     </p>
   </section>
 
@@ -110,7 +111,7 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
   {/* 실증 현장 사진 — 다이어그램과 달리 '증거'가 아니라 분위기를 맡는다 (DESIGN.md PhotoPanel) */}
   <figure class="photo">
     <img
-      src="/images/photos/exhibition.webp"
+      src={withBase("/images/photos/exhibition.webp")}
       alt={locale === 'ko'
         ? '국립중앙박물관 실증 전시 공간 — 실감형 문화유산 체험 콘텐츠'
         : 'Field validation at the National Museum of Korea — immersive heritage experience content'}

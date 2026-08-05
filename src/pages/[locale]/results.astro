@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { withBase } from '../../lib/url';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { locales, type Locale } from '../../i18n/ui';
 import { useTranslations } from '../../i18n/utils';
@@ -64,7 +65,7 @@ const years = [
           return (
             <li class="card" data-year={String(r.data.year)} data-category={r.data.category}>
               {r.data.image && (
-                <img class="thumb" src={r.data.image} alt={c.title} loading="lazy" decoding="async" />
+                <img class="thumb" src={withBase(r.data.image)} alt={c.title} loading="lazy" decoding="async" />
               )}
               <div class="body">
                 <p class="tag micro">

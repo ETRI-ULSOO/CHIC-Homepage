@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { withBase } from '../../../lib/url';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { locales, type Locale } from '../../../i18n/ui';
 import { useTranslations } from '../../../i18n/utils';
@@ -38,7 +39,7 @@ const slugOf = (id: string) => id.split('/').slice(1).join('/');
                   {post.data.where && <span class="where"> · {post.data.where}</span>}
                 </p>
                 <h2>
-                  <a href={`/${locale}/news/${slugOf(post.id)}/`}>{post.data.title}</a>
+                  <a href={withBase(`/${locale}/news/${slugOf(post.id)}/`)}>{post.data.title}</a>
                 </h2>
                 {post.data.when && <p class="when">{post.data.when}</p>}
                 {post.data.links.length > 0 && (

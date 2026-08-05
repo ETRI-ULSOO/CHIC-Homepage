@@ -1,23 +1,24 @@
 ---
 import LangSwitch from './LangSwitch.astro';
+import { withBase } from '../lib/url';
 import { getLocale, useTranslations } from '../i18n/utils';
 
 const locale = getLocale(Astro.url);
 const t = useTranslations(locale);
 
 const nav = [
-  { href: `/${locale}/#project`, label: t('nav.project') },
-  { href: `/${locale}/results/`, label: t('nav.results') },
-  { href: `/${locale}/publications/`, label: t('nav.publications') },
-  { href: `/${locale}/#consortium`, label: t('nav.consortium') },
-  { href: `/${locale}/news/`, label: t('nav.news') },
-  { href: `/${locale}/#contact`, label: t('nav.contact') },
+  { href: withBase(`/${locale}/#project`), label: t('nav.project') },
+  { href: withBase(`/${locale}/results/`), label: t('nav.results') },
+  { href: withBase(`/${locale}/publications/`), label: t('nav.publications') },
+  { href: withBase(`/${locale}/#consortium`), label: t('nav.consortium') },
+  { href: withBase(`/${locale}/news/`), label: t('nav.news') },
+  { href: withBase(`/${locale}/#contact`), label: t('nav.contact') },
 ];
 ---
 
 <header>
   <div class="wrap bar">
-    <a class="mark" href={`/${locale}/`}>CHIC<span>.</span></a>
+    <a class="mark" href={withBase(`/${locale}/`)}>CHIC<span>.</span></a>
     <nav aria-label="주 메뉴">
       {nav.map((item) => <a href={item.href}>{item.label}</a>)}
       <LangSwitch />

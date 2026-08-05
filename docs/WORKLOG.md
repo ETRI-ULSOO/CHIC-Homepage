@@ -405,3 +405,82 @@ Error: No such module "node:fs".
    사라진 자산에까지 규칙을 기계적으로 적용하지 말 것.
 3. **결과물 수를 손으로 세어 38로 오기** — 실제 39. 수치는 데이터에서 산출할 것.
 4. **다이어그램 2점을 만든 뒤 배치 단계에서 중복 발견** — 만들기 전에 놓일 자리를 먼저 볼 것.
+
+---
+
+## 2026-08-05 (3) — GitHub Pages 전환
+
+### 목표
+
+Cloudflare Pages 대시보드에서 프로젝트 생성 진입점이 사라진 상황(사용자 실측)을 받아,
+배포 대상을 **GitHub Pages**로 전환한다. 저장소가 이미 GitHub에 있으므로 외부 서비스
+연결과 계정 노출이 모두 사라지는 경로다.
+
+### 결정
+
+**[D-24] 배포 대상을 GitHub Pages로 전환한다 (D-23 대체).**
+
+- 근거 1 — 계정 접근 장벽 소거. Cloudflare Pages는 대시보드 조작이 필요했고 그 진입점이
+  실제로 보이지 않았다. GitHub Pages는 저장소 설정 한 번이면 되고, 이후는 워크플로 파일이
+  단일 원천이 된다.
+- 근거 2 — 기관 도메인 요건 충족. `chic.etri.re.kr` CNAME → `etri-ulsoo.github.io`로
+  서브도메인 연결이 가능하며 Let's Encrypt 인증서가 자동 발급된다. Workers를 기각했던
+  사유(외부 네임서버 도메인 연결 불가)에 걸리지 않는다.
+- 근거 3 — 주소에 개인 계정명이 없다. `etri-ulsoo.github.io`는 기관 조직 계정이다.
+- 대가 — **응답 헤더를 설정할 수 없다** (M-23) 와 **project site라 `/CHIC-Homepage/`
+  하위 경로가 된다.** 후자가 코드에 실질적 영향을 준 부분이다.
+
+**[D-25] base 처리를 `withBase()`/`stripBase()` 두 함수로 일원화한다.**
+
+Astro는 번들 자산에는 base를 자동으로 붙이지만 **소스에 하드코딩한 절대경로에는 붙이지
+않는다.** 각 호출부에서 문자열을 조합하면 누락 지점이 반드시 생기므로 [[url.ts]]에
+두 함수를 두고 전 호출부를 통과시켰다. 커스텀 도메인 연결 시 `BASE`만 비우면 전부
+무해해지는 구조다.
+
+### 산출물
+
+| 항목 | 내용 |
+|---|---|
+| `src/lib/url.ts` (신규) | `withBase()` — 내부 절대경로에 base 부착 (외부 URL·mailto·앵커는 통과) / `stripBase()` — 경로 해석 전 base 제거 |
+| `src/i18n/utils.ts` | `getLocale`이 `stripBase` 후 판별. **이것이 없으면 첫 세그먼트가 `CHIC-Homepage`로 읽혀 전 페이지가 기본 언어로 떨어진다** |
+| `astro.config.mjs` | `site: https://etri-ulsoo.github.io` · `base: '/CHIC-Homepage'` · **리다이렉트 대상 15건에 base 수동 부착** |
+| `.github/workflows/deploy.yml` (신규) | `main` push → 빌드 → `deploy-pages`. OIDC 인증, 외부 토큰 없음 |
+| `public/.nojekyll` (신규) | 없으면 Jekyll이 `_astro/`를 무시해 CSS·폰트 전량 404 |
+| `public/_headers` (삭제) | GitHub Pages 미지원 |
+| 링크·자산 수정 | Header 7 · index 2 · concept 2 · results 1 · news 2 · 404 2 |
+
+### 실측 검증 (2026-08-05)
+
+| 검사 | 결과 |
+|---|---|
+| `npm run build` | 21페이지 통과 |
+| 빌드 산출물 내부 참조 334건의 base 부착·대상 존재 | **누락 0 · 끊김 0** |
+| 리다이렉트 15건 대상 | 전건 `/CHIC-Homepage/…`로 교정 |
+| canonical ↔ hreflang 쌍 | 대칭 일치 |
+| dev 서버 실 요청 (`/ko/`, `/ko/results/`) | 404 0건, Results 이미지 39/39 로드 |
+| 외부 리소스 요청 | 0건 (본문 `<a>` 외부 링크는 의도된 것) |
+| 비공개데이터 추적 | 0건 |
+
+### 교정한 결함 2건
+
+1. **리다이렉트 대상에 base 미부착.** Astro는 redirects의 **출발 경로에만** base를 붙이고
+   대상에는 붙이지 않는다 (실측). 15건 전부가 `/ko/…`로 나가 404가 될 상태였다.
+   config에서 대상을 직접 합쳐 교정.
+2. **hreflang 끝 슬래시 불일치.** `alternatePath`가 2세그먼트 이상에서 끝 슬래시를 빼
+   `…/ko/results`를 내보냈다 — 상대 페이지의 canonical(`…/ko/results/`)과 다른 URL이라
+   언어 쌍이 성립하지 않는다. 항상 붙이도록 수정.
+
+### 남은 미해결 (추가)
+
+| # | 항목 |
+|---|---|
+| M-23 | **응답 헤더 부재.** `Referrer-Policy`만 meta로 대체했다. `X-Frame-Options`·`X-Content-Type-Options`는 meta 등가물이 없고 CSP `frame-ancestors`는 명세상 meta에서 무시된다. 공개 정적 사이트라 실질 위험은 낮음 |
+| M-24 | **저장소 Settings → Pages → Source 를 "GitHub Actions"로 지정** — 계정 접근 필요, 최초 1회 |
+| M-22 | (갱신) Cloudflare Worker `chic-homepage` 삭제 — 이제 Pages 프로젝트 생성이 아니라 **Cloudflare 자원 정리** 항목이다 |
+| M-15 | (해소) ~~Cloudflare Pages 대시보드 연결~~ → D-24로 무효화 |
+
+### 다음 단계
+
+1. 사용자가 M-24 수행 → 워크플로 첫 실행 확인
+2. 검수 3건 (M-11 · M-13 · D-17)
+3. 커스텀 도메인 `chic.etri.re.kr` 요청 (README 절차 순서 준수)

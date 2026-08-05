@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import { withBase } from '../../lib/url';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DiagramFigure from '../../components/DiagramFigure.astro';
 import { locales, type Locale } from '../../i18n/ui';
@@ -32,7 +33,7 @@ const title = locale === 'ko' ? '개념과 접근 방법' : 'Concept and Approac
           </h2>
           {item.body && <p class="body measure">{item.body}</p>}
           <DiagramFigure
-            src={item.image}
+            src={withBase(item.image)}
             alt={item.title}
             caption={item.title}
             no={i + 1}
@@ -44,7 +45,7 @@ const title = locale === 'ko' ? '개념과 접근 방법' : 'Concept and Approac
     }
 
     <p class="back">
-      <a class="ghost" href={`/${locale}/#project`}>
+      <a class="ghost" href={withBase(`/${locale}/#project`)}>
         ← {locale === 'ko' ? '과제 소개로 돌아가기' : 'Back to the project'}
       </a>
     </p>

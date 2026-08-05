@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { withBase } from '../../../lib/url';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { type Locale } from '../../../i18n/ui';
 import { useTranslations } from '../../../i18n/utils';
@@ -40,7 +41,7 @@ const date = formatDate(post.data.date, locale);
 
     {
       post.data.image && (
-        <img class="hero-img" src={post.data.image} alt={post.data.title} loading="lazy" decoding="async" />
+        <img class="hero-img" src={withBase(post.data.image)} alt={post.data.title} loading="lazy" decoding="async" />
       )
     }
 
@@ -66,7 +67,7 @@ const date = formatDate(post.data.date, locale);
     }
 
     <p class="back">
-      <a href={`/${locale}/news/`}>← {t('news.back')}</a>
+      <a href={withBase(`/${locale}/news/`)}>← {t('news.back')}</a>
     </p>
   </article>
 </BaseLayout>
