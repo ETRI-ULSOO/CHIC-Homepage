@@ -265,6 +265,29 @@ KPI를 손으로 세지 않는 규칙을 이번에 논문·특허까지 확대�
 | 큐레이션 플랫폼 8 | 전체 시스템 구성도 · 유물 검색 UI · 관계 시각화 · 웹뷰 |
 | 전시·체험 4 | ENGAGE VR · 웹 박물관 3D · 관람객 동선 배치도 |
 
+### Cloudflare 배포 실패와 해결 (2026-08-05)
+
+**증상:** 첫 배포에서 `astro build`는 20페이지로 **성공**했으나(`Success: Build command completed`), 이어지는 `npx wrangler deploy`에서 실패.
+
+```
+Error: No such module "node:fs".
+  imported from "dist/server/.prerender/chunks/content.config_*.mjs"
+```
+
+**원인 (로그 실측):** 프로젝트가 Pages가 아니라 **Worker로 생성**되어 배포 명령이 `npx wrangler deploy`였다. `wrangler.jsonc`가 없으니 wrangler가 자동 구성을 돌려 **`astro add cloudflare`로 어댑터를 설치**했고, 정적 사이트가 서버 렌더링 모드로 **재빌드**되었다. `content.config.ts`는 빌드 시점에 `node:fs`로 YAML·Markdown을 읽는데 Workers 런타임에는 `node:fs`가 없다.
+
+즉 **빌드가 두 번 돌았고, 두 번째(어댑터가 붙은) 빌드가 터진 것**이다. 첫 빌드 로그만 보면 성공으로 보여 오진하기 쉽다.
+
+**해결:** 되돌리는 대신 Workers 정적 자산 배포로 제대로 설정했다.
+- `wrangler.jsonc` 신설 — `assets.directory: ./dist`, **`main` 없음**(실행할 서버 코드가 없다). 설정이 있으면 자동 구성이 건너뛴다
+- `src/pages/404.astro` 신설 — `not_found_handling: "404-page"`가 `/404.html`을 요구한다
+- `wrangler`를 devDependency로 고정
+- `.gitignore`에 `.wrangler/` 추가
+
+**검증 (실측):** `npx wrangler deploy --dry-run` → `Read 242 files from the assets directory`, 자동 구성 미실행, 바인딩 0. 빌드 21페이지(404 포함).
+
+**교훈:** 빌드 성공 로그를 보고 판단하지 않는다. Cloudflare는 build 단계와 deploy 단계가 분리되어 있고 **deploy 단계에서 프로젝트를 재구성할 수 있다.**
+
 ### 남은 미해결
 
 | # | 항목 |
@@ -286,7 +309,8 @@ KPI를 손으로 세지 않는 규칙을 이번에 논문·특허까지 확대�
 | M-16-b | 원 판단 근거 (보관) — 성과보고서에 사업화 23건·매출 59.2억(2020 9.2억/2021 18.9억/2022 31.0억)·직접고용 13명이 있다. 사례명(미륵사지 석등 디지털복원, 조선왕릉 실감콘텐츠, 클리블랜드미술관, 광화벽화 등)은 공개형 사업이나 **계약 상대·금액은 대외비 성격**이라 사용자 판단 전까지 사이트에 싣지 않았다 |
 | ~~M-18~~ | ~~히스토리 유출~~ → **해소 (2026-08-05).** 저장소 삭제·재생성으로 완전 제거, 실증 확인 |
 | M-19 | 빈 저장소 `ETRI-ULSOO/chic-site` 삭제 (혼선 방지) |
-| M-20 | Cloudflare Pages: `NODE_VERSION=22` 필수 (Astro 7 engines `>=22.12.0`, 기본값으로는 빌드 실패). 프로젝트명을 `chic-homepage`로 생성 — `astro.config.mjs`의 `site` 값과 일치시켜야 함 |
+| ~~M-20~~ | ~~Cloudflare 빌드 설정~~ → **해소 (2026-08-05).** `wrangler.jsonc`로 Workers 정적 자산 배포 구성, dry-run 검증 완료 |
+| M-20-b | 구 기술 — `NODE_VERSION=22` 필수 (Astro 7 engines `>=22.12.0`, 기본값으로는 빌드 실패). 프로젝트명을 `chic-homepage`로 생성 — `astro.config.mjs`의 `site` 값과 일치시켜야 함 |
 | M-17 | **반입 이미지의 저작권·공개 범위 확인.** 최종보고서 수록 이미지이며 상당수가 국립중앙박물관 소장품 촬영·3D 스캔 결과다. 과제 자체 홍보 사이트 사용은 통상적이나 확인이 필요하다 |
 | M-15 | **Cloudflare Pages 대시보드 최초 연결** — 계정 접근이 필요해 미수행. 설정값은 [[README]]에 정리 |
 

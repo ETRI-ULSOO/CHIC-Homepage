@@ -1,0 +1,63 @@
+---
+// 언어 접두사 밖에 있는 최상위 404. Cloudflare Workers의 not_found_handling이
+// 이 파일(/404.html)을 찾으므로 [locale] 아래가 아니라 여기 둔다.
+// 방문자의 언어를 알 수 없는 지점이므로 한·영을 함께 싣는다.
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>페이지를 찾을 수 없습니다 — CHIC</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <main class="wrap">
+      <p class="code">404</p>
+      <h1>페이지를 찾을 수 없습니다</h1>
+      <p class="en">The page you are looking for could not be found.</p>
+      <p class="links">
+        <a href="/ko/">한국어 홈으로</a>
+        <span class="sep">·</span>
+        <a href="/en/">English home</a>
+      </p>
+    </main>
+  </body>
+</html>
+
+<style>
+  main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-block: var(--s-104);
+  }
+  .code {
+    margin: 0;
+    font-family: var(--f-serif-en);
+    font-size: clamp(64px, 14vw, 160px);
+    line-height: 1;
+    color: var(--c-accent);
+  }
+  h1 {
+    font-size: var(--t-heading);
+    margin: var(--s-24) 0 var(--s-12);
+  }
+  .en {
+    margin: 0;
+    color: var(--c-muted);
+  }
+  .links { margin: var(--s-48) 0 0; }
+  .links a {
+    color: var(--c-accent);
+    text-decoration: none;
+    font-size: var(--t-body-sm);
+  }
+  .links a:hover { text-decoration: underline; }
+  .sep { color: var(--c-muted); margin: 0 var(--s-8); }
+</style>

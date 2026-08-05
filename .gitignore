@@ -14,3 +14,6 @@ _migration/raw/
 # public/ 로 복사한 것만 공개된다. 원본 폴더는 저장소 밖에 머문다.
 docs/비공개데이터/
 docs/비공개데이터/**
+
+# wrangler 작업 산출물
+.wrangler/
