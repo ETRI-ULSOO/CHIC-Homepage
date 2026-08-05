@@ -32,7 +32,7 @@ public/images/diagrams/   # 시스템 팔레트로 재제작한 SVG (국문 7 + 
 
 ## 배포 — Cloudflare Pages
 
-Git 연동 방식이며, `main`에 push하면 자동 빌드·배포된다.
+Git 연동 방식이며, 저장소는 `ETRI-ULSOO/CHIC-Homepage`다. `main`에 push하면 자동 빌드·배포된다.
 **최초 1회 연결은 Cloudflare 대시보드에서 수행해야 한다.**
 
 | 설정 | 값 |
@@ -43,8 +43,9 @@ Git 연동 방식이며, `main`에 push하면 자동 빌드·배포된다.
 | Node version | 20 이상 (`NODE_VERSION` 환경변수) |
 | Production branch | `main` |
 
-프로젝트명이 그대로 서브도메인이 된다 (`<프로젝트명>.pages.dev`). 생성 후 변경이 번거로우므로
-`chic-site`로 만들면 `https://chic-site.pages.dev`가 되며, 이는 `astro.config.mjs`의 `site` 값과 일치한다.
+프로젝트명이 그대로 서브도메인이 되고(`<프로젝트명>.pages.dev`) 생성 후 변경이 번거롭다.
+`astro.config.mjs`의 `site` 값이 `https://chic-homepage.pages.dev`이므로 **프로젝트명을 `chic-homepage`로** 만든다.
+다른 이름을 쓸 경우 `site` 값을 함께 고쳐야 한다 — canonical·hreflang·OG URL이 이 값에서 생성된다.
 기관 도메인 정책이 열리면 CNAME 연결만으로 이관 가능하다.
 
 응답 헤더는 [public/_headers](public/_headers)에서 관리한다.
