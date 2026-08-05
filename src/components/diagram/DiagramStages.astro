@@ -1,0 +1,204 @@
+---
+/**
+ * DiagramStages — 화살표로 이어지는 단계들과, 화살표 없이 나열되는 하단 띠.
+ *
+ * 넓은 화면에서는 단계가 가로로 흐르고 화살표가 →, 좁은 화면에서는 세로로 쌓이고
+ * 화살표가 ↓ 가 된다. 화살표는 글꼴에 좌우되지 않도록 CSS 보더로 그린다.
+ */
+type Line = string | { sub: string };
+interface Box {
+  title: string;
+  accent?: boolean;
+  lines: Line[];
+}
+interface Stage {
+  label?: string;
+  cols?: number;
+  boxes: Box[];
+}
+
+interface Props {
+  stages: Stage[];
+  band?: { title: string; boxes: Box[] };
+}
+
+const { stages, band } = Astro.props;
+const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
+---
+
+<div class="flow">
+  {
+    stages.map((stage, i) => (
+      <>
+        {i > 0 && <div class="arrow" aria-hidden="true" />}
+        <section class="stage" style={`--cols: ${stage.cols ?? 1}`}>
+          {stage.label && <p class="stage-label micro">{stage.label}</p>}
+          <div class="boxes">
+            {stage.boxes.map((box) => (
+              <article class:list={['box', { accent: box.accent }]}>
+                <h4>{box.title}</h4>
+                {box.lines.length > 0 && (
+                  <ul>
+                    {box.lines.map((line) => (
+                      <li class:list={{ sub: isSub(line) }}>
+                        {isSub(line) ? line.sub : line}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      </>
+    ))
+  }
+</div>
+
+{
+  band && (
+    <section class="band">
+      <h4 class="band-title">{band.title}</h4>
+      <div class="band-boxes">
+        {band.boxes.map((box) => (
+          <article class="box compact">
+            <h4>{box.title}</h4>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  /* 넓은 화면: 단계가 가로로 흐른다. 단계 폭은 내용량에 비례해 늘어난다. */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: var(--s-12);
+  }
+  .stage {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  /* 4대 연구 축처럼 박스가 여럿인 단계는 더 넓은 지분을 갖는다 */
+  .stage:has(.boxes > :nth-child(2)) { flex-grow: 2.2; }
+
+  .stage-label {
+    margin: 0 0 var(--s-8);
+    color: var(--c-muted);
+  }
+  .boxes {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: var(--s-12);
+    align-content: start;
+  }
+
+  .box {
+    background: var(--c-canvas);
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    padding: var(--s-16);
+  }
+  .box h4 {
+    font-family: var(--f-sans);
+    font-size: var(--t-body-sm);
+    font-weight: 700;
+    letter-spacing: normal;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--c-text);
+  }
+  .box.accent h4 { color: var(--c-accent); }
+
+  .box ul {
+    list-style: none;
+    margin: var(--s-12) 0 0;
+    padding: 0;
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+  }
+  .box li {
+    position: relative;
+    padding-left: 0.85em;
+    line-height: 1.6;
+  }
+  .box li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+  }
+  .box li + li { margin-top: var(--s-4); }
+  /* 바로 위 줄의 부연 — 항목이 아니라 설명이므로 글머리를 빼고 들여쓴다 */
+  .box li.sub {
+    padding-left: 2.1em;
+    opacity: 0.8;
+  }
+  .box li.sub::before { content: '—'; left: 0.85em; }
+
+  /* 화살표. 글꼴 문자 대신 보더로 그려 어떤 환경에서도 같은 모양이 나온다. */
+  .arrow {
+    align-self: center;
+    flex: 0 0 auto;
+    width: 22px;
+    height: 1px;
+    background: #6b7b8a;
+    position: relative;
+  }
+  .arrow::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: -3.5px;
+    border-left: 7px solid #6b7b8a;
+    border-block: 4px solid transparent;
+  }
+
+  /* 하단 띠 — 화살표 없이 나열된다 */
+  .band {
+    margin-top: var(--s-24);
+    padding-top: var(--s-24);
+    border-top: 1px solid var(--c-border);
+  }
+  .band-title {
+    font-family: var(--f-sans);
+    font-size: var(--t-body);
+    font-weight: 700;
+    letter-spacing: normal;
+    margin: 0 0 var(--s-12);
+  }
+  .band-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+    gap: var(--s-8);
+  }
+  .box.compact { padding: var(--s-12) var(--s-16); }
+  .box.compact h4 { font-weight: 500; }
+
+  /* 좁은 화면: 단계가 세로로 쌓이고 화살표가 아래를 가리킨다.
+     축소가 아니라 재배치다 — 글자 크기는 어느 폭에서도 본문과 같다. */
+  @media (max-width: 899px) {
+    .flow { flex-direction: column; gap: var(--s-8); }
+    .stage:has(.boxes > :nth-child(2)) { flex-grow: 1; }
+    .boxes { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
+
+    .arrow {
+      width: 1px;
+      height: 18px;
+      margin-inline: auto;
+    }
+    .arrow::after {
+      right: -3.5px;
+      top: auto;
+      bottom: -1px;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 7px solid #6b7b8a;
+      border-bottom: 0;
+    }
+  }
+</style>

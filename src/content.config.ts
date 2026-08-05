@@ -148,6 +148,43 @@ const applications = defineCollection({
   }),
 });
 
+/** 도해 한 줄. 문자열이면 본 항목, `{ sub }`이면 바로 위 줄의 부연이다. */
+const diagramLine = z.union([z.string(), z.object({ sub: z.string() })]);
+
+const diagramBox = z.object({
+  title: z.string(),
+  /** 흐름의 시작·끝을 표시하는 강조 박스 (제목이 Mint) */
+  accent: z.boolean().optional(),
+  lines: z.array(diagramLine).default([]),
+});
+
+const diagramContent = z.object({
+  title: z.string(),
+  /** 화살표로 이어지는 단계들 */
+  stages: z.array(
+    z.object({
+      /** 단계 위에 붙는 작은 라벨 */
+      label: z.string().optional(),
+      /** 넓은 화면에서 이 단계의 박스를 몇 열로 놓을지 (기본 1) */
+      cols: z.number().optional(),
+      boxes: z.array(diagramBox),
+    }),
+  ),
+  /** 화살표 없이 나열되는 하단 띠 */
+  band: z.object({ title: z.string(), boxes: z.array(diagramBox) }).optional(),
+  footer: z.array(z.string()).default([]),
+});
+
+/** 랜딩 도해. 종전에는 국·영문 SVG 2벌에 문안이 박혀 있었다 —
+ *  HTML로 옮기면서 문안을 한 벌로 통합했다 (2026-08-05). */
+const diagrams = defineCollection({
+  loader: file('./src/data/diagrams.yaml', { parser: (text) => parseYaml(text) }),
+  schema: z.object({
+    ko: diagramContent,
+    en: diagramContent,
+  }),
+});
+
 export const collections = {
-  news, consortium, home, project, contact, concept, results, outcomes, applications,
+  news, consortium, home, project, contact, concept, results, outcomes, applications, diagrams,
 };

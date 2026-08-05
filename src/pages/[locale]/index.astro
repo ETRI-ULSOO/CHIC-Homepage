@@ -2,10 +2,12 @@
 import { getCollection, getEntry } from 'astro:content';
 import { withBase } from '../../lib/url';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import DiagramFigure from '../../components/DiagramFigure.astro';
+import DiagramShell from '../../components/diagram/DiagramShell.astro';
+import DiagramStages from '../../components/diagram/DiagramStages.astro';
+import ConsortiumChart from '../../components/diagram/ConsortiumChart.astro';
 import KpiStat from '../../components/KpiStat.astro';
 import { locales, type Locale } from '../../i18n/ui';
-import { useTranslations, diagramSrc } from '../../i18n/utils';
+import { useTranslations } from '../../i18n/utils';
 
 // 14개 페이지를 언어마다 복제하지 않는다. 언어는 라우트 파라미터이고
 // 콘텐츠는 컬렉션에서 언어로 조회한다 — 이 패턴을 전 페이지에 적용한다.
@@ -23,6 +25,10 @@ if (!home || !project || !contact) throw new Error(`'${locale}' 항목이 데이
 
 // getCollection은 id 알파벳순이다. 기관 서열이 뒤집히므로 명시 정렬이 필수.
 const orgs = (await getCollection('consortium')).sort((a, b) => a.data.order - b.data.order);
+
+// 도해 문안은 국·영문 한 벌이다 (종전 SVG 2벌 → diagrams.yaml 1벌).
+const overview = (await getEntry('diagrams', 'project-overview'))!.data[locale];
+const necessity = (await getEntry('diagrams', 'necessity'))!.data[locale];
 
 // 수치는 세지 않고 데이터에서 산출한다 — 손으로 센 값은 틀린다 (실제로 39를 38로 잘못 셌다).
 const outcomes = await getCollection('outcomes');
@@ -60,16 +66,9 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
     <p class="micro">01</p>
     <h2>{t('section.project')}</h2>
 
-    <DiagramFigure
-      src={diagramSrc('/images/diagrams/project-overview.svg', locale)}
-      alt={locale === 'ko'
-        ? 'CHIC 과제 개요 — 4대 연구 축과 실증 대상'
-        : 'CHIC project overview — four research axes and validation targets'}
-      caption={t('section.project')}
-      no={1}
-      width={1280}
-      height={470}
-    />
+    <DiagramShell title={overview.title} caption={t('section.project')} no={1} footer={overview.footer}>
+      <DiagramStages stages={overview.stages} />
+    </DiagramShell>
 
     <div class="cols">
       <div>
@@ -130,16 +129,9 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
   <section class="wrap block">
     <p class="micro">03</p>
     <h2>{t('section.rationale')}</h2>
-    <DiagramFigure
-      src={diagramSrc('/images/diagrams/necessity.svg', locale)}
-      alt={locale === 'ko'
-        ? 'CHIC 연구개발의 필요성 — 현황 및 문제점, 기술적 요구, 기대 성과와 5개 연구개발 체계'
-        : 'Rationale for CHIC — current problems, technical requirements, expected outcomes and the five research areas'}
-      caption={t('section.rationale')}
-      no={2}
-      width={1280}
-      height={470}
-    />
+    <DiagramShell title={necessity.title} caption={t('section.rationale')} no={2} footer={necessity.footer}>
+      <DiagramStages stages={necessity.stages} band={necessity.band} />
+    </DiagramShell>
   </section>
 
   <section id="applications" class="wrap block">
@@ -168,16 +160,12 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
   <section id="consortium" class="wrap block">
     <p class="micro">05</p>
     <h2>{t('section.consortium')}</h2>
-    <DiagramFigure
-      src={diagramSrc('/images/diagrams/consortium-structure.svg', locale)}
-      alt={locale === 'ko'
-        ? 'CHIC 연구개발 추진체계 — 주관기관 ETRI, 참여기관 4곳, 협력기관 2곳'
-        : 'CHIC research structure — ETRI as lead, four partners and two collaborating institutions'}
-      caption={locale === 'ko' ? 'CHIC 연구개발 추진체계' : 'CHIC research structure'}
+    <DiagramShell
+      title={locale === 'ko' ? 'CHIC 연구개발 추진체계' : 'CHIC research structure'}
       no={3}
-      width={1280}
-      height={400}
-    />
+    >
+      <ConsortiumChart locale={locale} />
+    </DiagramShell>
     <ul class="orgs">
       {
         orgs.map((org) => (

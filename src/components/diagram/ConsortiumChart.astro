@@ -1,0 +1,101 @@
+---
+/**
+ * ConsortiumChart — 추진체계 도해.
+ *
+ * 문안을 새로 두지 않는다. consortium.yaml의 role(lead/partner/collaborator)에서
+ * 직접 생성하므로, 기관이 바뀌면 목록과 도해가 함께 바뀐다 — 두 벌이 어긋날 여지가 없다.
+ * 종전 SVG는 같은 기관명을 국·영문 파일에 각각 박아 두어 총 3벌이 존재했다.
+ */
+import { getCollection } from 'astro:content';
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+// getCollection은 id 알파벳순이다. 기관 서열이 뒤집히므로 명시 정렬이 필수.
+const orgs = (await getCollection('consortium')).sort((a, b) => a.data.order - b.data.order);
+const byRole = (role: string) => orgs.filter((o) => o.data.role === role);
+
+const label = {
+  ko: { lead: '주관기관', partner: '참여기관', collaborator: '협력기관 · 실증' },
+  en: { lead: 'Lead', partner: 'Partners', collaborator: 'Collaborating · validation' },
+}[locale];
+
+const name = (o: (typeof orgs)[number]) => (locale === 'ko' ? o.data.ko : o.data.en);
+---
+
+<div class="tree">
+  {
+    (['lead', 'partner', 'collaborator'] as const).map((role, i) => (
+      <section class:list={['tier', role]}>
+        {i > 0 && <div class="stem" aria-hidden="true" />}
+        <p class="tier-label micro">{label[role]}</p>
+        <ul>
+          {byRole(role).map((o) => (
+            <li class:list={['org', { lead: role === 'lead' }]}>
+              <span class="name">{name(o)}</span>
+              <span class="abbr">{o.data.abbr}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>
+
+<style>
+  .tree { display: flex; flex-direction: column; }
+
+  /* 상위 계층과 잇는 세로줄. 트리 구조를 선으로 드러낸다. */
+  .stem {
+    width: 1px;
+    height: 20px;
+    margin: 0 auto var(--s-12);
+    background: #6b7b8a;
+  }
+
+  .tier-label { margin: 0 0 var(--s-8); color: var(--c-muted); }
+  .tier.lead .tier-label { color: var(--c-accent); }
+
+  .tier ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    gap: var(--s-12);
+  }
+  /* 주관기관은 하나뿐이라 늘어나지 않게 가운데 둔다 */
+  .tier.lead ul {
+    grid-template-columns: minmax(0, 380px);
+    justify-content: center;
+  }
+
+  .org {
+    background: var(--c-canvas);
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    padding: var(--s-16);
+  }
+  .org.lead { border-color: var(--c-accent); }
+  /* 협력기관은 과제 수행 주체가 아니다 — 점선으로 구분한다 */
+  .tier.collaborator .org { border-style: dashed; }
+
+  .name {
+    display: block;
+    font-size: var(--t-body-sm);
+    font-weight: 700;
+    color: var(--c-text);
+    line-height: 1.5;
+  }
+  .abbr {
+    display: block;
+    margin-top: var(--s-4);
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+  }
+
+  .tier + .tier { margin-top: var(--s-16); }
+</style>
