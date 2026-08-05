@@ -40,7 +40,7 @@ Git 연동 방식이며, 저장소는 `ETRI-ULSOO/CHIC-Homepage`다. `main`에 p
 | Framework preset | Astro |
 | Build command | `npm run build` |
 | Build output directory | `dist` |
-| Node version | **22.12 이상** — 환경변수 `NODE_VERSION` = `22` (Astro 7 요구사항. Cloudflare 기본값은 더 낮아 설정하지 않으면 빌드가 실패한다) |
+| Node version | **22.12 이상**. 저장소의 `.nvmrc`(=22)를 Cloudflare가 자동으로 읽는다. 읽히지 않으면 환경변수 `NODE_VERSION` = `22`를 추가한다 (Astro 7 요구사항 — 기본 Node로는 빌드 실패) |
 | Production branch | `main` |
 
 프로젝트명이 그대로 서브도메인이 되고(`<프로젝트명>.pages.dev`) 생성 후 변경이 번거롭다.
