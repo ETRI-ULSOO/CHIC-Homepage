@@ -8,8 +8,9 @@
     애셋 기반 지능형 큐레이션 및 서비스 운영기술 개발" 과제입니다.
   kpis:
     - { value: AUTO_RESULTS, key: '연구 결과물' }
+    - { value: AUTO_PAPERS, key: '학술 논문' }
+    - { value: AUTO_PATENTS, key: '특허 출원' }
     - { value: '8,353', key: '아카이브 디지털화 (장)' }
-    - { value: '92 / 14', key: '데이터 속성 / 관계 정의' }
     - { value: '7', key: '참여 기관' }
   impacts:
     - title: 국립중앙박물관·국립무형유산원과 협력한 플랫폼 개발 및 실증
@@ -34,8 +35,9 @@
     service operation technology for immersive cultural heritage experiences".
   kpis:
     - { value: AUTO_RESULTS, key: 'Research outputs' }
+    - { value: AUTO_PAPERS, key: 'Academic papers' }
+    - { value: AUTO_PATENTS, key: 'Patent filings' }
     - { value: '8,353', key: 'Archive items digitised' }
-    - { value: '92 / 14', key: 'Attributes / relations defined' }
     - { value: '7', key: 'Partner organisations' }
   impacts:
     - title: Platform development and field validation with NMK and NIHC

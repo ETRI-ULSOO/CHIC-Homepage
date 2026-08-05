@@ -70,6 +70,7 @@
   year: 2
   category: acquisition
   order: 105
+  image: /images/results/field-capture.webp
   ko:
     title: 초고해상도 2D/3D 데이터 획득 기술
     desc: >-
@@ -87,6 +88,7 @@
   year: 2
   category: acquisition
   order: 106
+  image: /images/results/robot-arm.webp
   ko:
     title: 문화유산 획득을 위한 로봇팔 기술
     desc: >-
@@ -132,6 +134,7 @@
   year: 2
   category: asset
   order: 109
+  image: /images/results/3d-scan-colormap.webp
   ko:
     title: 문화유산 애셋 3D 가시화 기술
     desc: >-
@@ -147,6 +150,7 @@
   year: 2
   category: asset
   order: 110
+  image: /images/results/virtual-exhibition.webp
   ko:
     title: 문화유산의 가상 공간 전시 기술
     desc: >-
@@ -164,6 +168,7 @@
   year: 2
   category: asset
   order: 111
+  image: /images/results/asset-library.webp
   ko:
     title: 문화유산 애셋 표준 생성
     desc: >-
@@ -212,6 +217,7 @@
   year: 2
   category: analysis
   order: 114
+  image: /images/results/relation-network.webp
   ko:
     title: 문화유산 관계 네트워크 분석 기술
     desc: >-
@@ -228,6 +234,7 @@
   year: 2
   category: analysis
   order: 115
+  image: /images/results/painting-detection.webp
   ko:
     title: 문화유산 기반 실시간 객체 검출 및 인식 기술
     desc: >-
@@ -339,6 +346,7 @@
   year: 2
   category: service
   order: 122
+  image: /images/results/incense-burner-3d.webp
   ko:
     title: AR/VR 박물관 시범 서비스
     desc: 문화유산 애셋 생성 데이터를 활용하여 시범 콘텐츠 제작(7종)
@@ -386,6 +394,7 @@
   year: 1
   category: acquisition
   order: 201
+  image: /images/results/surface-detail.webp
   ko:
     title: 초해상화 고품질 변환
     desc: >-
@@ -429,6 +438,7 @@
   year: 1
   category: acquisition
   order: 204
+  image: /images/results/robot-arm-device.webp
   ko:
     title: 로봇팔을 이용한 자동획득장치
     desc: >-
@@ -472,6 +482,7 @@
   year: 1
   category: asset
   order: 207
+  image: /images/results/3d-scan-detail.webp
   ko:
     title: 애셋 가시화
     desc: 애셋의 가시화를 활용해 큐레이터들의 요구사항인 직관적 데이터 관리 인터페이스 제공
@@ -541,6 +552,7 @@
   year: 1
   category: analysis
   order: 212
+  image: /images/results/knowledge-graph.webp
   ko:
     title: 개체간 지식그래프 도출
     desc: 지식 관계망 구축을 통한 기록물 데이터 새로운 접근 방향 제시 및 시각화

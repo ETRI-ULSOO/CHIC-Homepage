@@ -23,10 +23,15 @@ if (!home || !project || !contact) throw new Error(`'${locale}' 항목이 데이
 // getCollection은 id 알파벳순이다. 기관 서열이 뒤집히므로 명시 정렬이 필수.
 const orgs = (await getCollection('consortium')).sort((a, b) => a.data.order - b.data.order);
 
-// 결과물 수는 세지 않고 데이터에서 산출한다 — 손으로 센 값은 틀린다 (실제로 38로 잘못 셌다).
-const resultCount = (await getCollection('results')).length;
+// 수치는 세지 않고 데이터에서 산출한다 — 손으로 센 값은 틀린다 (실제로 39를 38로 잘못 셌다).
+const outcomes = await getCollection('outcomes');
+const AUTO: Record<string, number> = {
+  AUTO_RESULTS: (await getCollection('results')).length,
+  AUTO_PAPERS: outcomes.filter((o) => o.data.type === 'journal' || o.data.type === 'conference').length,
+  AUTO_PATENTS: outcomes.filter((o) => o.data.type === 'patent').length,
+};
 const kpis = home.data.kpis.map((k) =>
-  k.value === 'AUTO_RESULTS' ? { ...k, value: String(resultCount) } : k,
+  k.value in AUTO ? { ...k, value: String(AUTO[k.value]) } : k,
 );
 ---
 
@@ -95,6 +100,25 @@ const kpis = home.data.kpis.map((k) =>
       }
     </div>
   </section>
+
+  {/* 실증 현장 사진 — 다이어그램과 달리 '증거'가 아니라 분위기를 맡는다 (DESIGN.md PhotoPanel) */}
+  <figure class="photo">
+    <img
+      src="/images/photos/exhibition.webp"
+      alt={locale === 'ko'
+        ? '국립중앙박물관 실증 전시 공간 — 실감형 문화유산 체험 콘텐츠'
+        : 'Field validation at the National Museum of Korea — immersive heritage experience content'}
+      width={2000}
+      height={838}
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption class="wrap">
+      {locale === 'ko'
+        ? '국립중앙박물관·국립무형유산원 실증 전시'
+        : 'Field validation exhibitions at NMK and NIHC'}
+    </figcaption>
+  </figure>
 
   <section class="wrap block">
     <p class="micro">03</p>
@@ -215,6 +239,20 @@ const kpis = home.data.kpis.map((k) =>
     margin: var(--s-24) 0 0;
     font-size: var(--t-lead);
     line-height: 1.9;
+    color: var(--c-muted);
+  }
+
+  /* 풀블리드 사진 밴드 — 보더·라운드 없이 페이지 폭 전체를 쓴다 */
+  .photo { margin: 0; }
+  .photo img {
+    width: 100%;
+    height: clamp(220px, 32vw, 380px);
+    object-fit: cover;
+    display: block;
+  }
+  .photo figcaption {
+    margin-top: var(--s-12);
+    font-size: var(--t-body-sm);
     color: var(--c-muted);
   }
 

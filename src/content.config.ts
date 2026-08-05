@@ -18,6 +18,8 @@ const news = defineCollection({
     order: z.number(),
     /** 일시·장소처럼 날짜로 환원되지 않는 부가 정보 */
     when: z.string().optional(),
+    /** 게시물 대표 이미지 (선택). 없으면 텍스트만 렌더된다. */
+    image: z.string().optional(),
     where: z.string().optional(),
     /** News 첨부는 전부 외부 링크다 (content-inventory.md M-06) */
     links: z
@@ -111,4 +113,30 @@ const results = defineCollection({
   }),
 });
 
-export const collections = { news, consortium, home, project, contact, concept, results };
+export const outcomeTypes = ['journal', 'conference', 'patent', 'software', 'award'] as const;
+
+const outcomes = defineCollection({
+  loader: file('./src/data/outcomes.yaml', { parser: (text) => parseYaml(text) }),
+  schema: z.object({
+    type: z.enum(outcomeTypes),
+    order: z.number(),
+    date: z.coerce.date(),
+    title: z.string(),
+    /** 원제가 국문인 항목의 영문 제목. 없으면 원제를 그대로 쓴다 —
+     *  학술 성과는 원제 표기가 원칙이므로 억지로 번역하지 않는다. */
+    titleEn: z.string().optional(),
+    authors: z.string().optional(),
+    venue: z.string().optional(),
+    venueEn: z.string().optional(),
+    /** 특허 출원번호 · SW 등록번호 */
+    number: z.string().optional(),
+    country: z.enum(['KR', 'US']).optional(),
+    org: z.string(),
+    note: z.string().optional(),
+    url: z.string().url().optional(),
+  }),
+});
+
+export const collections = {
+  news, consortium, home, project, contact, concept, results, outcomes,
+};

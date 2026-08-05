@@ -2,6 +2,7 @@
 title: 2021 공존과 지속 콜로키움 행사
 date: 2021-11-30
 order: 2
+image: /images/photos/coexistence-key.webp
 when: 2021/11/30 13:30 시작
 where: 국립중앙박물관 교육관 제1실기실
 links:

@@ -1,0 +1,158 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { locales, type Locale } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+import { outcomeTypes } from '../../content.config';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const t = useTranslations(locale);
+
+// getCollection은 id 알파벳순이다. 발표일 순서가 뒤집히므로 명시 정렬이 필수.
+const all = (await getCollection('outcomes')).sort((a, b) => a.data.order - b.data.order);
+
+// 유형별로 나눠 싣는다 — 논문·특허·SW는 성격이 달라 한 목록에 섞으면 훑기 어렵다.
+const groups = outcomeTypes
+  .map((type) => ({ type, items: all.filter((o) => o.data.type === type) }))
+  .filter((g) => g.items.length > 0);
+
+const fmt = new Intl.DateTimeFormat(locale === 'ko' ? 'ko-KR' : 'en-GB', {
+  year: 'numeric',
+  month: 'short',
+  timeZone: 'UTC',
+});
+---
+
+<BaseLayout title={t('pub.title')} description={t('pub.intro')}>
+  <section class="wrap block">
+    <p class="micro">{t('pub.title')}</p>
+    <h1>{t('pub.title')}</h1>
+    <p class="intro measure">{t('pub.intro')}</p>
+
+    <dl class="summary">
+      {
+        groups.map((g) => (
+          <div>
+            <dt class="v">{g.items.length}</dt>
+            <dd class="k micro">{t(`pub.${g.type}` as any)}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    {
+      groups.map((g) => (
+        <section class="group">
+          <h2>{t(`pub.${g.type}` as any)}</h2>
+          <ol class="list">
+            {g.items.map((o) => {
+              const d = o.data;
+              const title = locale === 'en' && d.titleEn ? d.titleEn : d.title;
+              const venue = locale === 'en' && d.venueEn ? d.venueEn : d.venue;
+              return (
+                <li>
+                  <p class="meta micro">
+                    {fmt.format(d.date)}
+                    <span class="org"> · {d.org}</span>
+                    {d.country && <span class="org"> · {d.country}</span>}
+                  </p>
+                  <h3>
+                    {d.url ? (
+                      <a href={d.url} target="_blank" rel="noopener noreferrer">
+                        {title} ↗
+                      </a>
+                    ) : (
+                      title
+                    )}
+                  </h3>
+                  {(d.authors || venue) && (
+                    <p class="src">
+                      {d.authors}
+                      {d.authors && venue && ' · '}
+                      {venue}
+                    </p>
+                  )}
+                  {d.number && (
+                    <p class="num micro">
+                      {t('pub.number')} {d.number}
+                    </p>
+                  )}
+                  {d.note && <p class="note micro">{d.note}</p>}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ))
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .block { padding-block: var(--s-72); }
+  h1 {
+    font-size: var(--t-display-ko);
+    line-height: var(--lh-display-ko);
+    margin: var(--s-8) 0 var(--s-16);
+  }
+  .intro { margin: 0 0 var(--s-48); color: var(--c-muted); }
+
+  /* 보더·배경 없음 — 숫자 자체가 유일한 강조다 (DESIGN.md) */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--s-32);
+    margin: 0 0 var(--s-72);
+    padding-bottom: var(--s-32);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .v {
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    color: var(--c-accent);
+    line-height: 1.2;
+  }
+  .k { margin: var(--s-8) 0 0; }
+
+  .group + .group { margin-top: var(--s-72); }
+  .group h2 {
+    font-size: var(--t-heading);
+    margin: 0 0 var(--s-24);
+  }
+
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: item;
+  }
+  .list li {
+    border-top: 1px solid var(--c-border);
+    padding-block: var(--s-24);
+  }
+  .list li:last-child { border-bottom: 1px solid var(--c-border); }
+
+  .meta { margin: 0; color: var(--c-accent); }
+  .org { color: var(--c-muted); }
+  h3 {
+    font-size: var(--t-subheading);
+    font-family: var(--f-serif-ko);
+    font-weight: 600;
+    line-height: 1.5;
+    margin: var(--s-8) 0;
+  }
+  h3 a { color: var(--c-accent-2); text-decoration: none; }
+  h3 a:hover { text-decoration: underline; }
+  .src {
+    margin: 0;
+    font-size: var(--t-body-sm);
+    color: var(--c-muted);
+  }
+  .num, .note { margin: var(--s-8) 0 0; }
+  .note { color: var(--c-accent); }
+</style>

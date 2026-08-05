@@ -38,6 +38,12 @@ const date = formatDate(post.data.date, locale);
       )
     }
 
+    {
+      post.data.image && (
+        <img class="hero-img" src={post.data.image} alt={post.data.title} loading="lazy" decoding="async" />
+      )
+    }
+
     <div class="body measure">
       <Content />
     </div>
@@ -75,6 +81,15 @@ const date = formatDate(post.data.date, locale);
     max-width: 24ch;
   }
   .where { margin: 0 0 var(--s-32); color: var(--c-muted); font-size: var(--t-body-sm); }
+  .hero-img {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-card);
+    margin: 0 0 var(--s-32);
+  }
   .body :global(p) { margin: 0 0 var(--s-16); }
 
   .links {

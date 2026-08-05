@@ -2,6 +2,7 @@
 title: 2021 Coexistence and Continuity Colloquium
 date: 2021-11-30
 order: 2
+image: /images/photos/coexistence-key.webp
 when: 30 Nov 2021, from 13:30
 where: National Museum of Korea, Education Building, Studio 1
 links:
