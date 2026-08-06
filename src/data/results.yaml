@@ -329,6 +329,7 @@
   category: platform
   order: 120
   image: /images/results/relation-analysis.webp
+  imageCredit: UNESCO — Dive into Intangible Cultural Heritage (ich.unesco.org)
   ko:
     title: 큐레이션 애셋 기반 관계분석 기술
     desc: >-
@@ -577,6 +578,7 @@
   category: analysis
   order: 212
   image: /images/results/knowledge-graph.webp
+  imageCredit: The British Museum · Google Arts & Culture — Museum of the World
   ko:
     title: 개체간 지식그래프 도출
     desc: 지식 관계망 구축을 통한 기록물 데이터 새로운 접근 방향 제시 및 시각화

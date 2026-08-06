@@ -108,6 +108,9 @@ const results = defineCollection({
     /** 결과물 이미지는 원본 화질·저작권 미확인 상태다 (PLAN P-04).
      *  없으면 텍스트 전용으로 렌더되므로 이미지 대기가 페이지를 막지 않는다. */
     image: z.string().optional(),
+    /** 이미지가 과제 산출물이 아니라 외부 참고 화면일 때의 출처. 고유명사라 언어 공통이며,
+     *  'Source:' 라벨만 i18n으로 붙는다. 값이 있으면 이미지 아래에 캡션으로 노출된다. */
+    imageCredit: z.string().optional(),
   }),
 });
 

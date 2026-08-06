@@ -75,6 +75,11 @@ const years = [
                 </p>
                 <h2>{c.title}</h2>
                 <p class="desc">{c.desc}</p>
+                {r.data.imageCredit && (
+                  <p class="credit micro">
+                    {t('results.source')}: {r.data.imageCredit}
+                  </p>
+                )}
               </div>
             </li>
           );
@@ -157,6 +162,12 @@ const years = [
     margin: 0;
     font-size: var(--t-body-sm);
     color: var(--c-muted);
+  }
+  /* 외부 참고 화면임을 밝히는 출처 캡션 — 본문보다 한 단계 낮은 위계 */
+  .credit {
+    margin: var(--s-8) 0 0;
+    color: var(--c-muted);
+    opacity: 0.75;
   }
   .empty {
     margin: var(--s-48) 0 0;

@@ -841,3 +841,44 @@ dev 서버 재시작으로 해소됐다. 스키마 변경 시 dev 재시작이 �
 | 박스 띠 아랫변 일치 | **전 조합 일치** |
 | 화살표 ↔ 띠 중앙 편차 | **전 조합 0** (허용 ±2px) |
 | 1920px 도해 폭 | 1092 → **1440px** (좌우 여백 240px) |
+
+## 2026-08-05
+
+### 공개 이미지 개인정보·출처 정리 (ULSOO 사이트 대조 작업에서 역방향 발견)
+
+**발단**: ULSOO 홈페이지의 CHIC 서술을 본 저장소 데이터와 대조하던 중, `public/images/results/`의
+공개 이미지 일부에 브라우저 크롬이 통째로 캡처되어 개인·내부 정보가 노출된 것을 발견했다.
+결과물 이미지 39점 + 사진 5점 전수를 콘택트시트로 훑어 대상을 특정했다.
+
+**개인·내부 정보 제거 (상단 브라우저 크롬 크롭)**
+| 이미지 | 노출 내용 |
+|---|---|
+| `knowledge-graph.webp` | 북마크바 — CHCS_SQI · HEEKWON_NAS · CHIC-Data(Synology) · ARCSP · OnAR · NewstormNas |
+| `relation-analysis.webp` | 북마크바(위 항목 + Digital Heritage · AutoDesk_Charactor · CHCS-CMS) + 탭 12개 |
+| `web-viewer.webp` | 북마크바 — e나라도움 · 연구비통합관리시스템 · 연구개발정보관리 · EasyPMS · BR 가맹점 CMS 등 |
+| `annotation-tool.webp` | localhost 주소창 + 브라우저 프로필 칩(실명) |
+
+**실제 인물 프로필 사진 익명화**: `nl-search` · `web-museum` · `semantic-search` 3점의 큐레이터
+플랫폼 헤더에 실인물 얼굴 사진이 아바타로 노출되어 중립 플레이스홀더(회색 원)로 치환. 같은 크롭으로
+내부 S3 엔드포인트(`chcs-curator-frontend-2022.s3-website.ap-northeast-2…`)도 함께 제거.
+
+**서드파티 앱 크롬 제거**: `virtual-exhibition.webp` — KMPlayer 타이틀바("Microsoft Game DVR-ENGAGE")와
+하단 재생 컨트롤 크롭.
+
+**출처 표기 (별개 사안 — 저작권·정합성)**
+`knowledge-graph.webp`는 영국박물관 *Museum of the World*(Google Arts & Culture), `relation-analysis.webp`는
+UNESCO *Dive into Intangible Cultural Heritage* 화면이다. 과제 산출물이 아닌 **외부 참고 화면**이
+성과 이미지 자리에 출처 없이 실려 있었다. 이미지를 내리는 대신 출처를 명시하는 쪽을 택했다:
+- `content.config.ts` results 스키마에 `imageCredit` 선택 필드 추가 (고유명사라 언어 공통)
+- `i18n/ui.ts`에 `results.source` 라벨 추가 (ko "참고 화면 출처" / en "Reference screen, courtesy of")
+- `results.astro`에 설명문 아래 캡션으로 렌더 (`.credit`, 본문보다 한 단계 낮은 위계)
+- 두 항목에 `imageCredit` 기입
+
+**검증(2026-08-05 실측)**: `npm run build` 22페이지 성공. 수정 이미지 8점의 상단·하단을 잘라 육안 확인 —
+북마크·주소창·실인물 사진 잔여 0. ko/en 빌드 산출물에서 출처 캡션 4건(2이미지 × 2언어) 렌더 확인.
+
+**판단 보류**: `field-capture.webp`는 마스크를 쓴 인물이 장비를 다루는 현장 사진이다. 통상적인 연구
+활동 사진으로 보아 수정하지 않았다. 당사자 동의 여부는 확인이 필요하다.
+
+**미커밋 잔류(타 세션 작업, 손대지 않음)**: `package.json`/`package-lock.json` fontsource devDeps,
+`Header.astro` 워드마크 조정, `src/pages/font-candidates.astro` — 타이포그래피 실험 진행 중.
