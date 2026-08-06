@@ -45,6 +45,17 @@ const label = no ? `${t('figure.prefix')} ${no}. ${caption ?? title}` : (caption
     border-radius: var(--radius-card);
     overflow: hidden;
   }
+
+  /* 도해는 본문보다 가로 정보량이 많다. 본문 컬럼(1092px)에 묶어 두면 대형 화면에서
+     좌우 800px이 비는데도 박스 안 문장이 두세 줄로 접힌다 — 도해만 밖으로 뺀다.
+     64px 거터의 절반은 세로 스크롤바 몫이다 (100vw는 스크롤바를 포함한다). */
+  @media (min-width: 1200px) {
+    .dgm {
+      --dgm-bleed: min(1440px, 100vw - 64px);
+      width: var(--dgm-bleed);
+      margin-inline: calc((100% - var(--dgm-bleed)) / 2);
+    }
+  }
   .canvas {
     background: var(--c-surface);
     padding: var(--s-24);

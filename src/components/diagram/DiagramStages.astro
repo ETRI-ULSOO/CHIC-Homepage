@@ -36,9 +36,18 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
   {
     stages.map((stage, i) => (
       <>
-        {i > 0 && <div class="arrow" aria-hidden="true" />}
+        {i > 0 && (
+          <div class="arrow-cell" aria-hidden="true">
+            <p class="stage-label micro" />
+            <div class="arrow-wrap">
+              <span class="arrow" />
+            </div>
+          </div>
+        )}
         <section class="stage" style={`--cols: ${stage.cols ?? 1}`}>
-          {stage.label && <p class="stage-label micro">{stage.label}</p>}
+          {/* 라벨이 없는 단계도 빈 자리를 둔다 — 없으면 그 단계만 박스가 위로 올라가
+              윗변이 어긋나고, 라벨 있는 단계의 제목이 홀로 떠 보인다. */}
+          <p class="stage-label micro">{stage.label ?? ''}</p>
           <div class="boxes">
             {stage.boxes.map((box) => (
               <article class:list={['box', { accent: box.accent }]}>
@@ -99,19 +108,32 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
     display: flex;
     flex-direction: column;
   }
-  /* 4대 연구 축처럼 박스가 여럿인 단계는 더 넓은 지분을 갖는다 */
-  .stage:has(.boxes > :nth-child(2)) { flex-grow: 2.2; }
+  /* 4대 연구 축처럼 박스가 여럿인 단계는 더 넓은 지분을 갖는다.
+     원본 SVG의 폭 비율(170 : 480 : 228 : 184)에 맞춘 값이다. */
+  .stage:has(.boxes > :nth-child(2)) { flex-grow: 2.6; }
 
+  /* 패딩과 보더를 빈 라벨에도 똑같이 준다. 보이는 쪽에만 주면 그 단계의 박스만
+     5px 내려가 윗변이 어긋난다 (밑줄을 넣으며 실제로 만들었던 결함). */
   .stage-label {
     margin: 0 0 var(--s-8);
+    padding-bottom: var(--s-4);
+    border-bottom: 1px solid transparent;
     color: var(--c-muted);
   }
+  /* 밑줄이 그 단계의 폭만큼만 그어져 아래 박스 묶음의 머리글임을 드러낸다 —
+     없으면 라벨이 홀로 떠 보인다. */
+  .stage-label:not(:empty) { border-bottom-color: var(--c-border); }
+  /* 빈 라벨도 한 줄 높이를 차지해야 아래 박스들의 윗변이 맞는다 */
+  .stage-label:empty::before { content: '\00a0'; }
+
   .boxes {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
     gap: var(--s-12);
-    align-content: start;
+    /* start가 아니라 stretch — 단계마다 박스 띠의 아랫변까지 맞춰야
+       화살표가 띠의 중앙에 놓인다 (원본 SVG도 전 열이 같은 높이였다). */
+    align-content: stretch;
   }
 
   .box {
@@ -162,10 +184,21 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
   }
   .box li.sub::before { content: '—'; left: 0.85em; }
 
-  /* 화살표. 글꼴 문자 대신 보더로 그려 어떤 환경에서도 같은 모양이 나온다. */
-  .arrow {
-    align-self: center;
+  /* 화살표는 단계와 같은 라벨 자리를 갖고, 그 아래 박스 띠의 중앙에 놓인다.
+     라벨 자리를 빼지 않으면 전체 높이의 중앙에 놓여 박스보다 한참 아래로 내려간다. */
+  .arrow-cell {
     flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .arrow-wrap {
+    flex: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  /* 글꼴 문자 대신 보더로 그려 어떤 환경에서도 같은 모양이 나온다. */
+  .arrow {
     width: 22px;
     height: 1px;
     background: #6b7b8a;
@@ -219,6 +252,9 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
 
   /* flow="column" — 넓은 화면에서도 세로. 중심에서 갈래로 퍼지는 구조에 쓴다. */
   .flow.column { flex-direction: column; gap: var(--s-8); }
+  /* 세로로 쌓이면 윗변을 맞출 이유가 없다 — 빈 라벨 자리는 여백만 만든다 */
+  .flow.column .stage-label:empty,
+  .flow.column .arrow-cell .stage-label { display: none; }
   .flow.column .stage:has(.boxes > :nth-child(2)) { flex-grow: 1; }
   .flow.column .arrow {
     width: 1px;
@@ -240,6 +276,8 @@ const isSub = (l: Line): l is { sub: string } => typeof l !== 'string';
   @media (max-width: 899px) {
     .flow { flex-direction: column; gap: var(--s-8); }
     .stage:has(.boxes > :nth-child(2)) { flex-grow: 1; }
+    .stage-label:empty,
+    .arrow-cell .stage-label { display: none; }
     .boxes { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
 
     .arrow {
