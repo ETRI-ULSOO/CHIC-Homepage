@@ -66,8 +66,14 @@ CHIC는 종료된 국가 R&D 과제의 아카이브다. 이 사이트의 시각�
 - 자간 **-0.01em 이하 금지**, 행간 **1.15 이상 필수** — 한글은 네거티브 트래킹과 압축 행간에서 뭉개진다
 - 다크 배경 위 명조는 획이 가늘어 보이므로 **weight 600을 기본**으로 한다 (라이트 배경의 400 대응)
 
-**라틴 디스플레이 — Playfair Display**
-- 워드마크·영문 헤딩 전용. 자간 -0.02em, 행간 0.95 (라틴은 커질수록 조인다)
+**라틴 디스플레이 — Cormorant Garamond** (2026-08-06 개정, 종전 Playfair Display)
+- 워드마크·영문 디스플레이 전용. 워드마크는 **CHIC** — 마침표를 붙이지 않는다
+- **weight 500 이상만 쓴다.** 본래 획이 가늘어 다크 배경에서 더 약해진다
+  (명조에 600을 강제한 것과 같은 이유). 400은 아예 들여오지 않는다
+- 자간은 **양수**로 연다 — 워드마크 +0.07em, 본문 크기 +0.02em
+- 교체 근거: 구식(old-style) 세리프라 획의 축이 기울어 있어 **명조와 계보가 가깝다**.
+  디도 계열인 Playfair는 축이 수직이라 명조와 나란히 놓으면 서로 다른 시대의 글씨로
+  읽혔고, 굵기 대비가 커서 다크 배경에서 가는 획이 더 가늘어졌다
 
 **본문·UI — Pretendard**
 - Weights: 400, 500, 700(숫자 전용)
@@ -93,10 +99,10 @@ CHIC는 종료된 국가 R&D 과제의 아카이브다. 이 사이트의 시각�
 | heading (serif) | 32px | 1.35 | -0.01em | `--t-heading` |
 | kpi (Pretendard 700) | 28px | 1.2 | -0.02em | `--t-kpi` |
 | display-ko (serif) | clamp(36px, 5vw, 60px) | 1.2 | -0.01em | `--t-display-ko` |
-| display-en (Playfair) | clamp(44px, 7vw, 92px) | 0.95 | -0.02em | `--t-display-en` |
+| display-en (Cormorant) | clamp(44px, 7vw, 92px) | 0.95 | -0.02em | `--t-display-en` |
 
 > `--t-display-en`은 현재 사용처가 0건이다 (2026-08-05 실측). 라틴 디스플레이 조판은
-> 워드마크가 `--t-heading-sm`으로, 404 숫자가 자체 clamp로 각각 처리한다.
+> 워드마크가 `--t-heading`(32px, weight 600)으로, 404 숫자가 자체 clamp로 각각 처리한다.
 
 ### 배정 규칙 — 값보다 이것이 먼저다
 
@@ -292,7 +298,7 @@ Surface 카드에 국문명(Pretendard 600) + 영문명(micro Muted) + 외부 �
 
   /* Type */
   --f-serif-ko: 'Noto Serif KR', serif;
-  --f-serif-en: 'Playfair Display', Georgia, serif;
+  --f-serif-en: 'Cormorant Garamond', Georgia, serif;
   --f-sans: Pretendard, -apple-system, 'Apple SD Gothic Neo', sans-serif;
 
   --t-micro: 12px;
@@ -359,5 +365,5 @@ Surface 카드에 국문명(Pretendard 600) + 영문명(micro Muted) + 외부 �
 | 1 | 한지 캔버스(밝음) 지배 | 먹빛 캔버스(어두움) 지배 | CHIC의 주 자산은 흰 배경 다이어그램 — 어두운 벽에서만 초점이 된다 |
 | 2 | 한지↔먹 반복 하드컷 교차 | 다크 지배, 라이트는 페이지당 1구간 | 교차를 반복하면 다이어그램 섹션의 초점 효과가 희석된다 |
 | 3 | 금(Geum) 악센트 | 민트(Mint) 악센트 | 두 사이트의 식별성 확보. 둘 다 "고채도는 어두운 면에서만" 규칙은 동일 |
-| 4 | 붓글씨 워드마크 | 라틴 세리프(Playfair) 워드마크 | CHIC는 라틴 두문자어가 브랜드명 — 붓 서체는 한글 정체성의 도구다 |
+| 4 | 붓글씨 워드마크 | 라틴 세리프(Cormorant Garamond) 워드마크 | CHIC는 라틴 두문자어가 브랜드명 — 붓 서체는 한글 정체성의 도구다 |
 | 5 | 한지 질감 오버레이 | 격자(grid) 배경, 히어로 한정 | 재질의 자리를 데이터 구조의 은유가 대신한다 |

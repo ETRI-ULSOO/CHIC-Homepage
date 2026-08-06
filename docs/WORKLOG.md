@@ -882,3 +882,60 @@ UNESCO *Dive into Intangible Cultural Heritage* 화면이다. 과제 산출물�
 
 **미커밋 잔류(타 세션 작업, 손대지 않음)**: `package.json`/`package-lock.json` fontsource devDeps,
 `Header.astro` 워드마크 조정, `src/pages/font-candidates.astro` — 타이포그래피 실험 진행 중.
+
+---
+
+## 2026-08-06 (2) — 워드마크 교정과 라틴 디스플레이 서체 교체
+
+### 지적
+
+① 좌상단 CHIC 글씨가 매우 작아 보임 ② `CHIC.`이 아니라 `CHIC`임
+③ 글씨체가 사이트 전체 분위기와 맞지 않음 — 후보 4개를 보여 달라
+
+### 결정
+
+**[D-30] 라틴 디스플레이를 Playfair Display → Cormorant Garamond로 교체한다.**
+
+후보 4종(Cinzel · Cormorant Garamond · Spectral · Space Grotesk)을 현행 Playfair와 함께
+같은 32px·같은 헤더·같은 다크 바탕에 놓고 비교판을 만들어 제시했고, 사용자가 Cormorant를 채택했다.
+
+교체 근거 — **축(axis)의 문제였다.** 이 사이트의 한글 헤딩은 명조(Noto Serif KR)로 획의 축이
+기울어 있는데, Playfair는 디도(didone) 계열이라 축이 수직이다. 둘을 나란히 놓으면 서로 다른
+시대의 글씨처럼 읽힌다. Cormorant는 구식(old-style) 세리프라 축이 기울어 명조와 계보가 같다 —
+국·영문이 한 가족으로 읽히는 유일한 후보였다. Playfair의 큰 굵기 대비가 다크 배경에서 가는
+획을 더 가늘게 만든 것도 "작아 보인다"는 체감에 기여했을 것이다.
+
+### 산출물
+
+| 파일 | 변경 |
+|---|---|
+| `Header.astro` | `CHIC.` → **`CHIC`** (마침표 제거). 크기 `--t-heading-sm`(24px) → **`--t-heading`(32px)**, weight 600, 자간 0.07em |
+| `styles/fonts.css` | Playfair 가변 → **Cormorant Garamond latin 500/600**. 400은 들여오지 않는다 |
+| `styles/tokens.css` | `--f-serif-en: 'Cormorant Garamond', Georgia, serif` |
+| `Footer.astro` | 태그라인 weight 500 + 자간 0.02em (본문 크기라 600은 무겁다) |
+| `404.astro` | 큰 숫자 weight 600 |
+| `package.json` | Playfair 제거, Cormorant 추가 |
+| `DESIGN.md` | 라틴 디스플레이 절 재작성 — weight 하한·자간 방향·교체 근거 |
+
+**Cormorant는 400을 아예 들여오지 않는다.** 본래 획이 가늘어 다크 배경에서 더 약해지므로
+500 미만은 쓸 일이 없다 — 명조에 600을 강제한 것과 같은 원리다.
+
+### 실측 검증 (5개 페이지 × 7개 뷰포트 = 35조합)
+
+| 검사 | 결과 |
+|---|---|
+| 가로 오버플로 | **0건** |
+| 헤더 바 넘침 (320px 포함) | **0건** |
+| 워드마크 서체 | 전 조합 Cormorant Garamond |
+| 워드마크 weight | 전 조합 600 |
+| 워드마크 텍스트 | 전 조합 `CHIC` (마침표 0건) |
+| Playfair 잔존 | **0건** (빌드 산출물 포함) |
+| 외부 폰트 요청 | **0건** — 자체호스팅 유지 |
+| 빌드 폰트 파일 | Cormorant 500/600 · 명조 4종 · Pretendard |
+| DESIGN.md ↔ tokens.css | 전 토큰 일치 |
+
+### 정리
+
+비교판(`src/pages/font-candidates.astro`)과 채택되지 않은 폰트 패키지 3종
+(Cinzel · Spectral · Space Grotesk)을 삭제했다. 비교판 자체는 폰트를 data URI로 내장한
+자립 페이지로 따로 남겨 사용자에게 전달했다.

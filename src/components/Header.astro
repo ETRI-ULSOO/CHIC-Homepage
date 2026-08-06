@@ -18,7 +18,7 @@ const nav = [
 
 <header>
   <div class="wrap bar">
-    <a class="mark" href={withBase(`/${locale}/`)}>CHIC<span>.</span></a>
+    <a class="mark" href={withBase(`/${locale}/`)}>CHIC</a>
     <nav aria-label="주 메뉴">
       {nav.map((item) => <a href={item.href}>{item.label}</a>)}
       <LangSwitch />
@@ -38,13 +38,16 @@ const nav = [
     gap: var(--s-24);
     padding-block: var(--s-16);
   }
+  /* 워드마크는 브랜드 요소다. 내비(15px) 대비 확실히 커야 위계가 선다. */
   .mark {
     font-family: var(--f-serif-en);
-    font-size: var(--t-heading-sm);
-    letter-spacing: 0.02em;
+    /* Cormorant는 획이 가늘다 — 다크 배경에서 600이 아니면 획이 사라진다 */
+    font-weight: 600;
+    font-size: var(--t-heading);
+    line-height: 1;
+    letter-spacing: 0.07em;
     text-decoration: none;
   }
-  .mark span { color: var(--c-accent); }
 
   nav {
     display: flex;
