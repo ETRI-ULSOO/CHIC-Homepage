@@ -54,7 +54,9 @@ const appYears = [...new Set(apps.map((a) => a.data.year))]
     <div class="wrap">
       <p class="pill">{t('hero.period')}</p>
       <h1>
-        {locale === 'ko' ? '문화유산을 읽는 ' : 'Intelligent curation for '}
+        {/* '읽는'이 아니라 '기록하는' — 과제 업무의 대부분이 문화유산의 디지털화와
+            애셋 생성이었다. 해석·판독이 아니라 기록이 이 과제의 무게중심이다. */}
+        {locale === 'ko' ? '문화유산을 기록하는 ' : 'Intelligent curation for '}
         <em>{locale === 'ko' ? '지능형 큐레이션' : 'cultural heritage'}</em>
       </h1>
       <p class="lead measure">{home.data.lead}</p>
