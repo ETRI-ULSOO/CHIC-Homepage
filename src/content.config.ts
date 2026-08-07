@@ -21,6 +21,9 @@ const news = defineCollection({
     /** 게시물 대표 이미지 (선택). 없으면 텍스트만 렌더된다. */
     image: z.string().optional(),
     where: z.string().optional(),
+    /** YouTube 영상 ID. 있으면 본문 위에 플레이어가 박힌다.
+     *  URL이 아니라 ID만 담는다 — 도메인(youtube-nocookie)은 렌더 쪽 결정이다. */
+    video: z.string().optional(),
     /** News 첨부는 전부 외부 링크다 (content-inventory.md M-06) */
     links: z
       .array(z.object({ label: z.string(), href: z.string().url() }))
